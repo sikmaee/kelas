@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BHAWARA 8G - SMPN 8 YOGYAKARTA</title>
-    <!-- Fonts & Icons -->
+    <title>BHAWARA - CLASS PLATFORM V8</title>
+    <!-- Frameworks & UI Kits -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -17,7 +17,7 @@
         }
         body {
             font-family: 'Inter', sans-serif;
-            transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
         .font-arabic { font-family: 'Amiri', serif; }
         
@@ -26,19 +26,19 @@
             color: #f8fafc;
         }
         
-        /* Moving Islamic Background Pattern */
+        /* Islamic Moving Background */
         .bg-pattern {
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l15 30-15 30L15 30z' fill='%23065f46' fill-opacity='0.05'/%3E%3C/svg%3E");
-            animation: move-bg 30s linear infinite;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l15 30-15 30L15 30z' fill='%23065f46' fill-opacity='0.04'/%3E%3C/svg%3E");
+            animation: move-bg 35s linear infinite;
         }
         @keyframes move-bg {
             from { background-position: 0 0; }
-            to { background-position: 120px 120px; }
+            to { background-position: 150px 150px; }
         }
 
         .glass {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.4);
         }
         .dark .glass {
@@ -52,95 +52,123 @@
         .btn-interact:active { transform: scale(0.92); }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
-
         [v-cloak] { display: none; }
 
-        .btn-disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        /* Admin White Inputs */
+        /* Admin Dashboard UI */
         .input-admin {
             background-color: #ffffff !important;
             color: #1e293b !important;
-            border: 1px solid #e2e8f0;
-        }
-        .input-admin::placeholder { color: #94a3b8; }
-
-        .card-enter {
-            animation: slideUp 0.7s ease-out forwards;
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
+            border: 1px solid #cbd5e1;
         }
 
-        /* High Contrast Nav Icons */
+        /* Nav Icon Contrast */
         .nav-icon-inactive {
-            color: #1e293b !important;
-            opacity: 0.85;
+            color: #000000 !important;
+            opacity: 0.8;
         }
         .dark .nav-icon-inactive {
-            color: #f8fafc !important;
+            color: #ffffff !important;
             opacity: 0.4;
         }
-        .nav-icon-active {
-            color: #ffffff !important;
-            background-color: var(--islamic-green);
+
+        /* Wheel Styling */
+        .wheel-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            border: 8px solid var(--islamic-green);
+            border-radius: 50%;
+            overflow: hidden;
+            transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1);
+            box-shadow: 0 0 30px rgba(6, 95, 70, 0.2);
+        }
+        .wheel-pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 30px solid #ef4444;
+            z-index: 30;
+        }
+
+        /* Winner Card Animation */
+        .winner-pop {
+            animation: pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes pop {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: absolute;
+            width: 8px; height: 8px;
+            animation: fall 3s ease-out infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(60vh) rotate(720deg); opacity: 0; }
         }
     </style>
 </head>
 <body :class="{ 'dark': isDarkMode }" class="bg-slate-50 text-slate-900 min-h-screen bg-pattern">
     <div id="app" v-cloak>
         <!-- NAVIGATION BAR -->
-        <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-xl glass rounded-[2.5rem] p-2.5 flex items-center shadow-2xl border-t border-white/40">
-            <div class="flex justify-around w-full overflow-x-auto no-scrollbar gap-2 px-2">
+        <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-2xl glass rounded-[2.5rem] p-2.5 flex items-center shadow-2xl border-t border-white/40">
+            <div class="flex justify-around w-full overflow-x-auto no-scrollbar gap-1 px-2">
                 <button @click="currentTab = 'home'" :class="tabClass('home')"><i class="ph-bold ph-house-line text-xl"></i></button>
                 <button @click="currentTab = 'students'" :class="tabClass('students')"><i class="ph-bold ph-users text-xl"></i></button>
                 <button @click="currentTab = 'structure'" :class="tabClass('structure')"><i class="ph-bold ph-identification-card text-xl"></i></button>
                 <button @click="currentTab = 'schedule'" :class="tabClass('schedule')"><i class="ph-bold ph-calendar-blank text-xl"></i></button>
                 <button @click="currentTab = 'piket'" :class="tabClass('piket')"><i class="ph-bold ph-broom text-xl"></i></button>
+                <button @click="currentTab = 'tools'" :class="tabClass('tools')"><i class="ph-bold ph-spinner text-xl"></i></button>
+                <button @click="currentTab = 'kas'" :class="tabClass('kas')"><i class="ph-bold ph-bank text-xl"></i></button>
+                <button @click="currentTab = 'chat'" :class="tabClass('chat')"><i class="ph-bold ph-chat-centered-text text-xl"></i></button>
                 <button @click="currentTab = 'admin'" :class="tabClass('admin')"><i class="ph-bold ph-lock-key text-xl"></i></button>
                 <div class="h-8 w-[1px] bg-black/10 dark:bg-white/10 shrink-0 mx-1"></div>
-                <button @click="toggleDarkMode" class="p-3 rounded-2xl transition-all btn-interact" :class="isDarkMode ? 'text-yellow-400' : 'text-orange-500'">
+                <button @click="toggleDarkMode" class="p-3 rounded-2xl transition-all" :class="isDarkMode ? 'text-yellow-400' : 'text-orange-500'">
                     <i :class="isDarkMode ? 'ph-bold ph-sun' : 'ph-bold ph-moon'"></i>
                 </button>
             </div>
         </nav>
 
         <!-- MAIN CONTENT -->
-        <main class="max-w-4xl mx-auto px-4 pt-10 pb-32">
+        <main class="max-w-4xl mx-auto px-4 pt-10 pb-40">
             
             <!-- VIEW: HOME -->
-            <section v-if="currentTab === 'home'" class="space-y-8 animate-in fade-in duration-700">
+            <section v-if="currentTab === 'home'" class="space-y-10 animate-in fade-in duration-700">
                 <div class="text-center space-y-4">
-                    <div class="inline-block p-2 px-6 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 font-bold text-xs tracking-widest uppercase shadow-sm">
-                        Angkatan 64 • SMPN 8 Yogyakarta
+                    <div class="inline-block p-2 px-6 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 font-bold text-[10px] tracking-widest uppercase">
+                        BHAWARA {{ classInfo.name }} • SMPN 8 YOGYAKARTA
                     </div>
                     <h1 class="text-4xl md:text-5xl font-arabic font-bold text-emerald-800 dark:text-emerald-400">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</h1>
-                    <h2 class="text-6xl md:text-8xl font-black tracking-tighter text-slate-900 dark:text-white">BHAWARA <span class="text-emerald-600">8G</span></h2>
+                    <h2 class="text-6xl md:text-8xl font-black tracking-tighter uppercase">BHAWARA <span class="text-emerald-600">{{ classInfo.name }}</span></h2>
                     <p class="text-lg font-medium italic opacity-60">"Berkarakter, Bermutu"</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="glass p-8 rounded-[2.5rem] text-center space-y-2 border-emerald-500/20 border-2 shadow-inner">
+                    <div class="glass p-8 rounded-[2.5rem] text-center space-y-2 border-emerald-500/20 border-2">
                         <div class="text-5xl font-mono font-bold text-emerald-600 tracking-tighter">{{ digitalTime }}</div>
-                        <div class="text-[10px] uppercase tracking-[0.4em] opacity-50 font-black">Waktu Indonesia Barat</div>
+                        <div class="text-[9px] uppercase tracking-[0.4em] opacity-50 font-black">Yogyakarta • WIB</div>
                     </div>
                     <a href="https://www.instagram.com/bhawara_8g" target="_blank" class="glass p-8 rounded-[2.5rem] flex items-center justify-between group hover:bg-emerald-600 transition-all duration-500 overflow-hidden relative shadow-lg">
-                        <div class="z-10">
-                            <h3 class="font-bold text-xl group-hover:text-white transition-colors">Instagram</h3>
-                            <p class="text-sm opacity-60 group-hover:text-emerald-100 font-mono">@bhawara_8g</p>
+                        <div class="z-10 text-left">
+                            <h3 class="font-bold text-xl group-hover:text-white">Instagram</h3>
+                            <p class="text-sm opacity-60 group-hover:text-emerald-100 font-mono">@bhawara_{{ classInfo.name.toLowerCase() }}</p>
                         </div>
                         <i class="ph-fill ph-instagram-logo text-7xl opacity-20 group-hover:opacity-100 group-hover:text-white group-hover:scale-125 transition-all z-10"></i>
                         <div class="absolute inset-0 bg-gradient-to-tr from-purple-600 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </a>
                 </div>
 
-                <div v-if="events.length > 0" class="relative overflow-hidden rounded-[2.5rem] bg-emerald-900 text-white p-10 shadow-2xl">
+                <div v-if="events && events.length > 0" class="relative overflow-hidden rounded-[2.5rem] bg-emerald-900 text-white p-10 shadow-2xl">
                     <div class="relative z-10">
-                        <span class="bg-yellow-500 text-black text-[9px] font-black px-3 py-1 rounded-full mb-4 inline-block tracking-widest uppercase">Agenda Kelas</span>
+                        <span class="bg-yellow-500 text-black text-[9px] font-black px-3 py-1 rounded-full mb-4 inline-block tracking-widest uppercase">AGENDA KELAS</span>
                         <h3 class="text-3xl font-bold tracking-tight">{{ events[0].title }}</h3>
                         <p class="opacity-80 mt-1 font-medium">{{ events[0].date }} • {{ events[0].location }}</p>
                     </div>
@@ -148,74 +176,88 @@
                 </div>
             </section>
 
-            <!-- VIEW: STUDENTS (Sorted by Absen) -->
+            <!-- VIEW: STUDENTS -->
             <section v-if="currentTab === 'students'" class="space-y-6">
-                <div class="flex justify-between items-end">
-                    <h2 class="text-3xl font-black">Daftar <span class="text-emerald-600">Siswa</span></h2>
-                    <span class="text-xs font-bold opacity-40 uppercase tracking-widest">{{ students.length }} Personil</span>
-                </div>
-                
+                <h2 class="text-3xl font-black">Daftar <span class="text-emerald-600">Siswa</span></h2>
                 <div v-if="students.length === 0" class="text-center py-24 glass rounded-[3rem] border-dashed border-2 border-emerald-500/20">
-                    <i class="ph-light ph-users-four text-8xl opacity-10"></i>
-                    <p class="mt-4 opacity-40 font-bold uppercase tracking-widest">Database Siswa Kosong</p>
+                    <p class="opacity-40 font-bold uppercase tracking-widest">Database Kosong</p>
                 </div>
-
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    <div v-for="student in sortedStudents" :key="student.noAbsen" class="glass p-4 rounded-[2rem] text-center group transition-all hover:-translate-y-2 card-enter shadow-md relative overflow-hidden">
+                    <div v-for="student in sortedStudents" :key="student.noAbsen" class="glass p-4 rounded-[2rem] text-center group transition-all hover:-translate-y-2 relative overflow-hidden shadow-md">
                         <div class="absolute top-3 left-3 bg-emerald-600 text-white text-[9px] font-black w-6 h-6 rounded-full flex items-center justify-center z-10 shadow-lg">{{ student.noAbsen }}</div>
-                        <div class="aspect-square rounded-2xl bg-slate-200 dark:bg-slate-800 mb-4 overflow-hidden relative border-2 border-emerald-500/10 shadow-inner">
-                            <img :src="student.photo || 'https://via.placeholder.com/400?text=No+Photo'" class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110">
+                        <div class="aspect-square rounded-2xl bg-slate-200 dark:bg-slate-800 mb-4 overflow-hidden border-2 border-emerald-500/10">
+                            <img :src="student.photo || 'https://via.placeholder.com/400?text=No+Photo'" class="w-full h-full object-cover transition-all duration-500 group-hover:scale-110">
                         </div>
-                        <h3 class="font-black text-[10px] truncate uppercase tracking-tighter text-emerald-900 dark:text-emerald-400">{{ student.name }}</h3>
+                        <h3 class="font-black text-[10px] truncate uppercase text-emerald-900 dark:text-emerald-400">{{ student.name }}</h3>
+                        <span class="text-[8px] opacity-40 font-bold uppercase">{{ student.gender === 'L' ? 'Laki-laki' : 'Perempuan' }}</span>
                     </div>
                 </div>
             </section>
 
-            <!-- VIEW: STRUCTURE -->
-            <section v-if="currentTab === 'structure'" class="space-y-10 text-center">
+            <!-- VIEW: STRUCTURE (KOTAK-KOTAK LENGKAP) -->
+            <section v-if="currentTab === 'structure'" class="space-y-12 text-center">
                 <h2 class="text-3xl font-black">Struktur <span class="text-emerald-600">Kelas</span></h2>
+                
                 <div v-if="structure.length === 0" class="py-24 glass rounded-[3rem] border-dashed border-2 border-emerald-500/20">
-                    <i class="ph-light ph-identification-card text-8xl opacity-10"></i>
-                    <p class="mt-4 opacity-40 font-bold uppercase">Belum ada struktur.</p>
+                    <p class="opacity-40 font-bold uppercase tracking-widest">Belum diatur.</p>
                 </div>
+
                 <div class="space-y-16">
-                    <div class="flex flex-wrap justify-center gap-8">
-                        <div v-for="member in getRoleGroup('Utama')" class="w-44 space-y-3 card-enter">
-                            <div class="aspect-square rounded-full border-4 border-emerald-500 p-1.5 bg-white shadow-2xl overflow-hidden ring-8 ring-emerald-500/5 transition-transform hover:scale-105">
-                                <img :src="member.photo" class="w-full h-full object-cover rounded-full">
+                    <!-- LEVEL 1: WALI KELAS -->
+                    <div v-if="getStructureByRole('Wali Kelas')" class="flex justify-center">
+                        <div class="w-56 space-y-4 animate-in slide-in-from-bottom duration-500">
+                            <div class="aspect-square rounded-[3rem] border-8 border-emerald-600 p-2 bg-white shadow-2xl overflow-hidden ring-12 ring-emerald-500/5">
+                                <img :src="getStructureByRole('Wali Kelas').photo" class="w-full h-full object-cover rounded-[2rem]">
                             </div>
                             <div>
-                                <h4 class="font-black text-emerald-600 text-[10px] uppercase tracking-[0.2em]">{{ member.role }}</h4>
-                                <p class="font-bold text-base leading-tight mt-1">{{ member.name }}</p>
+                                <h4 class="font-black text-emerald-600 text-xs uppercase tracking-widest">Wali Kelas</h4>
+                                <p class="font-bold text-lg leading-tight mt-1">{{ getStructureByRole('Wali Kelas').name }}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-                        <div v-for="member in getRoleGroup('Lainnya')" class="glass p-6 rounded-[2.5rem] space-y-3 card-enter shadow-sm">
-                            <div class="w-20 h-20 mx-auto rounded-2xl overflow-hidden border-2 border-emerald-500/30">
+
+                    <!-- LEVEL 2: KETUA & WAKIL -->
+                    <div class="grid grid-cols-2 gap-8 max-w-lg mx-auto">
+                        <div v-for="role in ['Ketua Kelas', 'Wakil Ketua']" :key="role">
+                            <div v-if="getStructureByRole(role)" class="space-y-3">
+                                <div class="aspect-square rounded-full border-4 border-emerald-500 p-1 bg-white shadow-xl overflow-hidden ring-4 ring-emerald-500/10">
+                                    <img :src="getStructureByRole(role).photo" class="w-full h-full object-cover rounded-full">
+                                </div>
+                                <div>
+                                    <h4 class="font-black text-emerald-600 text-[10px] uppercase tracking-widest">{{ role }}</h4>
+                                    <p class="font-bold text-sm mt-1">{{ getStructureByRole(role).name }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LEVEL 3: LAINNYA (Bendahara, Sekretaris, dll) -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                        <div v-for="member in otherStructure" :key="member.id" class="glass p-5 rounded-[2rem] space-y-3 shadow-sm border border-emerald-500/10 transition-transform hover:scale-105">
+                            <div class="w-16 h-16 mx-auto rounded-2xl overflow-hidden border-2 border-emerald-500/30 bg-white">
                                 <img :src="member.photo" class="w-full h-full object-cover">
                             </div>
                             <div>
                                 <h4 class="font-black text-[9px] text-emerald-600 uppercase tracking-widest">{{ member.role }}</h4>
-                                <p class="font-bold text-xs mt-1">{{ member.name }}</p>
+                                <p class="font-bold text-xs mt-1 leading-tight">{{ member.name }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- VIEW: SCHEDULE -->
+            <!-- VIEW: SCHEDULE (KOTAK-KOTAK) -->
             <section v-if="currentTab === 'schedule'" class="space-y-6">
                 <h2 class="text-3xl font-black">Jadwal <span class="text-emerald-600">Pelajaran</span></h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div v-for="day in days" :key="day" class="glass overflow-hidden rounded-[2.5rem] border border-emerald-500/10 shadow-sm">
+                    <div v-for="day in days" :key="day" class="glass overflow-hidden rounded-[2.5rem] border border-emerald-500/10 shadow-sm transition-all hover:shadow-xl">
                         <div class="bg-emerald-800 p-5 text-white font-black flex justify-between items-center shadow-lg uppercase text-xs tracking-widest">
                             <span>{{ day }}</span>
                             <i class="ph-bold ph-book-open"></i>
                         </div>
                         <div class="p-5 space-y-3">
-                            <div v-if="getScheduleForDay(day).length === 0" class="text-[9px] opacity-30 font-black py-4 text-center tracking-[0.4em]">BELUM ADA JADWAL</div>
-                            <div v-for="item in getScheduleForDay(day)" class="flex justify-between items-center text-sm p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-white/5">
+                            <div v-if="getScheduleForDay(day).length === 0" class="text-[9px] opacity-30 font-black py-4 text-center tracking-[0.4em]">BELUM DIISI</div>
+                            <div v-for="item in getScheduleForDay(day)" class="flex justify-between items-center text-sm p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-white/5 transition-all hover:translate-x-1">
                                 <span class="font-bold text-emerald-900 dark:text-emerald-100 tracking-tight">{{ item.subject }}</span>
                                 <span class="opacity-40 text-[9px] font-mono font-black">{{ item.time }}</span>
                             </div>
@@ -224,14 +266,14 @@
                 </div>
             </section>
 
-            <!-- VIEW: PIKET -->
+            <!-- VIEW: PIKET (KOTAK-KOTAK) -->
             <section v-if="currentTab === 'piket'" class="space-y-6">
                 <h2 class="text-3xl font-black">Jadwal <span class="text-emerald-600">Piket</span></h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div v-for="day in days" :key="day" class="glass rounded-[2.5rem] p-8 border-l-[12px] border-emerald-700 shadow-md">
-                        <h3 class="text-2xl font-black mb-6 flex items-center gap-3 tracking-tighter">
+                    <div v-for="day in days" :key="day" class="glass rounded-[2.5rem] p-8 border-l-[12px] border-emerald-700 shadow-md transition-all hover:-translate-y-1">
+                        <h3 class="text-2xl font-black mb-6 flex items-center gap-3 tracking-tighter uppercase">
                             <i class="ph-bold ph-broom text-emerald-600"></i>
-                            {{ day.toUpperCase() }}
+                            {{ day }}
                         </h3>
                         <div class="flex flex-wrap gap-2">
                             <div v-if="getPiketForDay(day).length === 0" class="text-[9px] opacity-30 font-black tracking-widest uppercase">Belum ada petugas</div>
@@ -243,246 +285,501 @@
                 </div>
             </section>
 
-            <!-- VIEW: ADMIN LOGIN -->
-            <section v-if="currentTab === 'admin' && !isAdmin" class="max-w-sm mx-auto py-24 text-center space-y-8">
-                <i class="ph-fill ph-lock-key text-8xl text-emerald-700"></i>
-                <div class="space-y-2">
-                    <h2 class="text-3xl font-black tracking-tighter uppercase">Admin Vault</h2>
-                    <p class="text-[10px] opacity-50 font-black uppercase tracking-[0.4em]">Rahasiakan PIN!</p>
+            <!-- VIEW: TOOLS (Spinning Wheel & Randomizer) -->
+            <section v-if="currentTab === 'tools'" class="space-y-10">
+                <div class="flex justify-between items-end">
+                    <h2 class="text-3xl font-black">Class <span class="text-emerald-600">Tools</span></h2>
+                    <button @click="resetTools" class="text-[9px] font-black uppercase tracking-widest bg-slate-200 text-slate-600 p-2 px-5 rounded-full hover:bg-slate-300">Reset All</button>
                 </div>
-                <input v-model="pinInput" type="password" maxlength="6" class="w-full bg-white text-slate-900 border-4 border-emerald-500/10 rounded-[2rem] p-6 text-center text-4xl tracking-[0.5em] focus:outline-none focus:border-emerald-600 shadow-2xl transition-all" placeholder="••••••">
-                <button @click="verifyPin" :class="{'btn-disabled': isCoolingDown}" class="w-full bg-emerald-700 text-white p-6 rounded-[2rem] font-black tracking-widest btn-interact shadow-xl shadow-emerald-700/30 uppercase text-sm">Buka Akses</button>
-                <div v-if="authError" class="text-red-500 text-[10px] font-black uppercase tracking-widest">{{ authError }}</div>
+                
+                <div class="glass p-8 rounded-[3rem] text-center space-y-8 shadow-2xl relative overflow-hidden border border-emerald-500/10">
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <button v-for="f in ['Campur', 'Laki-laki', 'Perempuan']" @click="setWheelFilter(f)" :class="wheelFilter === f ? 'bg-emerald-600 text-white' : 'bg-white dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-white/10'" class="p-2 px-6 rounded-full text-[10px] font-black transition-all">{{ f }}</button>
+                    </div>
+
+                    <div class="relative py-10">
+                        <div class="wheel-pointer"></div>
+                        <div class="wheel-container" :style="{ transform: `rotate(${wheelRotation}deg)` }">
+                            <div v-for="(s, i) in wheelPool" :key="s.noAbsen" :style="wheelSegmentStyle(i)" class="absolute inset-0 flex items-start justify-center pt-10 text-[8px] font-black uppercase origin-bottom">
+                                <span class="rotate-[-90deg] translate-y-4">{{ s.name.split(' ')[0] }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-center gap-6 py-4 border-t border-emerald-500/10">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" v-model="removeAfterSpin" class="w-5 h-5 rounded accent-emerald-600">
+                            <span class="text-[10px] font-black uppercase tracking-widest opacity-60">Hapus Pemenang</span>
+                        </label>
+                        <button @click="resetWheelPool" class="text-[10px] font-black text-emerald-600 hover:underline uppercase">Reset Daftar ({{ wheelPool.length }})</button>
+                    </div>
+
+                    <button @click="spinWheel" :disabled="isSpinning || wheelPool.length === 0" class="w-full bg-emerald-700 text-white p-5 rounded-[2rem] font-black tracking-widest btn-interact uppercase shadow-xl">Putar Roda!</button>
+                    
+                    <!-- Winner Modal -->
+                    <div v-if="wheelWinner" class="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-emerald-950/80 backdrop-blur-md">
+                        <div v-for="i in 15" :key="i" class="confetti" :style="{ left: Math.random() * 100 + 'vw', backgroundColor: i%2===0?'#d4af37':'#065f46', animationDelay: Math.random() * 2 + 's' }"></div>
+                        <div class="winner-pop glass bg-white dark:bg-slate-900 p-12 rounded-[4rem] text-center shadow-2xl border-4 border-emerald-500/30 space-y-6 max-w-sm w-full">
+                            <h4 class="text-xs font-black uppercase tracking-[0.4em] text-emerald-600">Pemenang!</h4>
+                            <div class="aspect-square w-32 h-32 mx-auto rounded-full border-4 border-emerald-500 p-1 bg-white overflow-hidden shadow-xl">
+                                <img :src="getWinnerPhoto()" class="w-full h-full object-cover rounded-full">
+                            </div>
+                            <h2 class="text-3xl font-black uppercase tracking-tighter text-slate-900 dark:text-white">{{ wheelWinner }}</h2>
+                            <button @click="wheelWinner = null" class="w-full bg-emerald-600 text-white p-4 rounded-3xl font-black uppercase tracking-widest shadow-lg">Lanjut</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RANDOMIZER -->
+                <div class="glass p-8 rounded-[3rem] space-y-6 shadow-2xl border border-emerald-500/10">
+                    <h3 class="font-black uppercase tracking-widest text-xs text-emerald-700 text-center">Group Randomizer</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <select v-model="groupFilter" class="p-4 rounded-2xl input-admin font-bold text-xs outline-none">
+                            <option value="Campur">Campur</option>
+                            <option value="L">Laki-laki saja</option>
+                            <option value="P">Perempuan saja</option>
+                        </select>
+                        <select v-model="groupCount" class="p-4 rounded-2xl input-admin font-bold text-xs outline-none">
+                            <option value="2">2 Kelompok</option>
+                            <option value="4">4 Kelompok</option>
+                            <option value="8">8 Kelompok</option>
+                            <option v-if="groupFilter === 'Campur'" value="16">16 Kelompok</option>
+                        </select>
+                    </div>
+                    <button @click="generateGroups" class="w-full bg-emerald-800 text-white p-4 rounded-2xl font-black tracking-widest btn-interact uppercase shadow-lg">Acak Sekarang!</button>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                        <div v-for="(group, idx) in generatedGroups" :key="idx" class="p-6 bg-white dark:bg-slate-800 rounded-[2.5rem] border border-emerald-500/10 shadow-sm transition-all hover:translate-x-1">
+                            <h4 class="font-black text-emerald-600 uppercase text-[10px] mb-4">Kelompok {{ idx + 1 }}</h4>
+                            <div class="space-y-2">
+                                <p v-for="m in group" :key="m.noAbsen" class="text-[11px] font-bold opacity-80 flex items-center gap-2">
+                                    <span class="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-700 text-[8px] flex items-center justify-center font-black">{{ m.noAbsen }}</span>
+                                    {{ m.name }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
-            <!-- VIEW: ADMIN DASHBOARD -->
+            <!-- OTHER VIEWS (UANG KAS, CHAT, ADMIN) - Simplified Layout -->
+            <section v-if="currentTab === 'kas'" class="space-y-6">
+                 <div class="flex justify-between items-center">
+                    <h2 class="text-3xl font-black">Uang <span class="text-emerald-600">Kas</span></h2>
+                    <button v-if="cashTransactions.length > 0" @click="exportCashReport" class="text-[9px] font-black bg-emerald-600 text-white p-2 px-4 rounded-full uppercase">Export CSV</button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="glass p-6 rounded-[2rem] border-l-8 border-emerald-600 shadow-xl">
+                        <div class="text-[10px] font-black opacity-50 uppercase tracking-widest">Total Saldo</div>
+                        <div class="text-2xl font-black text-emerald-700 dark:text-emerald-400">Rp {{ formatNumber(cashBalance.total) }}</div>
+                    </div>
+                </div>
+                <!-- Transactions List Kotak-Kotak -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div v-for="t in cashTransactions" :key="t.id" class="glass p-4 rounded-[2rem] flex justify-between items-center shadow-sm border border-emerald-500/5">
+                        <div class="flex flex-col">
+                            <span class="font-black text-[9px] uppercase" :class="t.type === 'in' ? 'text-blue-600' : 'text-red-600'">{{ t.type === 'in' ? 'Masuk' : 'Keluar' }}</span>
+                            <span class="font-bold text-xs">{{ t.note }}</span>
+                            <span class="text-[8px] opacity-40 uppercase">{{ t.date }}</span>
+                        </div>
+                        <div class="font-black text-sm" :class="t.type === 'in' ? 'text-blue-600' : 'text-red-600'">
+                            {{ t.type === 'in' ? '+' : '-' }} {{ formatNumber(t.amount) }}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section v-if="currentTab === 'chat'" class="space-y-6">
+                <h2 class="text-3xl font-black">Secret <span class="text-emerald-600">Wall</span></h2>
+                <div class="glass p-6 rounded-[2.5rem] shadow-2xl space-y-4">
+                    <textarea v-model="newMessage" rows="3" placeholder="Tulis sesuatu secara anonim... (Filter Aktif!)" class="w-full p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none focus:ring-4 ring-emerald-500/10 text-sm font-medium resize-none shadow-inner"></textarea>
+                    <button @click="addMessage" class="w-full bg-emerald-700 text-white p-4 rounded-2xl font-black tracking-widest btn-interact uppercase shadow-lg">Kirim Pesan</button>
+                </div>
+                <div class="space-y-4">
+                    <div v-for="(m, msgIdx) in anonymousMessages" :key="m.id" class="glass p-6 rounded-[2rem] shadow-md border-l-4 border-emerald-600 relative">
+                        <div class="text-sm font-medium leading-relaxed italic text-slate-800 dark:text-slate-200">"{{ m.text }}"</div>
+                        <div class="mt-4 flex flex-wrap items-center gap-2">
+                            <button v-for="(count, emoji) in m.reactions" :key="emoji" @click="reactToMessage(msgIdx, emoji)" class="flex items-center gap-1.5 px-3 py-1 bg-white/50 dark:bg-slate-800/50 rounded-full border border-emerald-500/20 hover:border-emerald-500 transition-all">
+                                <span class="text-sm">{{ emoji }}</span>
+                                <span class="text-[10px] font-black opacity-60">{{ count }}</span>
+                            </button>
+                            <div class="flex gap-2 ml-auto">
+                                <button v-for="e in ['❤️', '😂', '👍', '🔥', '🙏']" @click="reactToMessage(msgIdx, e)" class="opacity-40 hover:opacity-100 hover:scale-125 transition-all text-sm">{{ e }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW: ADMIN DASHBOARD (LENGKAP) -->
+            <section v-if="currentTab === 'admin' && !isAdmin" class="max-w-sm mx-auto py-24 text-center space-y-8">
+                <i class="ph-fill ph-lock-key text-8xl text-emerald-700 drop-shadow-lg"></i>
+                <h2 class="text-3xl font-black uppercase tracking-tighter">Admin Vault</h2>
+                <input v-model="pinInput" type="password" maxlength="6" class="w-full bg-white text-slate-900 border-4 border-emerald-500/10 rounded-[2rem] p-6 text-center text-4xl tracking-[0.5em] focus:outline-none focus:border-emerald-600 shadow-2xl transition-all" placeholder="••••••">
+                <button @click="verifyPin" class="w-full bg-emerald-700 text-white p-6 rounded-[2rem] font-black tracking-widest btn-interact shadow-xl uppercase text-sm">Masuk</button>
+            </section>
+
             <section v-if="currentTab === 'admin' && isAdmin" class="space-y-8 animate-in slide-in-from-bottom-10 duration-500">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-3xl font-black">Admin <span class="text-emerald-600">Panel</span></h2>
-                    <button @click="logout" class="text-[10px] bg-red-500/10 text-red-600 p-2 px-6 rounded-full font-black border border-red-500/20 tracking-widest uppercase hover:bg-red-600 hover:text-white transition-all">Logout</button>
+                    <h2 class="text-3xl font-black">Panel <span class="text-emerald-600">Kendali</span></h2>
+                    <button @click="logout" class="text-[10px] bg-red-600 text-white p-2 px-6 rounded-full font-black tracking-widest uppercase">Logout</button>
                 </div>
 
                 <div class="flex gap-2 overflow-x-auto pb-4 no-scrollbar">
                     <button v-for="t in adminTabs" @click="adminSubTab = t.id" :class="subTabClass(t.id)">{{ t.label }}</button>
                 </div>
 
-                <!-- Admin Action: Students (With Absen) -->
-                <div v-if="adminSubTab === 'students'" class="glass p-8 rounded-[3rem] space-y-6 shadow-2xl">
-                    <h3 class="font-black text-emerald-700 uppercase text-xs tracking-widest border-l-4 border-emerald-700 pl-4">Tambah Siswa</h3>
-                    <div class="grid grid-cols-4 gap-3">
-                        <input v-model.number="newStudent.noAbsen" type="number" placeholder="No" class="p-5 rounded-2xl input-admin font-bold text-sm outline-none col-span-1">
-                        <input v-model="newStudent.name" type="text" placeholder="Nama Lengkap" class="p-5 rounded-2xl input-admin font-bold text-sm outline-none col-span-3">
-                    </div>
-                    <input v-model="newStudent.photo" type="text" placeholder="URL Foto (https://...)" class="w-full p-5 rounded-2xl input-admin font-bold text-sm outline-none">
-                    <button @click="addStudent" class="w-full bg-emerald-700 text-white p-5 rounded-2xl font-black tracking-widest btn-interact uppercase shadow-lg">Simpan</button>
+                <!-- ADMIN FORMS: ALL OPERATIONAL -->
+                <div class="glass p-8 rounded-[3rem] space-y-6 shadow-2xl border border-emerald-500/10">
                     
-                    <div class="space-y-2 mt-8">
-                        <div v-for="(s, i) in sortedStudents" class="flex justify-between items-center p-4 bg-white rounded-2xl text-[11px] shadow-sm border border-slate-100">
-                            <span><b class="text-emerald-700 mr-2">{{ s.noAbsen }}.</b> {{ s.name }}</span>
-                            <button @click="deleteStudent(s.noAbsen)" class="text-red-500 p-2"><i class="ph-bold ph-trash-simple"></i></button>
+                    <!-- Form: Siswa -->
+                    <div v-if="adminSubTab === 'students'" class="space-y-4">
+                        <h3 class="font-black uppercase text-xs text-emerald-700 border-l-4 border-emerald-700 pl-4 mb-4">Input Siswa</h3>
+                        <div class="grid grid-cols-4 gap-3">
+                            <input v-model.number="newStudent.noAbsen" type="number" placeholder="Absen" class="p-4 rounded-2xl input-admin font-bold text-sm col-span-1 shadow-sm">
+                            <input v-model="newStudent.name" type="text" placeholder="Nama Lengkap" class="p-4 rounded-2xl input-admin font-bold text-sm col-span-3 shadow-sm">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <select v-model="newStudent.gender" class="p-4 rounded-2xl input-admin font-bold text-sm outline-none">
+                                <option value="L">Laki-laki</option>
+                                <option value="P">Perempuan</option>
+                            </select>
+                            <input v-model="newStudent.photo" type="text" placeholder="Link URL Foto" class="p-4 rounded-2xl input-admin font-bold text-sm">
+                        </div>
+                        <button @click="addStudent" class="w-full bg-emerald-700 text-white p-4 rounded-2xl font-black uppercase shadow-lg">Simpan Siswa</button>
+                        <div class="space-y-2 mt-8">
+                            <div v-for="s in sortedStudents" :key="s.noAbsen" class="flex justify-between items-center p-3 bg-white rounded-2xl text-[10px] shadow-sm border border-slate-100">
+                                <span><b>{{ s.noAbsen }}.</b> {{ s.name }}</span>
+                                <button @click="deleteStudent(s.noAbsen)" class="text-red-500 p-2"><i class="ph-bold ph-trash-simple"></i></button>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Other Admin Sub-tabs (Simplified Content) -->
-                <div v-if="adminSubTab === 'structure'" class="glass p-8 rounded-[3rem] space-y-4 shadow-2xl">
-                    <h3 class="font-black text-emerald-700 uppercase text-xs tracking-widest border-l-4 border-emerald-700 pl-4">Update Struktur</h3>
-                    <input v-model="newMember.role" type="text" placeholder="Jabatan" class="w-full p-5 rounded-2xl input-admin font-bold text-sm outline-none">
-                    <input v-model="newMember.name" type="text" placeholder="Nama" class="w-full p-5 rounded-2xl input-admin font-bold text-sm outline-none">
-                    <input v-model="newMember.photo" type="text" placeholder="URL Foto" class="w-full p-5 rounded-2xl input-admin font-bold text-sm outline-none">
-                    <button @click="addStructure" class="w-full bg-emerald-700 text-white p-5 rounded-2xl font-black tracking-widest btn-interact uppercase shadow-lg">Simpan</button>
-                </div>
+                    <!-- Form: Struktur -->
+                    <div v-if="adminSubTab === 'structure'" class="space-y-4">
+                        <h3 class="font-black uppercase text-xs text-emerald-700 border-l-4 border-emerald-700 pl-4 mb-4">Update Struktur</h3>
+                        <select v-model="newMember.role" class="w-full p-4 rounded-2xl input-admin font-bold text-sm">
+                            <option value="Wali Kelas">Wali Kelas</option>
+                            <option value="Ketua Kelas">Ketua Kelas</option>
+                            <option value="Wakil Ketua">Wakil Ketua</option>
+                            <option value="Bendahara">Bendahara</option>
+                            <option value="Sekretaris">Sekretaris</option>
+                            <option value="Sie Keamanan">Sie Keamanan</option>
+                            <option value="Sie Kebersihan">Sie Kebersihan</option>
+                            <option value="Sie Kerohanian">Sie Kerohanian</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                        <input v-model="newMember.name" type="text" placeholder="Nama Personil" class="w-full p-4 rounded-2xl input-admin font-bold text-sm">
+                        <input v-model="newMember.photo" type="text" placeholder="Link URL Foto" class="w-full p-4 rounded-2xl input-admin font-bold text-sm">
+                        <button @click="addStructure" class="w-full bg-emerald-700 text-white p-4 rounded-2xl font-black uppercase shadow-lg">Simpan Jabatan</button>
+                        <div class="space-y-2 mt-4">
+                            <div v-for="(m, i) in structure" :key="i" class="flex justify-between items-center p-3 bg-white rounded-2xl text-[10px] shadow-sm">
+                                <span><b>[{{ m.role }}]</b> {{ m.name }}</span>
+                                <button @click="deleteStructure(i)" class="text-red-500 p-2"><i class="ph-bold ph-trash-simple"></i></button>
+                            </div>
+                        </div>
+                    </div>
 
-                <div v-if="adminSubTab === 'schedule'" class="glass p-8 rounded-[3rem] space-y-4 shadow-2xl">
-                    <h3 class="font-black text-emerald-700 uppercase text-xs tracking-widest border-l-4 border-emerald-700 pl-4">Input Jadwal</h3>
-                    <select v-model="newSchedule.day" class="w-full p-5 rounded-2xl input-admin font-bold text-sm outline-none">
-                        <option v-for="d in days" :value="d">{{ d }}</option>
-                    </select>
-                    <input v-model="newSchedule.time" type="text" placeholder="Jam" class="w-full p-5 rounded-2xl input-admin font-bold text-sm outline-none">
-                    <input v-model="newSchedule.subject" type="text" placeholder="Mapel" class="w-full p-5 rounded-2xl input-admin font-bold text-sm outline-none">
-                    <button @click="addSchedule" class="w-full bg-emerald-700 text-white p-5 rounded-2xl font-black tracking-widest btn-interact uppercase shadow-lg">Input</button>
-                </div>
+                    <!-- Form: Jadwal -->
+                    <div v-if="adminSubTab === 'schedule'" class="space-y-4">
+                         <h3 class="font-black uppercase text-xs text-emerald-700 border-l-4 border-emerald-700 pl-4 mb-4">Input Mata Pelajaran</h3>
+                         <div class="grid grid-cols-2 gap-3">
+                            <select v-model="newSchedule.day" class="p-4 rounded-2xl input-admin font-bold text-sm">
+                                <option v-for="d in days" :value="d">{{ d }}</option>
+                            </select>
+                            <input v-model="newSchedule.time" type="text" placeholder="07:00 - 08:30" class="p-4 rounded-2xl input-admin font-bold text-sm">
+                        </div>
+                        <input v-model="newSchedule.subject" type="text" placeholder="Nama Mata Pelajaran" class="w-full p-4 rounded-2xl input-admin font-bold text-sm">
+                        <button @click="addSchedule" class="w-full bg-emerald-700 text-white p-4 rounded-2xl font-black uppercase shadow-lg">Simpan Jadwal</button>
+                        <div class="space-y-2 mt-4">
+                            <div v-for="(s, i) in schedule" :key="i" class="flex justify-between items-center p-3 bg-white rounded-2xl text-[10px] shadow-sm">
+                                <span><b>{{ s.day }}</b> - {{ s.subject }}</span>
+                                <button @click="deleteSchedule(i)" class="text-red-500 p-2"><i class="ph-bold ph-trash-simple"></i></button>
+                            </div>
+                        </div>
+                    </div>
 
-                <div v-if="adminSubTab === 'piket'" class="glass p-8 rounded-[3rem] space-y-4 shadow-2xl">
-                    <h3 class="font-black text-emerald-700 uppercase text-xs tracking-widest border-l-4 border-emerald-700 pl-4">Input Piket</h3>
-                    <select v-model="newPiket.day" class="w-full p-5 rounded-2xl input-admin font-bold text-sm outline-none">
-                        <option v-for="d in days" :value="d">{{ d }}</option>
-                    </select>
-                    <input v-model="newPiket.name" type="text" placeholder="Nama Siswa" class="w-full p-5 rounded-2xl input-admin font-bold text-sm outline-none">
-                    <button @click="addPiket" class="w-full bg-emerald-700 text-white p-5 rounded-2xl font-black tracking-widest btn-interact uppercase shadow-lg">Input</button>
+                    <!-- Form: Piket -->
+                    <div v-if="adminSubTab === 'piket'" class="space-y-4">
+                        <h3 class="font-black uppercase text-xs text-emerald-700 border-l-4 border-emerald-700 pl-4 mb-4">Input Petugas Piket</h3>
+                        <div class="flex gap-3">
+                            <select v-model="newPiket.day" class="p-4 rounded-2xl input-admin font-bold text-sm flex-1">
+                                <option v-for="d in days" :value="d">{{ d }}</option>
+                            </select>
+                            <input v-model="newPiket.name" type="text" placeholder="Nama Siswa" class="p-4 rounded-2xl input-admin font-bold text-sm flex-[2]">
+                        </div>
+                        <button @click="addPiket" class="w-full bg-emerald-700 text-white p-4 rounded-2xl font-black uppercase shadow-lg">Tambah Petugas</button>
+                        <div class="space-y-2 mt-4">
+                            <div v-for="(p, i) in piket" :key="i" class="flex justify-between items-center p-3 bg-white rounded-2xl text-[10px] shadow-sm">
+                                <span><b>{{ p.day }}</b> - {{ p.name }}</span>
+                                <button @click="deletePiket(i)" class="text-red-500 p-2"><i class="ph-bold ph-trash-simple"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form: Kas & Event (Simplified) -->
+                    <div v-if="adminSubTab === 'kas'" class="space-y-4">
+                         <h3 class="font-black uppercase text-xs text-emerald-700 border-l-4 border-emerald-700 pl-4 mb-4">Input Keuangan</h3>
+                         <div class="grid grid-cols-2 gap-3">
+                            <select v-model="newKas.type" class="p-4 rounded-2xl input-admin font-bold text-sm">
+                                <option value="in">Uang Masuk (+)</option>
+                                <option value="out">Uang Keluar (-)</option>
+                            </select>
+                            <input v-model.number="newKas.amount" type="number" placeholder="Nominal" class="p-4 rounded-2xl input-admin font-bold text-sm">
+                        </div>
+                        <input v-model="newKas.note" type="text" placeholder="Catatan Transaksi" class="w-full p-4 rounded-2xl input-admin font-bold text-sm">
+                        <button @click="addTransaction" class="w-full bg-emerald-700 text-white p-4 rounded-2xl font-black uppercase shadow-lg">Simpan Kas</button>
+                    </div>
+
+                    <div v-if="adminSubTab === 'settings'" class="space-y-4 text-center py-6">
+                        <h3 class="font-black uppercase text-xs text-emerald-700 mb-6">Sistem Naik Kelas</h3>
+                        <div class="text-3xl font-black text-emerald-900 uppercase mb-6">{{ classInfo.name }}</div>
+                        <button @click="promoteClass" class="bg-emerald-700 text-white p-5 rounded-3xl font-black uppercase shadow-lg btn-interact">Naik Kelas (+1)</button>
+                    </div>
+
                 </div>
             </section>
+
         </main>
 
         <!-- FOOTER -->
-        <footer class="mt-20 py-16 text-center opacity-40 text-[9px] space-y-2 pb-44 border-t border-emerald-500/10">
-            <p class="font-black tracking-[0.3em] uppercase">BHAWARA 8G • SMPN 8 YOGYAKARTA</p>
-            <p>Platform Architecture by <span class="font-bold text-emerald-700">Ruxxi (2026)</span></p>
-            <div class="font-arabic text-3xl mt-8 tracking-widest text-emerald-800">بِسْمِ اللهِ تَوَكَّلْتُ عَلَى اللهِ</div>
+        <footer class="mt-20 py-16 text-center opacity-30 text-[9px] space-y-2 pb-44 border-t border-emerald-500/10 uppercase font-black tracking-widest">
+            <p>BHAWARA {{ classInfo.name }} • ANGKATAN 64 • SMPN 8 YOGYAKARTA</p>
+            <p>Designed by <span class="font-bold text-emerald-700">Ruxxi (2026)</span></p>
+            <div class="font-arabic text-3xl mt-8 tracking-widest text-emerald-800">تَفَاؤَلُوا بِالْخَيْرِ تَجِدُوهُ</div>
         </footer>
 
-        <!-- TOAST -->
-        <div v-if="toast.show" class="fixed top-12 left-1/2 -translate-x-1/2 z-[100] bg-emerald-950 text-white px-10 py-5 rounded-[2.5rem] shadow-2xl border border-emerald-500 flex items-center gap-4 animate-in fade-in zoom-in duration-300">
-            <i class="ph-bold ph-check-circle text-2xl text-emerald-400"></i>
+        <!-- TOAST SYSTEM -->
+        <div v-if="toast.show" class="fixed top-12 left-1/2 -translate-x-1/2 z-[200] bg-emerald-950 text-white px-10 py-5 rounded-[2.5rem] shadow-2xl border border-emerald-500 flex items-center gap-4 animate-in fade-in zoom-in duration-300">
+            <i class="ph-bold ph-check-circle text-2xl" :class="toast.isError ? 'text-red-500' : 'text-emerald-400'"></i>
             <span class="font-black text-[11px] tracking-widest uppercase">{{ toast.message }}</span>
         </div>
     </div>
 
     <script>
-        const { createApp, ref, computed, onMounted, onUnmounted } = Vue;
+        const { createApp, ref, computed, onMounted } = Vue;
 
         createApp({
             setup() {
-                // Settings
+                // Persistent Store Version 8 (Fresh Start)
+                const storageKey = (key) => `bh_v8_${key}`;
+                
+                // Config & State
                 const isDarkMode = ref(localStorage.getItem('theme') === 'dark' || false);
                 const currentTab = ref('home');
                 const adminSubTab = ref('students');
                 const isAdmin = ref(sessionStorage.getItem('isAdmin') === 'true');
                 const digitalTime = ref('');
-                const isCoolingDown = ref(false);
                 
-                // Databases (Version 4 - Fully Empty)
-                const students = ref(JSON.parse(localStorage.getItem('bh_v4_students') || '[]'));
-                const schedule = ref(JSON.parse(localStorage.getItem('bh_v4_schedule') || '[]'));
-                const events = ref(JSON.parse(localStorage.getItem('bh_v4_events') || '[]'));
-                const piket = ref(JSON.parse(localStorage.getItem('bh_v4_piket') || '[]'));
-                const structure = ref(JSON.parse(localStorage.getItem('bh_v4_structure') || '[]'));
-                
-                // Constraints
+                // Databases
+                const classInfo = ref(JSON.parse(localStorage.getItem(storageKey('config')) || '{"name": "8G"}'));
+                const students = ref(JSON.parse(localStorage.getItem(storageKey('students')) || '[]'));
+                const structure = ref(JSON.parse(localStorage.getItem(storageKey('structure')) || '[]'));
+                const schedule = ref(JSON.parse(localStorage.getItem(storageKey('schedule')) || '[]'));
+                const piket = ref(JSON.parse(localStorage.getItem(storageKey('piket')) || '[]'));
+                const events = ref(JSON.parse(localStorage.getItem(storageKey('events')) || '[]'));
+                const cashTransactions = ref(JSON.parse(localStorage.getItem(storageKey('kas')) || '[]'));
+                const anonymousMessages = ref(JSON.parse(localStorage.getItem(storageKey('chats')) || '[]'));
+
                 const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
                 const adminTabs = [
                     { id: 'students', label: 'Siswa' },
                     { id: 'structure', label: 'Struktur' },
                     { id: 'schedule', label: 'Jadwal' },
-                    { id: 'piket', label: 'Piket' }
+                    { id: 'piket', label: 'Piket' },
+                    { id: 'kas', label: 'Kas' },
+                    { id: 'chat', label: 'Moderasi' },
+                    { id: 'settings', label: 'Sistem' }
                 ];
 
-                // Forms
+                // Profanity Filter
+                const forbiddenWords = ['anjing', 'babi', 'monyet', 'bangsat', 'kontol', 'memek', 'jembut', 'asu', 'perek', 'lonte', 'bajingan', 'tolol', 'goblok', 'idiot', 'fuck', 'shit', 'ngentot', 'anf', 'tol', 'pekok'];
+
+                // Forms & Tools
                 const pinInput = ref('');
-                const authError = ref('');
-                const newStudent = ref({ noAbsen: null, name: '', photo: '' });
+                const newMessage = ref('');
+                const newKas = ref({ type: 'in', amount: null, note: '' });
+                const newStudent = ref({ noAbsen: null, name: '', photo: '', gender: 'L' });
                 const newSchedule = ref({ day: 'Senin', time: '', subject: '' });
-                const newEvent = ref({ title: '', date: '', location: '' });
                 const newPiket = ref({ day: 'Senin', name: '' });
-                const newMember = ref({ role: '', name: '', photo: '', type: 'Utama' });
-                const toast = ref({ show: false, message: '' });
+                const newMember = ref({ role: 'Wali Kelas', name: '', photo: '' });
+                const newEvent = ref({ title: '', date: '', location: '' });
+                const toast = ref({ show: false, message: '', isError: false });
+
+                const wheelPool = ref([]);
+                const wheelRotation = ref(0);
+                const wheelFilter = ref('Campur');
+                const wheelWinner = ref(null);
+                const isSpinning = ref(false);
+                const removeAfterSpin = ref(false);
+                const groupFilter = ref('Campur');
+                const groupCount = ref('2');
+                const generatedGroups = ref([]);
 
                 const SECRET_PIN = "147258"; 
 
-                // Functions
+                // Basic Logic
                 const toggleDarkMode = () => {
                     isDarkMode.value = !isDarkMode.value;
                     localStorage.setItem('theme', isDarkMode.value ? 'dark' : 'light');
                 };
-
-                const updateTime = () => {
-                    const now = new Date();
-                    digitalTime.value = now.toLocaleTimeString('id-ID', { hour12: false });
-                };
-
-                // Navigation Style (Black icons for light mode)
-                const tabClass = (tab) => {
-                    const base = `p-4 px-6 rounded-2xl transition-all btn-interact shrink-0 `;
-                    if (currentTab.value === tab) return base + `nav-icon-active shadow-xl scale-110`;
-                    return base + `nav-icon-inactive hover:scale-110`;
-                };
-
-                const subTabClass = (tab) => {
-                    return `flex-none p-4 px-8 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all border ${adminSubTab.value === tab ? 'bg-emerald-700 text-white border-emerald-600 shadow-xl' : 'bg-white text-slate-400 border-slate-200'}`;
-                };
-
+                const updateTime = () => digitalTime.value = new Date().toLocaleTimeString('id-ID', { hour12: false });
+                const tabClass = (tab) => `p-4 px-5 rounded-2xl transition-all btn-interact shrink-0 ${currentTab.value === tab ? 'bg-emerald-600 text-white shadow-xl scale-110' : 'nav-icon-inactive hover:scale-110'}`;
+                const subTabClass = (tab) => `flex-none p-3 px-6 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all border ${adminSubTab.value === tab ? 'bg-emerald-700 text-white border-emerald-600 shadow-lg' : 'bg-white text-slate-400 border-slate-200'}`;
+                
                 const verifyPin = () => {
-                    if (isCoolingDown.value) return;
                     if (pinInput.value === SECRET_PIN) {
                         isAdmin.value = true;
                         sessionStorage.setItem('isAdmin', 'true');
-                        authError.value = '';
-                        showToast("AKSES DITERIMA");
+                        showToast("VAULT UNLOCKED");
                     } else {
-                        authError.value = "PIN SALAH!";
-                        isCoolingDown.value = true;
-                        setTimeout(() => isCoolingDown.value = false, 2500);
+                        showToast("PIN SALAH!", true);
                         pinInput.value = "";
                     }
                 };
+                const logout = () => { isAdmin.value = false; sessionStorage.removeItem('isAdmin'); };
+                const saveData = (key, val) => localStorage.setItem(storageKey(key), JSON.stringify(val));
 
-                const logout = () => {
-                    isAdmin.value = false;
-                    sessionStorage.removeItem('isAdmin');
-                };
-
-                const saveData = (key, val) => localStorage.setItem(key, JSON.stringify(val));
-
-                // Computed: Sort Students by No Absen
-                const sortedStudents = computed(() => {
-                    return [...students.value].sort((a, b) => a.noAbsen - b.noAbsen);
-                });
-
-                // Actions
+                // Actions: Students
+                const sortedStudents = computed(() => [...students.value].sort((a, b) => a.noAbsen - b.noAbsen));
                 const addStudent = () => {
                     if (!newStudent.value.name || !newStudent.value.noAbsen) return;
-                    // Prevent duplicate absen
-                    if (students.value.some(s => s.noAbsen === newStudent.value.noAbsen)) {
-                        showToast("No Absen Sudah Ada!");
-                        return;
-                    }
                     students.value.push({...newStudent.value});
-                    saveData('bh_v4_students', students.value);
-                    newStudent.value = { noAbsen: null, name: '', photo: '' };
+                    saveData('students', students.value);
+                    newStudent.value = { noAbsen: null, name: '', photo: '', gender: 'L' };
                     showToast("Siswa Tersimpan");
+                    resetWheelPool();
                 };
+                const deleteStudent = (no) => { students.value = students.value.filter(s => s.noAbsen !== no); saveData('students', students.value); resetWheelPool(); };
 
-                const deleteStudent = (noAbsen) => {
-                    students.value = students.value.filter(s => s.noAbsen !== noAbsen);
-                    saveData('bh_v4_students', students.value);
-                };
-
+                // Actions: Structure (The Requested hierarchy)
+                const getStructureByRole = (role) => structure.value.find(m => m.role === role);
+                const otherStructure = computed(() => structure.value.filter(m => !['Wali Kelas', 'Ketua Kelas', 'Wakil Ketua'].includes(m.role)));
                 const addStructure = () => {
-                    if (!newMember.value.name || !newMember.value.role) return;
-                    structure.value.push({...newMember.value});
-                    saveData('bh_v4_structure', structure.value);
-                    newMember.value = { role: '', name: '', photo: '', type: 'Utama' };
-                    showToast("Struktur Update");
+                    if (!newMember.value.name) return;
+                    // Replace existing if unique role like Wali Kelas
+                    if (['Wali Kelas', 'Ketua Kelas', 'Wakil Ketua'].includes(newMember.value.role)) {
+                        structure.value = structure.value.filter(m => m.role !== newMember.value.role);
+                    }
+                    structure.value.push({...newMember.value, id: Date.now()});
+                    saveData('structure', structure.value);
+                    newMember.value = { role: 'Wali Kelas', name: '', photo: '' };
+                    showToast("Jabatan Terupdate");
                 };
-                const getRoleGroup = (type) => structure.value.filter(m => m.type === type);
+                const deleteStructure = (id) => { structure.value = structure.value.filter(m => m.id !== id); saveData('structure', structure.value); };
 
+                // Actions: Schedule & Piket
                 const addSchedule = () => {
                     if (!newSchedule.value.subject) return;
                     schedule.value.push({...newSchedule.value});
-                    saveData('bh_v4_schedule', schedule.value);
+                    saveData('schedule', schedule.value);
                     newSchedule.value = { day: 'Senin', time: '', subject: '' };
-                    showToast("Jadwal Input");
+                    showToast("Jadwal Tersimpan");
                 };
+                const deleteSchedule = (i) => { schedule.value.splice(i, 1); saveData('schedule', schedule.value); };
                 const getScheduleForDay = (day) => schedule.value.filter(s => s.day === day);
 
                 const addPiket = () => {
                     if (!newPiket.value.name) return;
                     piket.value.push({...newPiket.value});
-                    saveData('bh_v4_piket', piket.value);
+                    saveData('piket', piket.value);
                     newPiket.value.name = '';
-                    showToast("Piket Input");
+                    showToast("Piket Tersimpan");
                 };
+                const deletePiket = (i) => { piket.value.splice(i, 1); saveData('piket', piket.value); };
                 const getPiketForDay = (day) => piket.value.filter(p => p.day === day).map(p => p.name);
 
-                const showToast = (msg) => {
-                    toast.value = { show: true, message: msg };
-                    setTimeout(() => toast.value.show = false, 3000);
+                // Actions: Finance & Chat
+                const cashBalance = computed(() => {
+                    let income = cashTransactions.value.filter(t=>t.type==='in').reduce((a,b)=>a+b.amount,0);
+                    let expense = cashTransactions.value.filter(t=>t.type==='out').reduce((a,b)=>a+b.amount,0);
+                    return { income, expense, total: income - expense };
+                });
+                const addTransaction = () => {
+                    if (!newKas.value.amount || !newKas.value.note) return;
+                    cashTransactions.value.unshift({ id: Date.now(), ...newKas.value, date: new Date().toLocaleDateString('id-ID') });
+                    saveData('kas', cashTransactions.value);
+                    newKas.value = { type: 'in', amount: null, note: '' };
+                    showToast("Kas Tercatat");
+                };
+                const deleteTransaction = (i) => { cashTransactions.value.splice(i,1); saveData('kas', cashTransactions.value); };
+
+                const addMessage = () => {
+                    if (!newMessage.value.trim()) return;
+                    const text = newMessage.value.toLowerCase();
+                    if (forbiddenWords.some(w => text.includes(w))) return showToast("KONTEN DIBLOKIR", true);
+                    anonymousMessages.value.unshift({ id: Date.now(), text: newMessage.value, reactions: {'❤️':0,'😂':0,'👍':0,'🔥':0,'🙏':0}, timestamp: new Date().toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'}) });
+                    saveData('chats', anonymousMessages.value);
+                    newMessage.value = "";
+                };
+                const reactToMessage = (idx, e) => { anonymousMessages.value[idx].reactions[e]++; saveData('chats', anonymousMessages.value); };
+
+                // Tools: Wheel Logic
+                const resetWheelPool = () => {
+                    let source = [...students.value];
+                    if (wheelFilter.value === 'Laki-laki') source = source.filter(s => s.gender === 'L');
+                    if (wheelFilter.value === 'Perempuan') source = source.filter(s => s.gender === 'P');
+                    wheelPool.value = source;
+                };
+                const setWheelFilter = (f) => { wheelFilter.value = f; resetWheelPool(); };
+                const wheelSegmentStyle = (idx) => {
+                    const total = wheelPool.value.length || 1;
+                    const rotate = (360 / total) * idx;
+                    return { transform: `rotate(${rotate}deg)`, height: '150px', width: `${300 * Math.PI / total}px`, backgroundColor: idx % 2 === 0 ? '#065f46' : '#d4af37', color: idx % 2 === 0 ? 'white' : 'black', clipPath: 'polygon(50% 100%, 0 0, 100% 0)' };
+                };
+                const spinWheel = () => {
+                    if (isSpinning.value || wheelPool.value.length === 0) return;
+                    isSpinning.value = true;
+                    wheelWinner.value = null;
+                    const randRotate = Math.floor(Math.random() * 360) + (360 * 5); 
+                    wheelRotation.value += randRotate;
+                    setTimeout(() => {
+                        const actualDeg = wheelRotation.value % 360;
+                        const total = wheelPool.value.length;
+                        const winningIdx = Math.floor(((360 - actualDeg + (360/total/2)) % 360) / (360/total)) % total;
+                        const winner = wheelPool.value[winningIdx];
+                        wheelWinner.value = winner.name;
+                        isSpinning.value = false;
+                        if (removeAfterSpin.value) wheelPool.value.splice(winningIdx, 1);
+                    }, 4000);
+                };
+                const getWinnerPhoto = () => students.value.find(s => s.name === wheelWinner.value)?.photo || 'https://via.placeholder.com/150';
+                const generateGroups = () => {
+                    let pool = groupFilter.value === 'Campur' ? [...students.value] : students.value.filter(s => s.gender === groupFilter.value);
+                    if (pool.length === 0) return showToast("Siswa tidak ditemukan", true);
+                    pool.sort(() => Math.random() - 0.5);
+                    const n = parseInt(groupCount.value);
+                    const res = Array.from({ length: n }, () => []);
+                    pool.forEach((s, i) => res[i % n].push(s));
+                    generatedGroups.value = res;
+                    showToast("Kelompok Berhasil Diacak");
                 };
 
-                let timer;
+                const promoteClass = () => {
+                    const currentNum = parseInt(classInfo.value.name);
+                    if (!isNaN(currentNum)) { classInfo.value.name = (currentNum + 1) + 'G'; saveData('config', classInfo.value); showToast("Naik Kelas!"); }
+                };
+
+                // Helpers
+                const formatNumber = (n) => new Intl.NumberFormat('id-ID').format(n);
+                const showToast = (m, e = false) => { toast.value = { show: true, message: m, isError: e }; setTimeout(() => toast.value.show = false, 3000); };
+                
                 onMounted(() => {
                     updateTime();
-                    timer = setInterval(updateTime, 1000);
+                    setInterval(updateTime, 1000);
+                    resetWheelPool();
                 });
-                onUnmounted(() => clearInterval(timer));
 
                 return {
-                    isDarkMode, currentTab, adminSubTab, isAdmin, digitalTime,
-                    students, sortedStudents, schedule, events, piket, structure, days, adminTabs,
-                    pinInput, authError, newStudent, newSchedule, newEvent, newPiket, newMember, toast, isCoolingDown,
-                    toggleDarkMode, tabClass, subTabClass, verifyPin, logout,
-                    addStudent, deleteStudent, addStructure, getRoleGroup,
-                    addSchedule, getScheduleForDay, addPiket, getPiketForDay
+                    isDarkMode, currentTab, adminSubTab, isAdmin, digitalTime, classInfo,
+                    students, structure, schedule, piket, events, cashTransactions, anonymousMessages, days, adminTabs,
+                    pinInput, newMessage, newKas, newStudent, newSchedule, newPiket, newMember, newEvent, toast,
+                    wheelPool, wheelRotation, wheelFilter, wheelWinner, isSpinning, removeAfterSpin, groupFilter, groupCount, generatedGroups,
+                    toggleDarkMode, tabClass, subTabClass, verifyPin, logout, promoteClass,
+                    addStudent, deleteStudent, sortedStudents, getStructureByRole, otherStructure, addStructure, deleteStructure,
+                    addSchedule, deleteSchedule, getScheduleForDay, addPiket, deletePiket, getPiketForDay,
+                    cashBalance, addTransaction, deleteTransaction, addMessage, reactToMessage,
+                    setWheelFilter, resetWheelPool, spinWheel, wheelSegmentStyle, getWinnerPhoto, generateGroups, formatNumber
                 };
             }
         }).mount('#app');
