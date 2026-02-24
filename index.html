@@ -55,6 +55,14 @@
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--islamic-green); border-radius: 10px; }
+
+        [v-cloak] { display: none; }
+
+        /* Anti-DDoS / Button Cooldown Effect */
+        .btn-disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body :class="{ 'dark': isDarkMode }" class="bg-slate-50 text-slate-900 min-h-screen bg-pattern">
@@ -71,12 +79,11 @@
             </button>
         </nav>
 
-        <!-- MAIN CONTENT CONTAINER -->
+        <!-- MAIN CONTENT -->
         <main class="max-w-4xl mx-auto px-4 pt-10 pb-32">
             
             <!-- VIEW: HOME -->
             <section v-if="currentTab === 'home'" class="space-y-8 animate-in fade-in duration-700">
-                <!-- Header Card -->
                 <div class="text-center space-y-4">
                     <div class="inline-block p-2 px-6 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-semibold text-sm tracking-widest uppercase">
                         Angkatan 64 • SMPN 8 Yogyakarta
@@ -86,7 +93,6 @@
                     <p class="text-lg font-medium italic opacity-70">"Berkarakter, Bermutu"</p>
                 </div>
 
-                <!-- Digital Clock & Info -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="glass p-8 rounded-[2rem] text-center space-y-2 border-emerald-500/20 border-2">
                         <div class="text-4xl font-mono font-bold text-emerald-600 tracking-widest">{{ digitalTime }}</div>
@@ -102,14 +108,13 @@
                     </a>
                 </div>
 
-                <!-- Latest Event Banner -->
-                <div v-if="events.length > 0" class="relative overflow-hidden rounded-[2rem] bg-emerald-900 text-white p-8">
+                <div v-if="events.length > 0" class="relative overflow-hidden rounded-[2rem] bg-emerald-900 text-white p-8 shadow-xl">
                     <div class="relative z-10">
-                        <span class="bg-yellow-500 text-black text-[10px] font-bold px-2 py-1 rounded mb-4 inline-block">UPCOMING EVENT</span>
+                        <span class="bg-yellow-500 text-black text-[10px] font-bold px-2 py-1 rounded mb-4 inline-block tracking-tighter">UPCOMING EVENT</span>
                         <h3 class="text-2xl font-bold">{{ events[0].title }}</h3>
                         <p class="opacity-80">{{ events[0].date }} • {{ events[0].location }}</p>
                     </div>
-                    <i class="ph-bold ph-star text-9xl absolute -right-10 -bottom-10 opacity-10 animate-spin-slow"></i>
+                    <i class="ph-bold ph-star text-9xl absolute -right-10 -bottom-10 opacity-10"></i>
                 </div>
             </section>
 
@@ -122,15 +127,15 @@
                 
                 <div v-if="students.length === 0" class="text-center py-20 glass rounded-[2rem]">
                     <i class="ph-light ph-users-three text-6xl opacity-20"></i>
-                    <p class="mt-4 opacity-50">Belum ada data siswa. Admin perlu menambahkan.</p>
+                    <p class="mt-4 opacity-50">Belum ada data siswa.</p>
                 </div>
 
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    <div v-for="(student, index) in students" :key="index" class="glass p-4 rounded-3xl text-center group transition-all hover:-translate-y-2">
-                        <div class="aspect-square rounded-2xl bg-slate-200 dark:bg-slate-800 mb-4 overflow-hidden relative">
-                            <img :src="student.photo || 'https://via.placeholder.com/150'" class="w-full h-full object-cover">
+                    <div v-for="(student, index) in students" :key="index" class="glass p-4 rounded-3xl text-center group transition-all hover:-translate-y-2 shadow-sm">
+                        <div class="aspect-square rounded-2xl bg-slate-200 dark:bg-slate-800 mb-4 overflow-hidden relative border border-emerald-500/10">
+                            <img :src="student.photo || 'https://via.placeholder.com/300?text=No+Photo'" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/300?text=Invalid+URL'">
                         </div>
-                        <h3 class="font-bold text-sm truncate uppercase">{{ student.name }}</h3>
+                        <h3 class="font-bold text-sm truncate uppercase tracking-tight text-emerald-800 dark:text-emerald-400">{{ student.name }}</h3>
                     </div>
                 </div>
             </section>
@@ -138,114 +143,106 @@
             <!-- VIEW: SCHEDULE -->
             <section v-if="currentTab === 'schedule'" class="space-y-6">
                 <h2 class="text-3xl font-black">Jadwal <span class="text-emerald-600">Pelajaran</span></h2>
-                
                 <div class="space-y-4">
-                    <div v-for="day in days" :key="day" class="glass overflow-hidden rounded-3xl">
-                        <div class="bg-emerald-600 p-4 text-white font-bold flex justify-between">
+                    <div v-for="day in days" :key="day" class="glass overflow-hidden rounded-3xl border border-emerald-500/10">
+                        <div class="bg-emerald-600 p-4 text-white font-bold flex justify-between shadow-md">
                             <span>{{ day }}</span>
                             <i class="ph-bold ph-calendar-check"></i>
                         </div>
                         <div class="p-4 space-y-2">
-                            <div v-if="getScheduleForDay(day).length === 0" class="text-xs opacity-50 py-2">Belum ada jadwal.</div>
-                            <div v-for="item in getScheduleForDay(day)" class="flex justify-between items-center text-sm p-2 bg-slate-100 dark:bg-slate-800/50 rounded-xl">
-                                <span class="font-semibold">{{ item.subject }}</span>
-                                <span class="opacity-60 text-[10px]">{{ item.time }}</span>
+                            <div v-if="getScheduleForDay(day).length === 0" class="text-xs opacity-50 py-2">Belum ada jadwal hari {{ day }}.</div>
+                            <div v-for="item in getScheduleForDay(day)" class="flex justify-between items-center text-sm p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm">
+                                <span class="font-semibold text-emerald-900 dark:text-emerald-100">{{ item.subject }}</span>
+                                <span class="opacity-60 text-[10px] font-mono">{{ item.time }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- VIEW: ADMIN LOGIN (PIN) -->
+            <!-- VIEW: ADMIN LOGIN -->
             <section v-if="currentTab === 'admin' && !isAdmin" class="max-w-sm mx-auto py-20 text-center space-y-6">
                 <i class="ph-fill ph-lock-key-open text-6xl text-emerald-600"></i>
                 <h2 class="text-2xl font-bold">Admin Dashboard</h2>
-                <p class="text-sm opacity-60">Masukkan PIN Rahasia untuk mengakses fitur manajemen kelas.</p>
-                <div class="flex justify-center gap-2">
-                    <input v-model="pinInput" type="password" maxlength="6" class="w-full bg-white dark:bg-slate-800 border-2 border-emerald-500/20 rounded-2xl p-4 text-center text-2xl tracking-[1em] focus:outline-none focus:border-emerald-500 transition-all shadow-inner">
-                </div>
-                <button @click="verifyPin" class="w-full bg-emerald-600 text-white p-4 rounded-2xl font-bold btn-interact shadow-lg shadow-emerald-600/20">Buka Akses</button>
-                <div v-if="authError" class="text-red-500 text-xs font-bold animate-bounce">{{ authError }}</div>
+                <p class="text-sm opacity-60 italic">"Rahasiakan PIN!"</p>
+                <input v-model="pinInput" type="password" maxlength="6" class="w-full bg-white text-slate-900 border-2 border-emerald-500/20 rounded-2xl p-4 text-center text-2xl tracking-[1em] focus:outline-none focus:border-emerald-500 shadow-xl" placeholder="••••••">
+                <button @click="verifyPin" :class="{'btn-disabled': isCoolingDown}" class="w-full bg-emerald-600 text-white p-4 rounded-2xl font-bold btn-interact shadow-lg shadow-emerald-600/20">Masuk</button>
+                <div v-if="authError" class="text-red-500 text-xs font-bold">{{ authError }}</div>
             </section>
 
             <!-- VIEW: ADMIN DASHBOARD -->
             <section v-if="currentTab === 'admin' && isAdmin" class="space-y-8 animate-in slide-in-from-bottom-10 duration-500">
                 <div class="flex justify-between items-center">
                     <h2 class="text-3xl font-black">Admin <span class="text-emerald-600">Control</span></h2>
-                    <button @click="logout" class="text-xs bg-red-500/10 text-red-500 p-2 px-4 rounded-full font-bold">LOGOUT</button>
+                    <button @click="logout" class="text-xs bg-red-500/10 text-red-500 p-2 px-4 rounded-full font-bold">KELUAR</button>
                 </div>
 
-                <!-- Management Tabs -->
-                <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-                    <button @click="adminSubTab = 'students'" :class="subTabClass('students')">Siswa</button>
-                    <button @click="adminSubTab = 'schedule'" :class="subTabClass('schedule')">Jadwal</button>
-                    <button @click="adminSubTab = 'events'" :class="subTabClass('events')">Event</button>
+                <div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+                    <button @click="adminSubTab = 'students'" :class="subTabClass('students')">Kelola Siswa</button>
+                    <button @click="adminSubTab = 'schedule'" :class="subTabClass('schedule')">Kelola Jadwal</button>
+                    <button @click="adminSubTab = 'events'" :class="subTabClass('events')">Kelola Event</button>
                 </div>
 
-                <!-- Admin Action: Add Student -->
+                <!-- Admin Action: Add Student (URL Based) -->
                 <div v-if="adminSubTab === 'students'" class="glass p-6 rounded-[2rem] space-y-4">
-                    <h3 class="font-bold border-l-4 border-emerald-500 pl-3">Tambah Siswa Baru</h3>
+                    <h3 class="font-bold text-emerald-600 border-l-4 border-emerald-600 pl-3">Tambah Siswa</h3>
                     <div class="space-y-4">
-                        <input v-model="newStudent.name" type="text" placeholder="Nama Lengkap Siswa" class="w-full p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 outline-none">
-                        <div class="flex items-center gap-4">
-                            <label class="flex-1 bg-slate-200 dark:bg-slate-700 p-4 rounded-2xl text-center cursor-pointer hover:bg-slate-300 transition-all">
-                                <span v-if="!newStudent.photo">Upload Foto Siswa</span>
-                                <span v-else class="text-emerald-600 font-bold">Foto Terpilih ✓</span>
-                                <input type="file" @change="handlePhotoUpload" class="hidden" accept="image/*">
-                            </label>
-                            <button @click="addStudent" class="bg-emerald-600 text-white p-4 px-8 rounded-2xl font-bold btn-interact">Simpan</button>
-                        </div>
+                        <input v-model="newStudent.name" type="text" placeholder="Nama Lengkap" class="w-full p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none focus:ring-2 ring-emerald-500">
+                        <input v-model="newStudent.photo" type="text" placeholder="Link/URL Foto Siswa (https://...)" class="w-full p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none focus:ring-2 ring-emerald-500">
+                        <button @click="addStudent" class="w-full bg-emerald-600 text-white p-4 rounded-2xl font-bold btn-interact">Simpan Siswa</button>
                     </div>
                     <hr class="opacity-10">
-                    <div class="space-y-2">
-                        <div v-for="(s, i) in students" class="flex justify-between items-center p-3 bg-white/5 rounded-xl text-sm">
-                            <span>{{ s.name }}</span>
-                            <button @click="deleteStudent(i)" class="text-red-500"><i class="ph-bold ph-trash"></i></button>
+                    <div class="grid grid-cols-1 gap-2">
+                        <div v-for="(s, i) in students" class="flex justify-between items-center p-3 bg-white dark:bg-slate-800 rounded-xl text-sm shadow-sm">
+                            <div class="flex items-center gap-3">
+                                <img :src="s.photo" class="w-8 h-8 rounded-full object-cover">
+                                <span class="font-semibold">{{ s.name }}</span>
+                            </div>
+                            <button @click="deleteStudent(i)" class="text-red-500 p-2"><i class="ph-bold ph-trash"></i></button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Admin Action: Add Schedule -->
                 <div v-if="adminSubTab === 'schedule'" class="glass p-6 rounded-[2rem] space-y-4">
-                    <h3 class="font-bold border-l-4 border-emerald-500 pl-3">Atur Jadwal Pelajaran</h3>
+                    <h3 class="font-bold text-emerald-600 border-l-4 border-emerald-600 pl-3">Input Jadwal Baru</h3>
                     <div class="grid grid-cols-2 gap-2">
-                        <select v-model="newSchedule.day" class="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 outline-none">
+                        <select v-model="newSchedule.day" class="p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none">
                             <option v-for="d in days" :value="d">{{ d }}</option>
                         </select>
-                        <input v-model="newSchedule.time" type="text" placeholder="Jam (07:00)" class="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 outline-none">
+                        <input v-model="newSchedule.time" type="text" placeholder="07:00 - 08:30" class="p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none">
                     </div>
-                    <input v-model="newSchedule.subject" type="text" placeholder="Mata Pelajaran" class="w-full p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 outline-none">
-                    <button @click="addSchedule" class="w-full bg-emerald-600 text-white p-4 rounded-2xl font-bold btn-interact">Tambahkan Jadwal</button>
+                    <input v-model="newSchedule.subject" type="text" placeholder="Nama Mata Pelajaran" class="w-full p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none">
+                    <button @click="addSchedule" class="w-full bg-emerald-600 text-white p-4 rounded-2xl font-bold btn-interact">Simpan Jadwal</button>
                 </div>
 
                 <!-- Admin Action: Add Event -->
                 <div v-if="adminSubTab === 'events'" class="glass p-6 rounded-[2rem] space-y-4">
-                    <h3 class="font-bold border-l-4 border-emerald-500 pl-3">Tambah Event Kelas</h3>
-                    <input v-model="newEvent.title" type="text" placeholder="Nama Event" class="w-full p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 outline-none">
+                    <h3 class="font-bold text-emerald-600 border-l-4 border-emerald-600 pl-3">Buat Pengumuman Event</h3>
+                    <input v-model="newEvent.title" type="text" placeholder="Judul Kegiatan" class="w-full p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none">
                     <div class="grid grid-cols-2 gap-2">
-                        <input v-model="newEvent.date" type="text" placeholder="Tanggal" class="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 outline-none">
-                        <input v-model="newEvent.location" type="text" placeholder="Lokasi" class="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800 outline-none">
+                        <input v-model="newEvent.date" type="text" placeholder="25 Feb 2026" class="p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none">
+                        <input v-model="newEvent.location" type="text" placeholder="Lokasi Acara" class="p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none">
                     </div>
-                    <button @click="addEvent" class="w-full bg-emerald-600 text-white p-4 rounded-2xl font-bold btn-interact">Publikasikan Event</button>
-                    <hr class="opacity-10">
-                    <div v-for="(e, i) in events" class="flex justify-between items-center p-3 bg-white/5 rounded-xl text-xs">
+                    <button @click="addEvent" class="w-full bg-emerald-600 text-white p-4 rounded-2xl font-bold btn-interact">Terbitkan</button>
+                    <div v-for="(e, i) in events" class="flex justify-between items-center p-3 bg-white dark:bg-slate-800 rounded-xl text-xs shadow-sm">
                         <span>{{ e.title }}</span>
                         <button @click="deleteEvent(i)" class="text-red-500"><i class="ph-bold ph-trash"></i></button>
                     </div>
                 </div>
             </section>
-
         </main>
 
         <!-- FOOTER -->
         <footer class="mt-20 py-10 text-center opacity-40 text-xs space-y-2 pb-40">
-            <p>© 2026 BHAWARA 8G. All Rights Reserved.</p>
-            <p>Made with ❤️ by <span class="font-bold">Ruxxi</span> for SMPN 8 Yogyakarta</p>
-            <p class="font-arabic text-lg tracking-widest">تَفَاؤَلُوا بِالْخَيْرِ تَجِدُوهُ</p>
+            <p>© 2026 BHAWARA 8G. SMP Negeri 8 Yogyakarta.</p>
+            <p>Designed by <span class="font-bold text-emerald-600">Ruxxi</span></p>
+            <p class="font-arabic text-lg mt-4">بِسْمِ اللهِ تَوَكَّلْتُ عَلَى اللهِ</p>
         </footer>
 
-        <!-- TOAST / NOTIFICATION (Simple) -->
-        <div v-if="toast.show" class="fixed top-10 left-1/2 -translate-x-1/2 z-[100] bg-emerald-600 text-white px-6 py-3 rounded-full shadow-2xl animate-bounce">
+        <!-- TOAST SYSTEM -->
+        <div v-if="toast.show" class="fixed top-10 left-1/2 -translate-x-1/2 z-[100] bg-emerald-800 text-white px-8 py-3 rounded-full shadow-2xl border border-emerald-500 flex items-center gap-3">
+            <i class="ph-bold ph-check-circle"></i>
             {{ toast.message }}
         </div>
     </div>
@@ -255,17 +252,18 @@
 
         createApp({
             setup() {
-                // Persistent State (Local Storage Simulation)
+                // Config & State
                 const isDarkMode = ref(localStorage.getItem('theme') === 'dark');
                 const currentTab = ref('home');
                 const adminSubTab = ref('students');
                 const isAdmin = ref(sessionStorage.getItem('isAdmin') === 'true');
                 const digitalTime = ref('');
+                const isCoolingDown = ref(false); // Anti-Spam/DDoS
                 
-                // Data Objects
-                const students = ref(JSON.parse(localStorage.getItem('db_students') || '[]'));
-                const schedule = ref(JSON.parse(localStorage.getItem('db_schedule') || '[]'));
-                const events = ref(JSON.parse(localStorage.getItem('db_events') || '[]'));
+                // Databases (Initially Empty)
+                const students = ref(JSON.parse(localStorage.getItem('bh_students') || '[]'));
+                const schedule = ref(JSON.parse(localStorage.getItem('bh_schedule') || '[]'));
+                const events = ref(JSON.parse(localStorage.getItem('bh_events') || '[]'));
                 const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 
                 // Forms
@@ -276,8 +274,7 @@
                 const newEvent = ref({ title: '', date: '', location: '' });
                 const toast = ref({ show: false, message: '' });
 
-                // Secret PIN (Don't leak in production, but here for the challenge)
-                // In a real app, this would be hashed.
+                // Secret PIN - "Rahasiakan PIN!"
                 const SECRET_PIN = "147258"; 
 
                 // Functions
@@ -292,22 +289,25 @@
                 };
 
                 const tabClass = (tab) => {
-                    return `p-3 px-5 rounded-2xl transition-all btn-interact ${currentTab.value === tab ? 'bg-emerald-600 text-white shadow-lg' : 'opacity-40'}`;
+                    return `p-3 px-5 rounded-2xl transition-all btn-interact ${currentTab.value === tab ? 'bg-emerald-600 text-white shadow-xl scale-110' : 'opacity-40 hover:opacity-100'}`;
                 };
 
                 const subTabClass = (tab) => {
-                    return `flex-none p-2 px-6 rounded-xl font-bold text-xs transition-all ${adminSubTab.value === tab ? 'bg-emerald-600 text-white' : 'glass opacity-50'}`;
+                    return `flex-none p-3 px-6 rounded-2xl font-bold text-xs transition-all border ${adminSubTab.value === tab ? 'bg-emerald-600 text-white border-emerald-500 shadow-md' : 'bg-white text-slate-500 border-slate-200'}`;
                 };
 
-                // Admin Auth
                 const verifyPin = () => {
+                    if (isCoolingDown.value) return;
+                    
                     if (pinInput.value === SECRET_PIN) {
                         isAdmin.value = true;
                         sessionStorage.setItem('isAdmin', 'true');
                         authError.value = '';
-                        showToast("Welcome Back, Admin!");
+                        showToast("Akses Diterima!");
                     } else {
-                        authError.value = "PIN Salah! Akses Ditolak.";
+                        authError.value = "PIN Salah!";
+                        isCoolingDown.value = true;
+                        setTimeout(() => isCoolingDown.value = false, 2000); // Anti-DDoS wait
                         pinInput.value = "";
                     }
                 };
@@ -318,59 +318,43 @@
                     currentTab.value = 'home';
                 };
 
-                // Persistence Helpers
                 const saveData = (key, val) => localStorage.setItem(key, JSON.stringify(val));
 
-                // Student Logic
-                const handlePhotoUpload = (e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (res) => {
-                            newStudent.value.photo = res.target.result; // Base64
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                };
-
+                // Actions
                 const addStudent = () => {
                     if (!newStudent.value.name) return;
                     students.value.push({...newStudent.value});
-                    saveData('db_students', students.value);
+                    saveData('bh_students', students.value);
                     newStudent.value = { name: '', photo: '' };
-                    showToast("Siswa berhasil ditambahkan!");
+                    showToast("Siswa ditambahkan!");
                 };
 
                 const deleteStudent = (idx) => {
                     students.value.splice(idx, 1);
-                    saveData('db_students', students.value);
+                    saveData('bh_students', students.value);
                 };
 
-                // Schedule Logic
                 const addSchedule = () => {
                     if (!newSchedule.value.subject) return;
                     schedule.value.push({...newSchedule.value});
-                    saveData('db_schedule', schedule.value);
+                    saveData('bh_schedule', schedule.value);
                     newSchedule.value = { day: 'Senin', time: '', subject: '' };
-                    showToast("Jadwal disimpan!");
+                    showToast("Jadwal tersimpan!");
                 };
 
-                const getScheduleForDay = (day) => {
-                    return schedule.value.filter(s => s.day === day);
-                };
+                const getScheduleForDay = (day) => schedule.value.filter(s => s.day === day);
 
-                // Event Logic
                 const addEvent = () => {
                     if (!newEvent.value.title) return;
                     events.value.unshift({...newEvent.value});
-                    saveData('db_events', events.value);
+                    saveData('bh_events', events.value);
                     newEvent.value = { title: '', date: '', location: '' };
-                    showToast("Event dipublikasikan!");
+                    showToast("Event terbit!");
                 };
-                
+
                 const deleteEvent = (idx) => {
                     events.value.splice(idx, 1);
-                    saveData('db_events', events.value);
+                    saveData('bh_events', events.value);
                 };
 
                 const showToast = (msg) => {
@@ -378,7 +362,6 @@
                     setTimeout(() => toast.value.show = false, 3000);
                 };
 
-                // Lifecycle Hooks
                 let timer;
                 onMounted(() => {
                     updateTime();
@@ -388,10 +371,10 @@
 
                 return {
                     isDarkMode, currentTab, adminSubTab, isAdmin, digitalTime,
-                    students, schedule, events, days,
+                    students, schedule, events, days, isCoolingDown,
                     pinInput, authError, newStudent, newSchedule, newEvent, toast,
                     toggleDarkMode, tabClass, subTabClass, verifyPin, logout,
-                    handlePhotoUpload, addStudent, deleteStudent, addSchedule, getScheduleForDay,
+                    addStudent, deleteStudent, addSchedule, getScheduleForDay,
                     addEvent, deleteEvent
                 };
             }
