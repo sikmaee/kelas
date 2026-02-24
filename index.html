@@ -26,10 +26,10 @@
             color: #f1f5f9;
         }
         
-        /* Moving Background Pattern */
+        /* Moving Islamic Background Pattern */
         .bg-pattern {
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l15 30-15 30L15 30z' fill='%23065f46' fill-opacity='0.05'/%3E%3C/svg%3E");
-            animation: move-bg 20s linear infinite;
+            animation: move-bg 25s linear infinite;
         }
         @keyframes move-bg {
             from { background-position: 0 0; }
@@ -37,46 +37,71 @@
         }
 
         .glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         .dark .glass {
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(15, 23, 42, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .btn-interact {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .btn-interact:active { transform: scale(0.95); }
+        .btn-interact:active { transform: scale(0.9); }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--islamic-green); border-radius: 10px; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
 
         [v-cloak] { display: none; }
 
-        /* Anti-DDoS / Button Cooldown Effect */
         .btn-disabled {
             opacity: 0.5;
             pointer-events: none;
+        }
+
+        /* Admin Dashboard White Inputs */
+        .input-admin {
+            background-color: white !important;
+            color: #0f172a !important;
+            border: 1px solid #cbd5e1;
+        }
+
+        .card-enter {
+            animation: slideUp 0.6s ease forwards;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Special Styling for Bottom Nav Icons to be Black (Item) */
+        .nav-icon-inactive {
+            color: #000000 !important;
+            opacity: 0.9;
+        }
+        .dark .nav-icon-inactive {
+            color: #ffffff !important;
+            opacity: 0.5;
         }
     </style>
 </head>
 <body :class="{ 'dark': isDarkMode }" class="bg-slate-50 text-slate-900 min-h-screen bg-pattern">
     <div id="app" v-cloak>
-        <!-- NAVIGATION BAR -->
-        <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-lg glass rounded-2xl p-2 flex justify-around items-center shadow-2xl border-t border-white/20">
-            <button @click="currentTab = 'home'" :class="tabClass('home')"><i class="ph-bold ph-house text-xl"></i></button>
-            <button @click="currentTab = 'students'" :class="tabClass('students')"><i class="ph-bold ph-users text-xl"></i></button>
-            <button @click="currentTab = 'schedule'" :class="tabClass('schedule')"><i class="ph-bold ph-calendar text-xl"></i></button>
-            <button @click="currentTab = 'admin'" :class="tabClass('admin')"><i class="ph-bold ph-lock-key text-xl"></i></button>
-            <div class="h-6 w-[1px] bg-slate-400/30 mx-1"></div>
-            <button @click="toggleDarkMode" class="p-3 rounded-xl transition-all hover:bg-yellow-500/20 text-yellow-600">
-                <i :class="isDarkMode ? 'ph-bold ph-sun' : 'ph-bold ph-moon'"></i>
-            </button>
+        <!-- NAVIGATION BAR (Icons set to Black/Item for visibility) -->
+        <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-xl glass rounded-[2.5rem] p-2.5 flex items-center shadow-[0_20px_50px_rgba(0,0,0,0.2)] border-t border-white/40">
+            <div class="flex justify-around w-full overflow-x-auto no-scrollbar gap-2 px-2">
+                <button @click="currentTab = 'home'" :class="tabClass('home')"><i class="ph-bold ph-house text-xl"></i></button>
+                <button @click="currentTab = 'students'" :class="tabClass('students')"><i class="ph-bold ph-users text-xl"></i></button>
+                <button @click="currentTab = 'structure'" :class="tabClass('structure')"><i class="ph-bold ph-identification-card text-xl"></i></button>
+                <button @click="currentTab = 'schedule'" :class="tabClass('schedule')"><i class="ph-bold ph-calendar text-xl"></i></button>
+                <button @click="currentTab = 'piket'" :class="tabClass('piket')"><i class="ph-bold ph-broom text-xl"></i></button>
+                <button @click="currentTab = 'admin'" :class="tabClass('admin')"><i class="ph-bold ph-lock-key text-xl"></i></button>
+                <div class="h-8 w-[1px] bg-black/10 dark:bg-white/10 shrink-0 mx-1"></div>
+                <button @click="toggleDarkMode" class="p-3 rounded-2xl transition-all text-yellow-600 shrink-0">
+                    <i :class="isDarkMode ? 'ph-bold ph-sun' : 'ph-bold ph-moon'"></i>
+                </button>
+            </div>
         </nav>
 
         <!-- MAIN CONTENT -->
@@ -85,165 +110,240 @@
             <!-- VIEW: HOME -->
             <section v-if="currentTab === 'home'" class="space-y-8 animate-in fade-in duration-700">
                 <div class="text-center space-y-4">
-                    <div class="inline-block p-2 px-6 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-semibold text-sm tracking-widest uppercase">
-                        Angkatan 64 • SMPN 8 Yogyakarta
+                    <div class="inline-block p-2 px-6 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-bold text-xs tracking-widest uppercase shadow-sm">
+                        BHAWARA 8G • SMPN 8 YK
                     </div>
-                    <h1 class="text-5xl font-arabic font-bold text-emerald-800 dark:text-emerald-500">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</h1>
-                    <h2 class="text-6xl font-black tracking-tighter">BHAWARA <span class="text-emerald-600">8G</span></h2>
+                    <h1 class="text-4xl md:text-5xl font-arabic font-bold text-emerald-800 dark:text-emerald-500">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</h1>
+                    <h2 class="text-6xl md:text-8xl font-black tracking-tighter drop-shadow-sm">BHAWARA <span class="text-emerald-600">8G</span></h2>
                     <p class="text-lg font-medium italic opacity-70">"Berkarakter, Bermutu"</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="glass p-8 rounded-[2rem] text-center space-y-2 border-emerald-500/20 border-2">
-                        <div class="text-4xl font-mono font-bold text-emerald-600 tracking-widest">{{ digitalTime }}</div>
-                        <div class="text-sm uppercase tracking-widest opacity-60">Waktu Indonesia Barat</div>
+                    <!-- Digital Clock -->
+                    <div class="glass p-8 rounded-[2.5rem] text-center space-y-2 border-emerald-500/20 border-2 shadow-inner">
+                        <div class="text-5xl font-mono font-bold text-emerald-600 tracking-tighter">{{ digitalTime }}</div>
+                        <div class="text-[10px] uppercase tracking-[0.4em] opacity-50 font-black">WIB • YOGYAKARTA</div>
                     </div>
-                    <a href="https://www.instagram.com/bhawara_8g" target="_blank" class="glass p-8 rounded-[2rem] flex items-center justify-between group hover:bg-emerald-600 transition-all duration-500 overflow-hidden relative">
+                    <!-- Instagram Shortcut -->
+                    <a href="https://www.instagram.com/bhawara_8g" target="_blank" class="glass p-8 rounded-[2.5rem] flex items-center justify-between group hover:bg-emerald-600 transition-all duration-500 overflow-hidden relative shadow-lg">
                         <div class="z-10">
-                            <h3 class="font-bold text-xl group-hover:text-white">Instagram Kelas</h3>
-                            <p class="text-sm opacity-60 group-hover:text-emerald-100">@bhawara_8g</p>
+                            <h3 class="font-bold text-xl group-hover:text-white transition-colors">Instagram</h3>
+                            <p class="text-sm opacity-60 group-hover:text-emerald-100 font-mono">@bhawara_8g</p>
                         </div>
-                        <i class="ph-fill ph-instagram-logo text-5xl opacity-20 group-hover:opacity-100 group-hover:text-white group-hover:scale-125 transition-all z-10"></i>
+                        <i class="ph-fill ph-instagram-logo text-7xl opacity-20 group-hover:opacity-100 group-hover:text-white group-hover:scale-125 transition-all z-10"></i>
                         <div class="absolute inset-0 bg-gradient-to-tr from-purple-600 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </a>
                 </div>
 
-                <div v-if="events.length > 0" class="relative overflow-hidden rounded-[2rem] bg-emerald-900 text-white p-8 shadow-xl">
+                <!-- Featured Event -->
+                <div v-if="events.length > 0" class="relative overflow-hidden rounded-[2.5rem] bg-emerald-900 text-white p-10 shadow-2xl">
                     <div class="relative z-10">
-                        <span class="bg-yellow-500 text-black text-[10px] font-bold px-2 py-1 rounded mb-4 inline-block tracking-tighter">UPCOMING EVENT</span>
-                        <h3 class="text-2xl font-bold">{{ events[0].title }}</h3>
-                        <p class="opacity-80">{{ events[0].date }} • {{ events[0].location }}</p>
+                        <span class="bg-yellow-500 text-black text-[9px] font-black px-3 py-1 rounded-full mb-4 inline-block tracking-widest uppercase">AGENDA KELAS</span>
+                        <h3 class="text-3xl font-bold tracking-tight">{{ events[0].title }}</h3>
+                        <p class="opacity-80 mt-1 font-medium italic tracking-wide">{{ events[0].date }} • {{ events[0].location }}</p>
                     </div>
-                    <i class="ph-bold ph-star text-9xl absolute -right-10 -bottom-10 opacity-10"></i>
+                    <i class="ph-bold ph-star-four text-[12rem] absolute -right-16 -bottom-16 opacity-10 animate-spin-slow"></i>
                 </div>
             </section>
 
-            <!-- VIEW: STUDENTS -->
+            <!-- VIEW: STUDENTS (Empty Initially) -->
             <section v-if="currentTab === 'students'" class="space-y-6">
                 <div class="flex justify-between items-end">
-                    <h2 class="text-3xl font-black">Daftar <span class="text-emerald-600">Siswa</span></h2>
-                    <span class="text-sm opacity-60">{{ students.length }} Orang</span>
+                    <h2 class="text-3xl font-black">Data <span class="text-emerald-600">Siswa</span></h2>
+                    <span class="text-xs font-bold opacity-40 uppercase tracking-widest">{{ students.length }} Personil</span>
                 </div>
-                
-                <div v-if="students.length === 0" class="text-center py-20 glass rounded-[2rem]">
-                    <i class="ph-light ph-users-three text-6xl opacity-20"></i>
-                    <p class="mt-4 opacity-50">Belum ada data siswa.</p>
+                <div v-if="students.length === 0" class="text-center py-24 glass rounded-[3rem] border-dashed border-2 border-emerald-500/20">
+                    <i class="ph-light ph-users-four text-8xl opacity-10"></i>
+                    <p class="mt-4 opacity-40 font-bold tracking-tight uppercase">Belum ada data siswa.</p>
                 </div>
-
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    <div v-for="(student, index) in students" :key="index" class="glass p-4 rounded-3xl text-center group transition-all hover:-translate-y-2 shadow-sm">
-                        <div class="aspect-square rounded-2xl bg-slate-200 dark:bg-slate-800 mb-4 overflow-hidden relative border border-emerald-500/10">
-                            <img :src="student.photo || 'https://via.placeholder.com/300?text=No+Photo'" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/300?text=Invalid+URL'">
+                    <div v-for="(student, index) in students" :key="index" class="glass p-4 rounded-[2rem] text-center group transition-all hover:-translate-y-2 card-enter shadow-md">
+                        <div class="aspect-square rounded-2xl bg-slate-200 dark:bg-slate-800 mb-4 overflow-hidden relative border-2 border-emerald-500/10 shadow-inner">
+                            <img :src="student.photo || 'https://via.placeholder.com/400?text=No+Photo'" class="w-full h-full object-cover transition-all duration-500 group-hover:scale-110">
                         </div>
-                        <h3 class="font-bold text-sm truncate uppercase tracking-tight text-emerald-800 dark:text-emerald-400">{{ student.name }}</h3>
+                        <h3 class="font-black text-[10px] truncate uppercase tracking-tighter text-emerald-900 dark:text-emerald-400">{{ student.name }}</h3>
                     </div>
                 </div>
             </section>
 
-            <!-- VIEW: SCHEDULE -->
+            <!-- VIEW: STRUCTURE (Empty Initially) -->
+            <section v-if="currentTab === 'structure'" class="space-y-10 text-center">
+                <h2 class="text-3xl font-black">Struktur <span class="text-emerald-600">Kelas</span></h2>
+                <div v-if="structure.length === 0" class="py-24 glass rounded-[3rem] border-dashed border-2 border-emerald-500/20">
+                    <i class="ph-light ph-identification-card text-8xl opacity-10"></i>
+                    <p class="mt-4 opacity-40 font-bold uppercase">Struktur belum diatur.</p>
+                </div>
+                <div class="space-y-16">
+                    <div class="flex flex-wrap justify-center gap-8">
+                        <div v-for="member in getRoleGroup('Utama')" class="w-44 space-y-3 card-enter">
+                            <div class="aspect-square rounded-full border-4 border-emerald-500 p-1.5 bg-white shadow-2xl overflow-hidden ring-8 ring-emerald-500/5 transition-transform hover:scale-105">
+                                <img :src="member.photo" class="w-full h-full object-cover rounded-full">
+                            </div>
+                            <div>
+                                <h4 class="font-black text-emerald-600 text-[10px] uppercase tracking-[0.2em]">{{ member.role }}</h4>
+                                <p class="font-bold text-base leading-tight mt-1">{{ member.name }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+                        <div v-for="member in getRoleGroup('Lainnya')" class="glass p-6 rounded-[2.5rem] space-y-3 card-enter shadow-sm transition-transform hover:-rotate-2">
+                            <div class="w-20 h-20 mx-auto rounded-2xl overflow-hidden border-2 border-emerald-500/30">
+                                <img :src="member.photo" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-black text-[9px] text-emerald-600 uppercase tracking-widest">{{ member.role }}</h4>
+                                <p class="font-bold text-xs mt-1">{{ member.name }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW: SCHEDULE (Empty Initially) -->
             <section v-if="currentTab === 'schedule'" class="space-y-6">
                 <h2 class="text-3xl font-black">Jadwal <span class="text-emerald-600">Pelajaran</span></h2>
-                <div class="space-y-4">
-                    <div v-for="day in days" :key="day" class="glass overflow-hidden rounded-3xl border border-emerald-500/10">
-                        <div class="bg-emerald-600 p-4 text-white font-bold flex justify-between shadow-md">
-                            <span>{{ day }}</span>
-                            <i class="ph-bold ph-calendar-check"></i>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div v-for="day in days" :key="day" class="glass overflow-hidden rounded-[2.5rem] border border-emerald-500/10 shadow-sm">
+                        <div class="bg-emerald-800 p-5 text-white font-black flex justify-between items-center shadow-lg">
+                            <span class="tracking-[0.2em] uppercase text-xs">{{ day }}</span>
+                            <i class="ph-bold ph-book-open text-xl opacity-40"></i>
                         </div>
-                        <div class="p-4 space-y-2">
-                            <div v-if="getScheduleForDay(day).length === 0" class="text-xs opacity-50 py-2">Belum ada jadwal hari {{ day }}.</div>
-                            <div v-for="item in getScheduleForDay(day)" class="flex justify-between items-center text-sm p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm">
-                                <span class="font-semibold text-emerald-900 dark:text-emerald-100">{{ item.subject }}</span>
-                                <span class="opacity-60 text-[10px] font-mono">{{ item.time }}</span>
+                        <div class="p-5 space-y-3">
+                            <div v-if="getScheduleForDay(day).length === 0" class="text-[9px] opacity-30 font-black py-4 text-center tracking-[0.4em]">NO DATA</div>
+                            <div v-for="item in getScheduleForDay(day)" class="flex justify-between items-center text-sm p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-white/5 transition-all hover:translate-x-1">
+                                <span class="font-bold text-emerald-900 dark:text-emerald-100 tracking-tight">{{ item.subject }}</span>
+                                <span class="opacity-40 text-[9px] font-mono font-black">{{ item.time }}</span>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW: PIKET (Empty Initially) -->
+            <section v-if="currentTab === 'piket'" class="space-y-6">
+                <h2 class="text-3xl font-black">Jadwal <span class="text-emerald-600">Piket</span></h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div v-for="day in days" :key="day" class="glass rounded-[2.5rem] p-8 border-l-[12px] border-emerald-700 shadow-md">
+                        <h3 class="text-2xl font-black mb-6 flex items-center gap-3 tracking-tighter">
+                            <i class="ph-bold ph-broom text-emerald-600"></i>
+                            {{ day.toUpperCase() }}
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <div v-if="getPiketForDay(day).length === 0" class="text-[9px] opacity-30 font-black tracking-widest uppercase">Belum ada petugas</div>
+                            <span v-for="name in getPiketForDay(day)" class="bg-emerald-50 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-200 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border border-emerald-600/10 shadow-sm">
+                                {{ name }}
+                            </span>
                         </div>
                     </div>
                 </div>
             </section>
 
             <!-- VIEW: ADMIN LOGIN -->
-            <section v-if="currentTab === 'admin' && !isAdmin" class="max-w-sm mx-auto py-20 text-center space-y-6">
-                <i class="ph-fill ph-lock-key-open text-6xl text-emerald-600"></i>
-                <h2 class="text-2xl font-bold">Admin Dashboard</h2>
-                <p class="text-sm opacity-60 italic">"Rahasiakan PIN!"</p>
-                <input v-model="pinInput" type="password" maxlength="6" class="w-full bg-white text-slate-900 border-2 border-emerald-500/20 rounded-2xl p-4 text-center text-2xl tracking-[1em] focus:outline-none focus:border-emerald-500 shadow-xl" placeholder="••••••">
-                <button @click="verifyPin" :class="{'btn-disabled': isCoolingDown}" class="w-full bg-emerald-600 text-white p-4 rounded-2xl font-bold btn-interact shadow-lg shadow-emerald-600/20">Masuk</button>
-                <div v-if="authError" class="text-red-500 text-xs font-bold">{{ authError }}</div>
+            <section v-if="currentTab === 'admin' && !isAdmin" class="max-w-sm mx-auto py-24 text-center space-y-8">
+                <div class="relative inline-block">
+                    <i class="ph-fill ph-lock-key text-8xl text-emerald-700"></i>
+                    <div class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full animate-ping"></div>
+                </div>
+                <div class="space-y-2">
+                    <h2 class="text-3xl font-black tracking-tighter uppercase">Admin Vault</h2>
+                    <p class="text-[10px] opacity-50 font-black uppercase tracking-[0.4em]">Rahasiakan PIN!</p>
+                </div>
+                <input v-model="pinInput" type="password" maxlength="6" class="w-full bg-white text-slate-900 border-4 border-emerald-500/10 rounded-[2rem] p-6 text-center text-4xl tracking-[0.5em] focus:outline-none focus:border-emerald-600 shadow-2xl transition-all" placeholder="••••••">
+                <button @click="verifyPin" :class="{'btn-disabled': isCoolingDown}" class="w-full bg-emerald-700 text-white p-6 rounded-[2rem] font-black tracking-widest btn-interact shadow-xl shadow-emerald-700/30 uppercase text-sm">Masuk Sistem</button>
+                <div v-if="authError" class="text-red-500 text-[10px] font-black uppercase tracking-widest animate-pulse">{{ authError }}</div>
             </section>
 
-            <!-- VIEW: ADMIN DASHBOARD -->
+            <!-- VIEW: ADMIN DASHBOARD (White Inputs) -->
             <section v-if="currentTab === 'admin' && isAdmin" class="space-y-8 animate-in slide-in-from-bottom-10 duration-500">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-3xl font-black">Admin <span class="text-emerald-600">Control</span></h2>
-                    <button @click="logout" class="text-xs bg-red-500/10 text-red-500 p-2 px-4 rounded-full font-bold">KELUAR</button>
+                    <h2 class="text-3xl font-black">Admin <span class="text-emerald-600">Panel</span></h2>
+                    <button @click="logout" class="text-[10px] bg-red-500/10 text-red-600 p-2 px-6 rounded-full font-black border border-red-500/20 tracking-widest uppercase hover:bg-red-600 hover:text-white transition-all">Logout</button>
                 </div>
 
-                <div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
-                    <button @click="adminSubTab = 'students'" :class="subTabClass('students')">Kelola Siswa</button>
-                    <button @click="adminSubTab = 'schedule'" :class="subTabClass('schedule')">Kelola Jadwal</button>
-                    <button @click="adminSubTab = 'events'" :class="subTabClass('events')">Kelola Event</button>
+                <div class="flex gap-2 overflow-x-auto pb-4 no-scrollbar">
+                    <button v-for="t in adminTabs" @click="adminSubTab = t.id" :class="subTabClass(t.id)">{{ t.label }}</button>
                 </div>
 
-                <!-- Admin Action: Add Student (URL Based) -->
-                <div v-if="adminSubTab === 'students'" class="glass p-6 rounded-[2rem] space-y-4">
-                    <h3 class="font-bold text-emerald-600 border-l-4 border-emerald-600 pl-3">Tambah Siswa</h3>
+                <!-- Admin Action: Students -->
+                <div v-if="adminSubTab === 'students'" class="glass p-8 rounded-[3rem] space-y-6 shadow-2xl border-emerald-500/10">
+                    <h3 class="font-black text-emerald-700 uppercase text-xs tracking-widest border-l-4 border-emerald-700 pl-4">Tambah Siswa</h3>
                     <div class="space-y-4">
-                        <input v-model="newStudent.name" type="text" placeholder="Nama Lengkap" class="w-full p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none focus:ring-2 ring-emerald-500">
-                        <input v-model="newStudent.photo" type="text" placeholder="Link/URL Foto Siswa (https://...)" class="w-full p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none focus:ring-2 ring-emerald-500">
-                        <button @click="addStudent" class="w-full bg-emerald-600 text-white p-4 rounded-2xl font-bold btn-interact">Simpan Siswa</button>
+                        <input v-model="newStudent.name" type="text" placeholder="Nama Lengkap" class="w-full p-5 rounded-2xl input-admin outline-none focus:ring-4 ring-emerald-500/10 transition-all font-bold text-sm">
+                        <input v-model="newStudent.photo" type="text" placeholder="URL Foto Siswa" class="w-full p-5 rounded-2xl input-admin outline-none focus:ring-4 ring-emerald-500/10 transition-all font-bold text-sm">
+                        <button @click="addStudent" class="w-full bg-emerald-700 text-white p-5 rounded-2xl font-black tracking-widest btn-interact uppercase shadow-lg">Simpan Data</button>
                     </div>
-                    <hr class="opacity-10">
-                    <div class="grid grid-cols-1 gap-2">
-                        <div v-for="(s, i) in students" class="flex justify-between items-center p-3 bg-white dark:bg-slate-800 rounded-xl text-sm shadow-sm">
-                            <div class="flex items-center gap-3">
-                                <img :src="s.photo" class="w-8 h-8 rounded-full object-cover">
-                                <span class="font-semibold">{{ s.name }}</span>
-                            </div>
-                            <button @click="deleteStudent(i)" class="text-red-500 p-2"><i class="ph-bold ph-trash"></i></button>
+                    <div class="space-y-2 mt-8">
+                        <div v-for="(s, i) in students" class="flex justify-between items-center p-4 bg-white rounded-2xl text-[11px] shadow-sm border border-slate-100 transition-all hover:bg-slate-50">
+                            <span class="font-black text-slate-800 uppercase">{{ s.name }}</span>
+                            <button @click="deleteStudent(i)" class="text-red-500 p-2 hover:bg-red-50 rounded-lg"><i class="ph-bold ph-trash-simple"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Admin Action: Add Schedule -->
-                <div v-if="adminSubTab === 'schedule'" class="glass p-6 rounded-[2rem] space-y-4">
-                    <h3 class="font-bold text-emerald-600 border-l-4 border-emerald-600 pl-3">Input Jadwal Baru</h3>
-                    <div class="grid grid-cols-2 gap-2">
-                        <select v-model="newSchedule.day" class="p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none">
-                            <option v-for="d in days" :value="d">{{ d }}</option>
+                <!-- Admin Action: Structure -->
+                <div v-if="adminSubTab === 'structure'" class="glass p-8 rounded-[3rem] space-y-6 shadow-2xl border-emerald-500/10">
+                    <h3 class="font-black text-emerald-700 uppercase text-xs tracking-widest border-l-4 border-emerald-700 pl-4">Kelola Struktur</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <input v-model="newMember.role" type="text" placeholder="Jabatan" class="p-5 rounded-2xl input-admin font-bold text-sm outline-none">
+                        <select v-model="newMember.type" class="p-5 rounded-2xl input-admin font-bold text-sm outline-none">
+                            <option value="Utama">Role Utama</option>
+                            <option value="Lainnya">Role Lainnya</option>
                         </select>
-                        <input v-model="newSchedule.time" type="text" placeholder="07:00 - 08:30" class="p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none">
                     </div>
-                    <input v-model="newSchedule.subject" type="text" placeholder="Nama Mata Pelajaran" class="w-full p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none">
-                    <button @click="addSchedule" class="w-full bg-emerald-600 text-white p-4 rounded-2xl font-bold btn-interact">Simpan Jadwal</button>
+                    <input v-model="newMember.name" type="text" placeholder="Nama Pejabat" class="w-full p-5 rounded-2xl input-admin font-bold text-sm outline-none">
+                    <input v-model="newMember.photo" type="text" placeholder="URL Foto" class="w-full p-5 rounded-2xl input-admin font-bold text-sm outline-none">
+                    <button @click="addStructure" class="w-full bg-emerald-700 text-white p-5 rounded-2xl font-black tracking-widest btn-interact uppercase shadow-lg">Update</button>
                 </div>
 
-                <!-- Admin Action: Add Event -->
-                <div v-if="adminSubTab === 'events'" class="glass p-6 rounded-[2rem] space-y-4">
-                    <h3 class="font-bold text-emerald-600 border-l-4 border-emerald-600 pl-3">Buat Pengumuman Event</h3>
-                    <input v-model="newEvent.title" type="text" placeholder="Judul Kegiatan" class="w-full p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none">
-                    <div class="grid grid-cols-2 gap-2">
-                        <input v-model="newEvent.date" type="text" placeholder="25 Feb 2026" class="p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none">
-                        <input v-model="newEvent.location" type="text" placeholder="Lokasi Acara" class="p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none">
+                <!-- Admin Action: Schedule -->
+                <div v-if="adminSubTab === 'schedule'" class="glass p-8 rounded-[3rem] space-y-6 shadow-2xl border-emerald-500/10">
+                    <h3 class="font-black text-emerald-700 uppercase text-xs tracking-widest border-l-4 border-emerald-700 pl-4">Input Mata Pelajaran</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <select v-model="newSchedule.day" class="p-5 rounded-2xl input-admin font-bold text-sm outline-none">
+                            <option v-for="d in days" :value="d">{{ d }}</option>
+                        </select>
+                        <input v-model="newSchedule.time" type="text" placeholder="Waktu (07:00)" class="p-5 rounded-2xl input-admin font-bold text-sm outline-none">
                     </div>
-                    <button @click="addEvent" class="w-full bg-emerald-600 text-white p-4 rounded-2xl font-bold btn-interact">Terbitkan</button>
-                    <div v-for="(e, i) in events" class="flex justify-between items-center p-3 bg-white dark:bg-slate-800 rounded-xl text-xs shadow-sm">
-                        <span>{{ e.title }}</span>
-                        <button @click="deleteEvent(i)" class="text-red-500"><i class="ph-bold ph-trash"></i></button>
+                    <input v-model="newSchedule.subject" type="text" placeholder="Mata Pelajaran" class="w-full p-5 rounded-2xl input-admin font-bold text-sm outline-none">
+                    <button @click="addSchedule" class="w-full bg-emerald-700 text-white p-5 rounded-2xl font-black tracking-widest btn-interact uppercase shadow-lg">Tambah Jadwal</button>
+                </div>
+
+                <!-- Admin Action: Piket -->
+                <div v-if="adminSubTab === 'piket'" class="glass p-8 rounded-[3rem] space-y-6 shadow-2xl border-emerald-500/10">
+                    <h3 class="font-black text-emerald-700 uppercase text-xs tracking-widest border-l-4 border-emerald-700 pl-4">Input Petugas Piket</h3>
+                    <div class="flex gap-3">
+                        <select v-model="newPiket.day" class="p-5 rounded-2xl input-admin font-bold text-sm outline-none flex-1">
+                            <option v-for="d in days" :value="d">{{ d }}</option>
+                        </select>
+                        <input v-model="newPiket.name" type="text" placeholder="Nama Siswa" class="p-5 rounded-2xl input-admin font-bold text-sm outline-none flex-[2]">
                     </div>
+                    <button @click="addPiket" class="w-full bg-emerald-700 text-white p-5 rounded-2xl font-black tracking-widest btn-interact uppercase shadow-lg">Input Piket</button>
+                </div>
+
+                <!-- Admin Action: Events -->
+                <div v-if="adminSubTab === 'events'" class="glass p-8 rounded-[3rem] space-y-6 shadow-2xl border-emerald-500/10">
+                    <h3 class="font-black text-emerald-700 uppercase text-xs tracking-widest border-l-4 border-emerald-700 pl-4">Buat Event</h3>
+                    <input v-model="newEvent.title" type="text" placeholder="Nama Event" class="w-full p-5 rounded-2xl input-admin font-bold text-sm outline-none">
+                    <div class="grid grid-cols-2 gap-3">
+                        <input v-model="newEvent.date" type="text" placeholder="Tanggal" class="p-5 rounded-2xl input-admin font-bold text-sm outline-none">
+                        <input v-model="newEvent.location" type="text" placeholder="Lokasi" class="p-5 rounded-2xl input-admin font-bold text-sm outline-none">
+                    </div>
+                    <button @click="addEvent" class="w-full bg-emerald-700 text-white p-5 rounded-2xl font-black tracking-widest btn-interact uppercase shadow-lg">Terbitkan</button>
                 </div>
             </section>
         </main>
 
         <!-- FOOTER -->
-        <footer class="mt-20 py-10 text-center opacity-40 text-xs space-y-2 pb-40">
-            <p>© 2026 BHAWARA 8G. SMP Negeri 8 Yogyakarta.</p>
-            <p>Designed by <span class="font-bold text-emerald-600">Ruxxi</span></p>
-            <p class="font-arabic text-lg mt-4">بِسْمِ اللهِ تَوَكَّلْتُ عَلَى اللهِ</p>
+        <footer class="mt-20 py-16 text-center opacity-40 text-[9px] space-y-2 pb-44 border-t border-emerald-500/10">
+            <p class="font-black tracking-[0.3em] uppercase">BHAWARA 8G • ANGKATAN 64 • SMPN 8 YOGYAKARTA</p>
+            <p>Platform Architecture by <span class="font-bold text-emerald-700">Ruxxi (2026)</span></p>
+            <div class="font-arabic text-3xl mt-8 tracking-widest text-emerald-800">بِسْمِ اللهِ تَوَكَّلْتُ عَلَى اللهِ</div>
         </footer>
 
         <!-- TOAST SYSTEM -->
-        <div v-if="toast.show" class="fixed top-10 left-1/2 -translate-x-1/2 z-[100] bg-emerald-800 text-white px-8 py-3 rounded-full shadow-2xl border border-emerald-500 flex items-center gap-3">
-            <i class="ph-bold ph-check-circle"></i>
-            {{ toast.message }}
+        <div v-if="toast.show" class="fixed top-12 left-1/2 -translate-x-1/2 z-[100] bg-emerald-950 text-white px-10 py-5 rounded-[2.5rem] shadow-2xl border border-emerald-500 flex items-center gap-4 animate-in fade-in zoom-in duration-300">
+            <i class="ph-bold ph-check-circle text-2xl text-emerald-400"></i>
+            <span class="font-black text-[11px] tracking-widest uppercase">{{ toast.message }}</span>
         </div>
     </div>
 
@@ -252,19 +352,31 @@
 
         createApp({
             setup() {
-                // Config & State
+                // Settings
                 const isDarkMode = ref(localStorage.getItem('theme') === 'dark');
                 const currentTab = ref('home');
                 const adminSubTab = ref('students');
                 const isAdmin = ref(sessionStorage.getItem('isAdmin') === 'true');
                 const digitalTime = ref('');
-                const isCoolingDown = ref(false); // Anti-Spam/DDoS
+                const isCoolingDown = ref(false);
                 
-                // Databases (Initially Empty)
-                const students = ref(JSON.parse(localStorage.getItem('bh_students') || '[]'));
-                const schedule = ref(JSON.parse(localStorage.getItem('bh_schedule') || '[]'));
-                const events = ref(JSON.parse(localStorage.getItem('bh_events') || '[]'));
-                const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                // Pure Databases (Version 3 - Fully Empty)
+                const students = ref(JSON.parse(localStorage.getItem('bh_v3_students') || '[]'));
+                const schedule = ref(JSON.parse(localStorage.getItem('bh_v3_schedule') || '[]'));
+                const events = ref(JSON.parse(localStorage.getItem('bh_v3_events') || '[]'));
+                const piket = ref(JSON.parse(localStorage.getItem('bh_v3_piket') || '[]'));
+                const structure = ref(JSON.parse(localStorage.getItem('bh_v3_structure') || '[]'));
+                
+                // Days: Monday to Friday
+                const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
+                
+                const adminTabs = [
+                    { id: 'students', label: 'Siswa' },
+                    { id: 'structure', label: 'Struktur' },
+                    { id: 'schedule', label: 'Jadwal' },
+                    { id: 'piket', label: 'Piket' },
+                    { id: 'events', label: 'Event' }
+                ];
 
                 // Forms
                 const pinInput = ref('');
@@ -272,9 +384,10 @@
                 const newStudent = ref({ name: '', photo: '' });
                 const newSchedule = ref({ day: 'Senin', time: '', subject: '' });
                 const newEvent = ref({ title: '', date: '', location: '' });
+                const newPiket = ref({ day: 'Senin', name: '' });
+                const newMember = ref({ role: '', name: '', photo: '', type: 'Utama' });
                 const toast = ref({ show: false, message: '' });
 
-                // Secret PIN - "Rahasiakan PIN!"
                 const SECRET_PIN = "147258"; 
 
                 // Functions
@@ -288,26 +401,30 @@
                     digitalTime.value = now.toLocaleTimeString('id-ID', { hour12: false });
                 };
 
+                // Styling for Bottom Nav (Black/Item Icons)
                 const tabClass = (tab) => {
-                    return `p-3 px-5 rounded-2xl transition-all btn-interact ${currentTab.value === tab ? 'bg-emerald-600 text-white shadow-xl scale-110' : 'opacity-40 hover:opacity-100'}`;
+                    const base = `p-4 px-6 rounded-2xl transition-all btn-interact shrink-0 `;
+                    if (currentTab.value === tab) {
+                        return base + `bg-emerald-600 text-white shadow-xl scale-110`;
+                    }
+                    return base + `nav-icon-inactive hover:scale-110`;
                 };
 
                 const subTabClass = (tab) => {
-                    return `flex-none p-3 px-6 rounded-2xl font-bold text-xs transition-all border ${adminSubTab.value === tab ? 'bg-emerald-600 text-white border-emerald-500 shadow-md' : 'bg-white text-slate-500 border-slate-200'}`;
+                    return `flex-none p-4 px-8 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all border ${adminSubTab.value === tab ? 'bg-emerald-700 text-white border-emerald-600 shadow-xl' : 'bg-white text-slate-400 border-slate-200'}`;
                 };
 
                 const verifyPin = () => {
                     if (isCoolingDown.value) return;
-                    
                     if (pinInput.value === SECRET_PIN) {
                         isAdmin.value = true;
                         sessionStorage.setItem('isAdmin', 'true');
                         authError.value = '';
-                        showToast("Akses Diterima!");
+                        showToast("VAULT UNLOCKED");
                     } else {
-                        authError.value = "PIN Salah!";
+                        authError.value = "WRONG PIN!";
                         isCoolingDown.value = true;
-                        setTimeout(() => isCoolingDown.value = false, 2000); // Anti-DDoS wait
+                        setTimeout(() => isCoolingDown.value = false, 2500);
                         pinInput.value = "";
                     }
                 };
@@ -315,7 +432,6 @@
                 const logout = () => {
                     isAdmin.value = false;
                     sessionStorage.removeItem('isAdmin');
-                    currentTab.value = 'home';
                 };
 
                 const saveData = (key, val) => localStorage.setItem(key, JSON.stringify(val));
@@ -324,37 +440,48 @@
                 const addStudent = () => {
                     if (!newStudent.value.name) return;
                     students.value.push({...newStudent.value});
-                    saveData('bh_students', students.value);
+                    saveData('bh_v3_students', students.value);
                     newStudent.value = { name: '', photo: '' };
-                    showToast("Siswa ditambahkan!");
+                    showToast("Siswa Tersimpan");
                 };
-
                 const deleteStudent = (idx) => {
                     students.value.splice(idx, 1);
-                    saveData('bh_students', students.value);
+                    saveData('bh_v3_students', students.value);
                 };
+
+                const addStructure = () => {
+                    if (!newMember.value.name || !newMember.value.role) return;
+                    structure.value.push({...newMember.value});
+                    saveData('bh_v3_structure', structure.value);
+                    newMember.value = { role: '', name: '', photo: '', type: 'Utama' };
+                    showToast("Struktur Update");
+                };
+                const getRoleGroup = (type) => structure.value.filter(m => m.type === type);
 
                 const addSchedule = () => {
                     if (!newSchedule.value.subject) return;
                     schedule.value.push({...newSchedule.value});
-                    saveData('bh_schedule', schedule.value);
+                    saveData('bh_v3_schedule', schedule.value);
                     newSchedule.value = { day: 'Senin', time: '', subject: '' };
-                    showToast("Jadwal tersimpan!");
+                    showToast("Jadwal Input");
                 };
-
                 const getScheduleForDay = (day) => schedule.value.filter(s => s.day === day);
+
+                const addPiket = () => {
+                    if (!newPiket.value.name) return;
+                    piket.value.push({...newPiket.value});
+                    saveData('bh_v3_piket', piket.value);
+                    newPiket.value.name = '';
+                    showToast("Piket Input");
+                };
+                const getPiketForDay = (day) => piket.value.filter(p => p.day === day).map(p => p.name);
 
                 const addEvent = () => {
                     if (!newEvent.value.title) return;
                     events.value.unshift({...newEvent.value});
-                    saveData('bh_events', events.value);
+                    saveData('bh_v3_events', events.value);
                     newEvent.value = { title: '', date: '', location: '' };
-                    showToast("Event terbit!");
-                };
-
-                const deleteEvent = (idx) => {
-                    events.value.splice(idx, 1);
-                    saveData('bh_events', events.value);
+                    showToast("Event Publish");
                 };
 
                 const showToast = (msg) => {
@@ -371,11 +498,11 @@
 
                 return {
                     isDarkMode, currentTab, adminSubTab, isAdmin, digitalTime,
-                    students, schedule, events, days, isCoolingDown,
-                    pinInput, authError, newStudent, newSchedule, newEvent, toast,
+                    students, schedule, events, piket, structure, days, adminTabs,
+                    pinInput, authError, newStudent, newSchedule, newEvent, newPiket, newMember, toast, isCoolingDown,
                     toggleDarkMode, tabClass, subTabClass, verifyPin, logout,
-                    addStudent, deleteStudent, addSchedule, getScheduleForDay,
-                    addEvent, deleteEvent
+                    addStudent, deleteStudent, addStructure, getRoleGroup,
+                    addSchedule, getScheduleForDay, addPiket, getPiketForDay, addEvent
                 };
             }
         }).mount('#app');
