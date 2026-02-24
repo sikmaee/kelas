@@ -2,13 +2,14 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BHAWARA - CLASS PLATFORM V9.1 (GRAND MASTER)</title>
-    <!-- Frameworks -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BHAWARA 8G - V12.0 STABLE</title>
+    
+    <!-- FRAMEWORK & FONTS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -17,231 +18,225 @@
         }
         body {
             font-family: 'Inter', sans-serif;
-            transition: background-color 0.4s ease, color 0.4s ease;
+            transition: background-color 0.3s ease;
+            background-color: #f1f5f9;
         }
         .font-arabic { font-family: 'Amiri', serif; }
         .dark { background-color: #0f172a; color: #f8fafc; }
         
-        /* Islamic Moving Background Animation */
+        /* Animasi Background */
         .bg-pattern {
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l15 30-15 30L15 30z' fill='%23065f46' fill-opacity='0.04'/%3E%3C/svg%3E");
-            animation: move-bg 40s linear infinite;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l15 30-15 30L15 30z' fill='%23065f46' fill-opacity='0.03'/%3E%3C/svg%3E");
+            animation: move-bg 60s linear infinite;
         }
-        @keyframes move-bg { from { background-position: 0 0; } to { background-position: 200px 200px; } }
+        @keyframes move-bg { from { background-position: 0 0; } to { background-position: 600px 600px; } }
 
         .glass {
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         .dark .glass {
-            background: rgba(30, 41, 59, 0.7);
+            background: rgba(30, 41, 59, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .btn-interact { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .btn-interact:active { transform: scale(0.92); }
+        /* Quran Card - Tetap Teks Hitam di Atas Putih */
+        .quran-card { background-color: #ffffff !important; border-left: 8px solid var(--islamic-green); color: #000000 !important; }
+        .quran-text-black { color: #000000 !important; }
+
+        .btn-interact { transition: all 0.2s ease; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .btn-interact:active { transform: scale(0.95); }
         .no-scrollbar::-webkit-scrollbar { display: none; }
+        
         [v-cloak] { display: none; }
 
-        /* Quran High Contrast - Specific Requirement */
-        .quran-text-black { color: #000000 !important; }
-        .quran-card { background-color: #ffffff !important; color: #000000 !important; }
+        /* Calculator UI */
+        .calc-btn { @apply p-4 rounded-2xl font-bold text-lg transition-all active:scale-90 flex items-center justify-center shadow border; }
+        .input-admin { @apply w-full p-4 rounded-2xl border-2 border-slate-200 outline-none focus:border-emerald-500 font-bold transition-all; }
 
-        .calc-btn { @apply p-4 rounded-2xl font-bold text-sm transition-all active:scale-90 flex items-center justify-center shadow-sm border border-black/5; }
-        .input-admin { background-color: #ffffff !important; color: #1e293b !important; border: 1px solid #cbd5e1; }
-        
-        .nav-icon-inactive { color: #000000 !important; opacity: 0.8; }
-        .dark .nav-icon-inactive { color: #ffffff !important; opacity: 0.4; }
-
-        /* Spinning Wheel Geometry */
+        /* Wheel Container */
         .wheel-container {
-            position: relative; width: 300px; height: 300px; margin: 0 auto;
-            border: 10px solid var(--islamic-green); border-radius: 50%; overflow: hidden;
+            position: relative; width: 280px; height: 280px; margin: 0 auto;
+            border: 8px solid var(--islamic-green); border-radius: 50%; overflow: hidden;
             transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1); background: white;
-            box-shadow: 0 0 50px rgba(6, 95, 70, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
         .wheel-pointer {
-            position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+            position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
             width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent;
-            border-top: 35px solid #ef4444; z-index: 40; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+            border-top: 30px solid #ef4444; z-index: 50;
         }
-
-        .winner-pop { animation: winner-scale 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-        @keyframes winner-scale { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-
-        .confetti { position: absolute; width: 10px; height: 10px; animation: fall 3s ease-out infinite; z-index: 101; pointer-events: none; }
-        @keyframes fall { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(80vh) rotate(720deg); opacity: 0; } }
     </style>
 </head>
-<body :class="{ 'dark': isDarkMode }" class="bg-slate-50 text-slate-900 min-h-screen bg-pattern">
+<body :class="{ 'dark': isDarkMode }" class="bg-pattern min-h-screen">
     <div id="app" v-cloak>
-        <!-- NAVIGATION BAR -->
-        <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-5xl glass rounded-[2.5rem] p-2.5 flex items-center shadow-2xl border-t border-white/40">
+        
+        <!-- NAVIGASI BAWAH (OPTIMAL HP) -->
+        <nav class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[100] w-[94%] max-w-4xl glass rounded-3xl p-2 flex items-center shadow-2xl border-t border-white/50">
             <div class="flex justify-around w-full overflow-x-auto no-scrollbar gap-1 px-2">
-                <button @click="currentTab = 'home'" :class="tabClass('home')"><i class="ph-bold ph-house-line text-xl"></i></button>
-                <button @click="currentTab = 'quran'" :class="tabClass('quran')"><i class="ph-bold ph-book-open text-xl"></i></button>
-                <button @click="currentTab = 'students'" :class="tabClass('students')"><i class="ph-bold ph-users text-xl"></i></button>
-                <button @click="currentTab = 'structure'" :class="tabClass('structure')"><i class="ph-bold ph-identification-card text-xl"></i></button>
-                <button @click="currentTab = 'schedule'" :class="tabClass('schedule')"><i class="ph-bold ph-calendar-blank text-xl"></i></button>
-                <button @click="currentTab = 'piket'" :class="tabClass('piket')"><i class="ph-bold ph-broom text-xl"></i></button>
-                <button @click="currentTab = 'tools'" :class="tabClass('tools')"><i class="ph-bold ph-spinner text-xl"></i></button>
-                <button @click="currentTab = 'calculator'" :class="tabClass('calculator')"><i class="ph-bold ph-calculator text-xl"></i></button>
-                <button @click="currentTab = 'kas'" :class="tabClass('kas')"><i class="ph-bold ph-bank text-xl"></i></button>
-                <button @click="currentTab = 'chat'" :class="tabClass('chat')"><i class="ph-bold ph-chat-centered-text text-xl"></i></button>
-                <button @click="currentTab = 'admin'" :class="tabClass('admin')"><i class="ph-bold ph-lock-key text-xl"></i></button>
+                <button @click="currentTab = 'home'" :class="tabClass('home')"><i class="ph-bold ph-house-line"></i></button>
+                <button @click="currentTab = 'quran'" :class="tabClass('quran')"><i class="ph-bold ph-book-open"></i></button>
+                <button @click="currentTab = 'students'" :class="tabClass('students')"><i class="ph-bold ph-users"></i></button>
+                <button @click="currentTab = 'structure'" :class="tabClass('structure')"><i class="ph-bold ph-identification-card"></i></button>
+                <button @click="currentTab = 'schedule'" :class="tabClass('schedule')"><i class="ph-bold ph-calendar-blank"></i></button>
+                <button @click="currentTab = 'piket'" :class="tabClass('piket')"><i class="ph-bold ph-broom"></i></button>
+                <button @click="currentTab = 'tools'" :class="tabClass('tools')"><i class="ph-bold ph-spinner"></i></button>
+                <button @click="currentTab = 'calculator'" :class="tabClass('calculator')"><i class="ph-bold ph-calculator"></i></button>
+                <button @click="currentTab = 'kas'" :class="tabClass('kas')"><i class="ph-bold ph-bank"></i></button>
+                <button @click="currentTab = 'chat'" :class="tabClass('chat')"><i class="ph-bold ph-chat-centered-text"></i></button>
+                <button @click="currentTab = 'admin'" :class="tabClass('admin')"><i class="ph-bold ph-lock-key"></i></button>
                 <div class="h-8 w-[1px] bg-black/10 dark:bg-white/10 shrink-0 mx-1"></div>
-                <button @click="toggleDarkMode" class="p-3 rounded-2xl transition-all btn-interact" :class="isDarkMode ? 'text-yellow-400' : 'text-orange-500'">
+                <button @click="toggleDarkMode" class="p-3 rounded-2xl transition-all btn-interact" :class="isDarkMode ? 'text-yellow-400' : 'text-orange-600'">
                     <i :class="isDarkMode ? 'ph-bold ph-sun' : 'ph-bold ph-moon'"></i>
                 </button>
             </div>
         </nav>
 
-        <!-- MAIN CONTAINER -->
-        <main class="max-w-6xl mx-auto px-4 pt-10 pb-44">
+        <!-- KONTEN UTAMA -->
+        <main class="max-w-4xl mx-auto px-4 pt-10 pb-40">
             
-            <!-- 1. HOME VIEW -->
-            <section v-if="currentTab === 'home'" class="space-y-12 animate-in fade-in duration-700">
-                <div class="text-center space-y-6">
-                    <div class="inline-block p-2 px-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 font-black text-[10px] tracking-[0.3em] uppercase shadow-sm">
-                        BHAWARA {{ classInfo.name }} • ANGKATAN 64
+            <!-- 1. BERANDA -->
+            <section v-if="currentTab === 'home'" class="space-y-10 animate-in fade-in duration-700 text-center">
+                <div class="space-y-4">
+                    <div class="inline-block p-2 px-6 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 font-bold text-[10px] tracking-widest uppercase border border-emerald-500/20">
+                        ANGKATAN 64 • SMPN 8 YOGYAKARTA
                     </div>
                     <h1 class="text-4xl md:text-5xl font-arabic font-bold text-emerald-800 dark:text-emerald-400">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</h1>
-                    <h2 class="text-7xl md:text-9xl font-black tracking-tighter uppercase drop-shadow-sm">BHAWARA <span class="text-emerald-600">{{ classInfo.name }}</span></h2>
-                    <p class="text-xl font-medium italic opacity-60 text-center">"Berkarakter, Bermutu"</p>
+                    <h2 class="text-6xl md:text-7xl font-black tracking-tighter uppercase leading-tight">BHAWARA <span class="text-emerald-600">{{ classInfo.name }}</span></h2>
+                    <p class="text-xl font-medium italic opacity-60">"Berkarakter, Bermutu, Bertaqwa"</p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="glass p-10 rounded-[3rem] text-center space-y-2 border-emerald-500/20 border-2 shadow-inner">
-                        <div class="text-5xl font-mono font-bold text-emerald-600 tracking-tighter">{{ digitalTime }}</div>
-                        <div class="text-[9px] uppercase tracking-[0.4em] opacity-50 font-black">Yogyakarta • WIB</div>
+                    <div class="glass p-10 rounded-[2.5rem] text-center border-emerald-500/20 border-2 shadow-xl">
+                        <div class="text-[10px] uppercase tracking-widest opacity-40 font-black mb-1">Waktu WIB</div>
+                        <div class="text-6xl font-mono font-black text-emerald-600">{{ digitalTime }}</div>
                     </div>
-                    <a href="https://www.instagram.com/bhawara_8g" target="_blank" class="glass p-10 rounded-[3rem] flex items-center justify-between group hover:bg-emerald-600 transition-all duration-700 overflow-hidden relative shadow-lg">
-                        <div class="z-10 text-left">
-                            <h3 class="font-black text-2xl group-hover:text-white transition-colors">Official Instagram</h3>
-                            <p class="text-sm opacity-60 group-hover:text-emerald-100 font-mono">@bhawara_{{ classInfo.name.toLowerCase() }}</p>
+                    <a :href="'https://www.instagram.com/bhawara_' + classInfo.name.toLowerCase()" target="_blank" class="glass p-10 rounded-[2.5rem] flex items-center justify-between group hover:bg-emerald-600 transition-all border-2 border-white/20 shadow-xl">
+                        <div class="text-left">
+                            <h3 class="font-black text-2xl group-hover:text-white">Instagram</h3>
+                            <p class="text-sm opacity-60 group-hover:text-emerald-100">@bhawara_{{ classInfo.name.toLowerCase() }}</p>
                         </div>
-                        <i class="ph-fill ph-instagram-logo text-7xl opacity-20 group-hover:opacity-100 group-hover:text-white group-hover:scale-110 transition-all z-10"></i>
-                        <div class="absolute inset-0 bg-gradient-to-tr from-purple-600 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <i class="ph-fill ph-instagram-logo text-7xl opacity-20 group-hover:opacity-100 group-hover:text-white transition-all"></i>
                     </a>
                 </div>
-                <div v-if="events && events.length > 0" class="relative overflow-hidden rounded-[3rem] bg-emerald-900 text-white p-12 shadow-2xl animate-in slide-in-from-bottom">
+                <div v-if="events.length > 0" class="glass p-10 rounded-[3rem] bg-emerald-900 text-white text-left shadow-2xl relative overflow-hidden">
                     <div class="relative z-10 space-y-4">
-                        <span class="bg-yellow-500 text-black text-[10px] font-black px-4 py-1.5 rounded-full inline-block tracking-widest uppercase shadow-lg">Agenda Terdekat</span>
-                        <h3 class="text-4xl font-black tracking-tight">{{ events[0].title }}</h3>
-                        <p class="opacity-80 text-sm font-bold flex gap-4"><i class="ph-bold ph-calendar"></i> {{ events[0].date }} | <i class="ph-bold ph-map-pin"></i> {{ events[0].location }}</p>
+                        <span class="bg-yellow-500 text-black text-[10px] font-black px-4 py-1 rounded-full uppercase">Agenda Terdekat</span>
+                        <h3 class="text-3xl font-black">{{ events[0].title }}</h3>
+                        <p class="opacity-80 text-sm font-bold flex items-center gap-4"><i class="ph-bold ph-calendar"></i> {{ events[0].date }} | <i class="ph-bold ph-map-pin"></i> {{ events[0].location }}</p>
                     </div>
-                    <i class="ph-bold ph-sparkle text-[15rem] absolute -right-20 -bottom-20 opacity-10 animate-pulse"></i>
                 </div>
             </section>
 
-            <!-- 2. AL-QURAN VIEW -->
+            <!-- 2. AL-QURAN (TEKS HITAM) -->
             <section v-if="currentTab === 'quran'" class="space-y-8 animate-in slide-in-from-bottom-10">
                 <div v-if="!selectedSurah">
                     <h2 class="text-4xl font-black">Al-Qur'an <span class="text-emerald-600">Digital</span></h2>
-                    <div class="glass p-5 rounded-[2.5rem] mb-8 flex items-center gap-4 border border-emerald-500/10">
-                        <i class="ph-bold ph-magnifying-glass text-xl opacity-40 text-emerald-700"></i>
-                        <input v-model="searchSurah" type="text" placeholder="Cari nama surah..." class="bg-transparent w-full outline-none font-bold text-base">
+                    <div class="glass p-4 rounded-2xl mb-8 flex items-center gap-4 border border-emerald-500/10 shadow-lg">
+                        <i class="ph-bold ph-magnifying-glass text-2xl opacity-40"></i>
+                        <input v-model="searchSurah" type="text" placeholder="Cari Surah..." class="bg-transparent w-full outline-none font-bold text-lg">
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                        <div v-for="s in filteredSurahs" :key="s.nomor" @click="fetchSurahDetail(s.nomor)" class="glass p-6 rounded-[2.5rem] flex items-center justify-between cursor-pointer hover:bg-emerald-600 transition-all border border-emerald-500/5 group">
-                            <div class="flex items-center gap-5">
-                                <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-black text-sm shadow-lg group-hover:bg-white group-hover:text-emerald-600 transition-colors">{{ s.nomor }}</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div v-for="s in filteredSurahs" :key="s.nomor" @click="fetchSurahDetail(s.nomor)" class="glass p-5 rounded-3xl flex items-center justify-between cursor-pointer hover:bg-emerald-600 hover:text-white transition-all group">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-black text-sm group-hover:bg-white group-hover:text-emerald-600 transition-all">{{ s.nomor }}</div>
                                 <div>
-                                    <h4 class="font-black text-sm uppercase group-hover:text-white">{{ s.namaLatin }}</h4>
-                                    <p class="text-[10px] opacity-40 font-black uppercase tracking-widest group-hover:text-emerald-100">{{ s.arti }}</p>
+                                    <h4 class="font-black text-sm uppercase">{{ s.namaLatin }}</h4>
+                                    <p class="text-[10px] opacity-40 group-hover:text-emerald-100 uppercase">{{ s.arti }} • {{ s.jumlahAyat }} Ayat</p>
                                 </div>
                             </div>
-                            <div class="font-arabic text-2xl text-emerald-700 dark:text-emerald-400 group-hover:text-white transition-transform">{{ s.nama }}</div>
+                            <div class="font-arabic text-2xl text-emerald-700 dark:text-emerald-400 group-hover:text-white">{{ s.nama }}</div>
                         </div>
                     </div>
                 </div>
-                <div v-else class="animate-in fade-in duration-500">
-                    <button @click="selectedSurah = null" class="flex items-center gap-2 text-xs font-black text-emerald-600 uppercase mb-8 hover:translate-x-[-4px] transition-transform"><i class="ph-bold ph-arrow-left"></i> Kembali</button>
-                    <div class="glass p-12 rounded-[4rem] text-center space-y-4 border-b-[12px] border-emerald-600 shadow-2xl mb-12">
-                        <h2 class="font-arabic text-6xl text-emerald-800">{{ selectedSurah.nama }}</h2>
-                        <h3 class="text-3xl font-black uppercase tracking-tighter">{{ selectedSurah.namaLatin }}</h3>
-                        <p class="text-[10px] font-black opacity-40 uppercase tracking-[0.4em]">{{ selectedSurah.arti }} • {{ selectedSurah.tempatTurun }}</p>
+                <div v-else class="animate-in fade-in">
+                    <button @click="selectedSurah = null" class="flex items-center gap-2 text-xs font-black text-emerald-600 uppercase mb-8"><i class="ph-bold ph-arrow-left"></i> Kembali</button>
+                    <div class="glass p-10 rounded-[3rem] text-center border-b-8 border-emerald-600 shadow-xl mb-10">
+                        <h2 class="font-arabic text-5xl text-emerald-900">{{ selectedSurah.nama }}</h2>
+                        <h3 class="text-2xl font-black uppercase tracking-tighter">{{ selectedSurah.namaLatin }}</h3>
+                        <p class="text-xs font-bold opacity-40 uppercase tracking-widest">{{ selectedSurah.arti }} • {{ selectedSurah.tempatTurun }}</p>
                     </div>
                     <div class="space-y-8">
-                        <div v-if="selectedSurah.nomor !== 1 && selectedSurah.nomor !== 9" class="text-center py-10 font-arabic text-4xl opacity-80 quran-text-black tracking-widest">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
-                        <div v-for="a in selectedSurah.ayat" :key="a.nomorAyat" class="quran-card p-10 rounded-[3rem] space-y-8 shadow-xl border-l-[12px] border-emerald-600 transition-all hover:scale-[1.01]">
-                            <div class="flex justify-between items-start gap-8">
-                                <div class="w-10 h-10 shrink-0 rounded-2xl bg-emerald-50 flex items-center justify-center text-xs font-black quran-text-black border border-emerald-500/20">{{ a.nomorAyat }}</div>
-                                <div class="text-right font-arabic text-4xl leading-[2.2] quran-text-black tracking-wide">{{ a.teksArab }}</div>
+                        <div v-for="a in selectedSurah.ayat" :key="a.nomorAyat" class="quran-card p-8 rounded-[2.5rem] space-y-6">
+                            <div class="flex justify-between items-start gap-6">
+                                <div class="w-10 h-10 shrink-0 rounded-xl bg-slate-100 flex items-center justify-center text-xs font-black quran-text-black">{{ a.nomorAyat }}</div>
+                                <div class="text-right font-arabic text-3xl leading-loose quran-text-black">{{ a.teksArab }}</div>
                             </div>
-                            <div class="space-y-4 border-t border-slate-100 pt-6">
-                                <p class="text-[11px] quran-text-black font-black italic tracking-wide leading-relaxed">{{ a.teksLatin }}</p>
-                                <p class="text-sm leading-relaxed font-semibold quran-text-black text-slate-600">{{ a.teksIndonesia }}</p>
+                            <div class="space-y-4 border-t pt-4 border-slate-100">
+                                <p class="text-xs quran-text-black font-black italic">{{ a.teksLatin }}</p>
+                                <p class="text-sm font-bold quran-text-black text-slate-700">{{ a.teksIndonesia }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 3. VIEW: STUDENTS -->
+            <!-- 3. DATA SISWA -->
             <section v-if="currentTab === 'students'" class="space-y-8 animate-in slide-in-from-right">
-                <h2 class="text-4xl font-black">Database <span class="text-emerald-600">Siswa</span></h2>
-                <div v-if="students.length === 0" class="py-32 text-center glass rounded-[3rem] border-dashed border-4 border-emerald-500/10"><p class="opacity-40 uppercase font-black text-xs tracking-widest">Database Kosong</p></div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                    <div v-for="student in sortedStudents" :key="student.noAbsen" class="glass p-5 rounded-[2.5rem] text-center group transition-all hover:-translate-y-3 relative overflow-hidden shadow-lg border border-emerald-500/5">
-                        <div class="absolute top-4 left-4 bg-emerald-600 text-white text-[10px] font-black w-8 h-8 rounded-2xl flex items-center justify-center z-10 shadow-xl ring-4 ring-white/10">{{ student.noAbsen }}</div>
-                        <div class="aspect-square rounded-3xl bg-slate-200 dark:bg-slate-800 mb-5 overflow-hidden border-2 border-emerald-500/10 shadow-inner">
-                            <img :src="student.photo || 'https://via.placeholder.com/400?text=Siswa'" class="w-full h-full object-cover transition-all duration-700 group-hover:scale-125">
+                <h2 class="text-4xl font-black">Data <span class="text-emerald-600">Siswa</span></h2>
+                <div v-if="students.length === 0" class="py-20 text-center glass rounded-3xl border-dashed border-2 border-emerald-500/10">
+                    <p class="opacity-40 uppercase font-black text-xs">Belum ada data siswa</p>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    <div v-for="student in sortedStudents" :key="student.noAbsen" class="glass p-4 rounded-3xl text-center group transition-all hover:-translate-y-2 relative overflow-hidden shadow-lg">
+                        <div class="absolute top-3 left-3 bg-emerald-600 text-white text-[10px] font-black w-6 h-6 rounded-lg flex items-center justify-center z-10">{{ student.noAbsen }}</div>
+                        <div class="aspect-square rounded-2xl bg-slate-200 dark:bg-slate-800 mb-4 overflow-hidden border-2 border-emerald-500/10">
+                            <img :src="student.photo || 'https://via.placeholder.com/400?text=Siswa'" class="w-full h-full object-cover">
                         </div>
                         <h3 class="font-black text-xs truncate uppercase text-emerald-900 dark:text-emerald-300">{{ student.name }}</h3>
-                        <p class="text-[8px] font-black opacity-30 uppercase mt-1">{{ student.gender === 'L' ? 'LAKI-LAKI' : 'PEREMPUAN' }}</p>
+                        <p class="text-[9px] font-black opacity-30 uppercase">{{ student.gender === 'L' ? 'Laki-laki' : 'Perempuan' }}</p>
                     </div>
                 </div>
             </section>
 
-            <!-- 4. VIEW: STRUCTURE (HIERARCHY) -->
+            <!-- 4. STRUKTUR -->
             <section v-if="currentTab === 'structure'" class="space-y-16 text-center animate-in slide-in-from-top">
-                <h2 class="text-4xl font-black">Struktur <span class="text-emerald-600">Kepengurusan</span></h2>
-                <div v-if="structure.length === 0" class="py-24 glass rounded-[4rem] border-dashed border-4 border-emerald-500/10"><p class="opacity-30 uppercase font-black text-xs">Belum diatur admin.</p></div>
+                <h2 class="text-4xl font-black">Struktur <span class="text-emerald-600">Kelas</span></h2>
+                <div v-if="structure.length === 0" class="py-20 glass rounded-[3rem] border-dashed border-2 border-emerald-500/10"><p class="opacity-30 uppercase font-black">Belum diatur admin</p></div>
                 <div v-else class="space-y-20">
                     <div v-if="getStructureByRole('Wali Kelas')" class="flex justify-center">
-                        <div class="w-64 space-y-5 animate-in zoom-in">
-                            <div class="aspect-square rounded-[4rem] border-[10px] border-emerald-600 p-2.5 bg-white shadow-2xl overflow-hidden ring-[15px] ring-emerald-500/5 transition-transform hover:scale-105">
-                                <img :src="getStructureByRole('Wali Kelas').photo" class="w-full h-full object-cover rounded-[3rem]" onerror="this.src='https://via.placeholder.com/300?text=Wali+Kelas'">
+                        <div class="w-60 space-y-4">
+                            <div class="aspect-square rounded-[3rem] border-8 border-emerald-600 p-2 bg-white shadow-2xl overflow-hidden ring-8 ring-emerald-500/5">
+                                <img :src="getStructureByRole('Wali Kelas').photo" class="w-full h-full object-cover rounded-[2rem]" onerror="this.src='https://via.placeholder.com/300?text=Profil'">
                             </div>
                             <div>
-                                <h4 class="font-black text-emerald-700 text-sm uppercase tracking-[0.3em]">Wali Kelas</h4>
-                                <p class="font-black text-2xl mt-2 text-slate-800 dark:text-emerald-100">{{ getStructureByRole('Wali Kelas').name }}</p>
+                                <h4 class="font-black text-emerald-700 text-xs uppercase tracking-widest leading-none mb-1">Wali Kelas</h4>
+                                <p class="font-black text-xl text-slate-800 dark:text-emerald-100">{{ getStructureByRole('Wali Kelas').name }}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-12 max-w-2xl mx-auto">
+                    <div class="grid grid-cols-2 gap-10 max-w-2xl mx-auto">
                         <div v-for="role in ['Ketua Kelas', 'Wakil Ketua']" :key="role">
-                            <div v-if="getStructureByRole(role)" class="space-y-5 animate-in fade-in">
-                                <div class="aspect-square rounded-full border-8 border-emerald-500 p-1.5 bg-white shadow-2xl overflow-hidden ring-8 ring-emerald-500/10">
+                            <div v-if="getStructureByRole(role)" class="space-y-4">
+                                <div class="aspect-square rounded-full border-4 border-emerald-500 p-1 bg-white shadow-xl overflow-hidden ring-4 ring-emerald-500/10">
                                     <img :src="getStructureByRole(role).photo" class="w-full h-full object-cover rounded-full" onerror="this.src='https://via.placeholder.com/200?text=Profil'">
                                 </div>
-                                <h4 class="font-black text-emerald-600 text-[11px] uppercase tracking-widest">{{ role }}</h4>
-                                <p class="font-black text-lg mt-1 tracking-tight leading-tight">{{ getStructureByRole(role).name }}</p>
+                                <h4 class="font-black text-emerald-600 text-[10px] uppercase leading-none">{{ role }}</h4>
+                                <p class="font-black text-sm">{{ getStructureByRole(role).name }}</p>
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                        <div v-for="member in otherStructure" :key="member.id" class="glass p-6 rounded-[3rem] space-y-4 shadow-md border border-emerald-500/10 transition-all hover:scale-105">
-                            <div class="w-20 h-20 mx-auto rounded-3xl overflow-hidden border-4 border-emerald-500/20 bg-white"><img :src="member.photo" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150?text=Profil'"></div>
-                            <div><h4 class="font-black text-[9px] text-emerald-600 uppercase tracking-widest">{{ member.role }}</h4><p class="font-black text-xs mt-1">{{ member.name }}</p></div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+                        <div v-for="member in otherStructure" :key="member.id" class="glass p-6 rounded-3xl space-y-3 shadow-md border border-emerald-500/10">
+                            <div class="w-20 h-20 mx-auto rounded-2xl overflow-hidden border-2 border-emerald-500/20 bg-white"><img :src="member.photo" class="w-full h-full object-cover"></div>
+                            <div><h4 class="font-black text-[9px] text-emerald-600 uppercase">{{ member.role }}</h4><p class="font-black text-xs">{{ member.name }}</p></div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 5. VIEW: SCHEDULE & PIKET (GRID KOTAK) -->
-            <section v-if="currentTab === 'schedule'" class="space-y-8 animate-in slide-in-from-bottom-10">
+            <!-- 5. JADWAL PELAJARAN -->
+            <section v-if="currentTab === 'schedule'" class="space-y-10 animate-in slide-in-from-bottom-10">
                 <h2 class="text-4xl font-black">Jadwal <span class="text-emerald-600">Pelajaran</span></h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div v-for="day in days" :key="day" class="glass overflow-hidden rounded-[3rem] border border-emerald-500/10 shadow-lg">
-                        <div class="bg-emerald-800 p-6 text-white font-black flex justify-between items-center shadow-xl uppercase text-sm tracking-widest">
-                            <span>{{ day }}</span><i class="ph-bold ph-book-open-text text-2xl"></i>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div v-for="day in days" :key="day" class="glass overflow-hidden rounded-[2.5rem] border-2 border-emerald-500/10 shadow-lg">
+                        <div class="bg-emerald-800 p-5 text-white font-black flex justify-between items-center shadow-xl uppercase text-xs tracking-widest">
+                            <span>{{ day }}</span><i class="ph-bold ph-book-open text-xl"></i>
                         </div>
-                        <div class="p-8 space-y-4">
-                            <div v-if="getScheduleForDay(day).length === 0" class="text-[9px] opacity-20 font-black py-8 text-center tracking-[0.3em]">KOSONG</div>
-                            <div v-for="item in getScheduleForDay(day)" :key="item.id" class="flex justify-between items-center text-sm p-5 bg-white dark:bg-slate-800 rounded-3xl border shadow-sm transition-all hover:translate-x-2">
-                                <span class="font-black text-emerald-900 dark:text-emerald-100 uppercase text-xs">{{ item.subject }}</span>
+                        <div class="p-6 space-y-4">
+                            <div v-if="getScheduleForDay(day).length === 0" class="text-xs opacity-20 font-black py-10 text-center uppercase tracking-widest">Kosong</div>
+                            <div v-for="item in getScheduleForDay(day)" :key="item.id" class="flex justify-between items-center text-sm p-4 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-white/5 shadow-sm transition-all hover:translate-x-2">
+                                <span class="font-black text-emerald-900 dark:text-emerald-100 uppercase text-[11px]">{{ item.subject }}</span>
                                 <span class="opacity-40 text-[10px] font-mono font-black">{{ item.time }}</span>
                             </div>
                         </div>
@@ -249,14 +244,15 @@
                 </div>
             </section>
 
-            <section v-if="currentTab === 'piket'" class="space-y-8 animate-in slide-in-from-bottom-10">
+            <!-- 6. JADWAL PIKET -->
+            <section v-if="currentTab === 'piket'" class="space-y-10 animate-in slide-in-from-bottom-10">
                 <h2 class="text-4xl font-black">Jadwal <span class="text-emerald-600">Piket</span></h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div v-for="day in days" :key="day" class="glass rounded-[3rem] p-10 border-l-[15px] border-emerald-700 shadow-xl transition-all hover:-translate-y-2">
-                        <h3 class="text-3xl font-black mb-8 flex items-center gap-4 tracking-tighter uppercase text-emerald-800 dark:text-emerald-400"><i class="ph-bold ph-broom text-4xl"></i>{{ day }}</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div v-for="day in days" :key="day" class="glass rounded-[3rem] p-8 border-l-[15px] border-emerald-700 shadow-xl transition-all">
+                        <h3 class="text-2xl font-black mb-6 flex items-center gap-4 tracking-tighter uppercase text-emerald-800 dark:text-emerald-400 leading-none"><i class="ph-bold ph-broom text-4xl"></i>{{ day }}</h3>
                         <div class="flex flex-wrap gap-3">
-                            <div v-if="getPiketForDay(day).length === 0" class="text-[10px] opacity-20 font-black uppercase tracking-[0.5em]">Kosong</div>
-                            <span v-for="name in getPiketForDay(day)" :key="name" class="bg-emerald-50 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-200 px-5 py-2.5 rounded-2xl text-[11px] font-black uppercase tracking-widest shadow-sm">
+                            <div v-if="getPiketForDay(day).length === 0" class="text-[10px] opacity-20 font-black uppercase tracking-widest">Belum diatur</div>
+                            <span v-for="name in getPiketForDay(day)" :key="name" class="bg-emerald-50 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-100 px-5 py-2 rounded-xl text-xs font-black uppercase tracking-widest shadow-sm">
                                 {{ name }}
                             </span>
                         </div>
@@ -264,258 +260,269 @@
                 </div>
             </section>
 
-            <!-- 6. VIEW: TOOLS (WHEEL & GROUPS) -->
-            <section v-if="currentTab === 'tools'" class="space-y-12 animate-in zoom-in">
+            <!-- 7. TOOLS (WHEEL & GROUP) -->
+            <section v-if="currentTab === 'tools'" class="space-y-12 animate-in zoom-in duration-500 text-center">
                 <div class="flex justify-between items-end">
-                    <h2 class="text-4xl font-black">Class <span class="text-emerald-600">Tools</span></h2>
-                    <button @click="resetTools" class="text-[9px] font-black uppercase tracking-widest bg-red-500 text-white p-3 px-8 rounded-full shadow-lg hover:bg-red-600 transition-all btn-interact">Reset Semua</button>
+                    <h2 class="text-4xl font-black text-left leading-none">Class <span class="text-emerald-600">Tools</span></h2>
+                    <button @click="resetTools" class="text-[10px] font-black uppercase bg-red-500 text-white p-2 px-6 rounded-full shadow-lg active:scale-90 transition-all">Reset All</button>
                 </div>
                 
-                <div class="glass p-12 rounded-[4rem] text-center space-y-10 shadow-2xl relative border border-emerald-500/10">
-                    <div class="flex flex-wrap justify-center gap-3">
-                        <button v-for="f in ['Campur', 'Laki-laki', 'Perempuan']" :key="f" @click="setWheelFilter(f)" :class="wheelFilter === f ? 'bg-emerald-600 text-white shadow-xl scale-110' : 'bg-white dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-white/10'" class="p-3 px-8 rounded-full text-[11px] font-black transition-all">{{ f }}</button>
+                <div class="glass p-10 rounded-[4rem] shadow-2xl relative border border-emerald-500/10">
+                    <div class="flex flex-wrap justify-center gap-3 mb-10">
+                        <button v-for="f in ['Campur', 'Laki-laki', 'Perempuan']" :key="f" @click="setWheelFilter(f)" :class="wheelFilter === f ? 'bg-emerald-600 text-white shadow-xl scale-110' : 'bg-white dark:bg-slate-800 text-slate-500 border border-slate-200'" class="p-3 px-8 rounded-full text-[10px] font-black transition-all">{{ f }}</button>
                     </div>
-                    <div class="relative py-12">
+                    <div class="relative py-10">
                         <div class="wheel-pointer"></div>
                         <div class="wheel-container" :style="{ transform: `rotate(${wheelRotation}deg)` }">
-                            <div v-for="(s, i) in wheelPool" :key="s.noAbsen" :style="wheelSegmentStyle(i)" class="absolute inset-0 flex items-start justify-center pt-10 text-[9px] font-black uppercase origin-bottom">
-                                <span class="rotate-[-90deg] translate-y-6">{{ s.name.split(' ')[0] }}</span>
+                            <div v-for="(s, i) in wheelPool" :key="s.noAbsen" :style="wheelSegmentStyle(i)" class="absolute inset-0 flex items-start justify-center pt-8 text-[9px] font-black uppercase origin-bottom">
+                                <span class="rotate-[-90deg] translate-y-6 leading-none">{{ s.name.split(' ')[0] }}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-wrap items-center justify-center gap-8 py-6 border-t border-emerald-500/10">
-                        <label class="flex items-center gap-4 cursor-pointer group"><input type="checkbox" v-model="removeAfterSpin" class="w-6 h-6 rounded-lg accent-emerald-600"><span class="text-[11px] font-black uppercase tracking-widest opacity-60">Hapus Jika Menang</span></label>
-                        <button @click="resetWheelPool" class="text-[11px] font-black text-emerald-600 hover:underline uppercase tracking-widest">Reset Daftar (Tersisa {{ wheelPool.length }})</button>
+                    <div class="flex flex-wrap items-center justify-center gap-8 py-6 border-t border-emerald-500/10 mt-10">
+                        <label class="flex items-center gap-3 cursor-pointer group"><input type="checkbox" v-model="removeAfterSpin" class="w-6 h-6 rounded-lg accent-emerald-600 shadow-inner"><span class="text-[10px] font-black uppercase opacity-60">Hapus Jika Menang</span></label>
+                        <button @click="resetWheelPool" class="text-[10px] font-black text-emerald-600 hover:underline uppercase">Reset List ({{ wheelPool.length }})</button>
                     </div>
-                    <button @click="spinWheel" :disabled="isSpinning || wheelPool.length === 0" class="w-full bg-emerald-700 text-white p-6 rounded-[3rem] font-black text-lg uppercase shadow-2xl btn-interact">PUTAR SEKARANG</button>
+                    <button @click="spinWheel" :disabled="isSpinning || wheelPool.length === 0" class="w-full bg-emerald-700 text-white p-6 rounded-[2.5rem] font-black text-xl uppercase shadow-2xl active:scale-95 disabled:opacity-20 transition-all">PUTAR RODA!</button>
                     
-                    <div v-if="wheelWinner" class="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-emerald-950/90 backdrop-blur-xl animate-in fade-in">
+                    <div v-if="wheelWinner" class="fixed inset-0 z-[150] flex items-center justify-center p-6 bg-emerald-950/90 backdrop-blur-xl animate-in fade-in">
                         <div v-for="i in 30" :key="i" class="confetti" :style="{ left: Math.random() * 100 + 'vw', backgroundColor: i%2===0?'#d4af37':'#f8fafc', animationDelay: Math.random() * 3 + 's' }"></div>
-                        <div class="winner-pop glass bg-white dark:bg-slate-900 p-16 rounded-[5rem] text-center shadow-2xl border-4 border-emerald-500/40 space-y-8 max-w-md w-full relative">
-                            <div class="aspect-square w-48 h-48 mx-auto rounded-[3rem] border-[8px] border-emerald-500 p-2 bg-white overflow-hidden shadow-2xl"><img :src="getWinnerPhoto()" class="w-full h-full object-cover rounded-[2rem]" onerror="this.src='https://via.placeholder.com/200?text=Winner'"></div>
-                            <h2 class="text-5xl font-black uppercase tracking-tighter text-slate-900 dark:text-white leading-none">{{ wheelWinner }}</h2>
-                            <button @click="wheelWinner = null" class="w-full bg-emerald-700 text-white p-5 rounded-[2rem] font-black uppercase shadow-lg btn-interact">Tutup</button>
+                        <div class="winner-pop glass bg-white dark:bg-slate-900 p-16 rounded-[4rem] shadow-2xl border-4 border-emerald-500/40 space-y-8 max-w-sm w-full relative">
+                            <h4 class="text-xs font-black uppercase tracking-[0.5em] text-emerald-600">✨ TERPILIH ✨</h4>
+                            <div class="aspect-square w-48 mx-auto rounded-[3rem] border-[10px] border-emerald-500 p-2 bg-white overflow-hidden shadow-2xl"><img :src="getWinnerPhoto()" class="w-full h-full object-cover rounded-[2rem]" onerror="this.src='https://via.placeholder.com/200?text=Siswa'"></div>
+                            <h2 class="text-4xl font-black uppercase tracking-tighter text-slate-900 dark:text-white leading-none">{{ wheelWinner }}</h2>
+                            <button @click="wheelWinner = null" class="w-full bg-emerald-700 text-white p-5 rounded-3xl font-black text-lg uppercase shadow-lg active:scale-90">LANJUT</button>
                         </div>
                     </div>
                 </div>
-                <div class="glass p-12 rounded-[4rem] space-y-8 shadow-2xl border border-emerald-500/10">
-                    <h3 class="font-black uppercase text-sm text-emerald-700 text-center tracking-widest">Group Randomizer</h3>
+                <!-- Group Randomizer -->
+                <div class="glass p-12 rounded-[4rem] space-y-8 shadow-2xl border border-emerald-500/10 text-left">
+                    <h3 class="font-black uppercase text-sm text-emerald-700 tracking-widest text-center">Group Randomizer</h3>
                     <div class="grid grid-cols-2 gap-6">
-                        <select v-model="groupFilter" class="p-5 rounded-[2rem] input-admin font-black text-xs shadow-sm"><option value="Campur">Campur</option><option value="L">Hanya Laki-laki</option><option value="P">Hanya Perempuan</option></select>
-                        <select v-model="groupCount" class="p-5 rounded-[2rem] input-admin font-black text-xs shadow-sm"><option value="2">2 Kelompok</option><option value="4">4 Kelompok</option><option value="8">8 Kelompok</option><option v-if="groupFilter === 'Campur'" value="16">16 Kelompok</option></select>
+                        <div class="space-y-2"><label class="text-[10px] font-black uppercase opacity-40 px-4">Gender</label><select v-model="groupFilter" class="w-full p-4 rounded-2xl bg-white dark:bg-slate-800 border-2 border-slate-200 font-bold"><option value="Campur">Campur</option><option value="L">Laki-laki</option><option value="P">Perempuan</option></select></div>
+                        <div class="space-y-2"><label class="text-[10px] font-black uppercase opacity-40 px-4">Kelompok</label><select v-model="groupCount" class="w-full p-4 rounded-2xl bg-white dark:bg-slate-800 border-2 border-slate-200 font-bold"><option value="2">2 Kelompok</option><option value="4">4 Kelompok</option><option value="8">8 Kelompok</option><option v-if="groupFilter === 'Campur'" value="16">16 Kelompok</option></select></div>
                     </div>
-                    <button @click="generateGroups" class="w-full bg-emerald-800 text-white p-5 rounded-[2.5rem] font-black tracking-widest btn-interact uppercase shadow-xl">ACAK KELOMPOK</button>
+                    <button @click="generateGroups" class="w-full bg-emerald-800 text-white p-5 rounded-[2.5rem] font-black text-lg uppercase shadow-xl transition-all active:scale-95">ACAK KELOMPOK</button>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                        <div v-for="(group, idx) in generatedGroups" :key="idx" class="p-8 bg-white dark:bg-slate-800 rounded-[3.5rem] border-2 border-emerald-500/10 shadow-xl">
-                            <h4 class="font-black text-emerald-600 uppercase text-xs mb-6 flex justify-between border-b pb-4"><span>Kelompok {{ idx + 1 }}</span><span class="opacity-40">{{ group.length }} Org</span></h4>
+                        <div v-for="(group, idx) in generatedGroups" :key="idx" class="p-8 bg-white dark:bg-slate-800 rounded-[3.5rem] border-2 border-emerald-500/10 shadow-xl transition-all hover:scale-[1.03]">
+                            <h4 class="font-black text-emerald-600 uppercase text-xs mb-6 flex justify-between border-b-2 pb-4"><span>Kelompok {{ idx + 1 }}</span><span class="opacity-40">{{ group.length }} Org</span></h4>
                             <div class="space-y-3">
-                                <p v-for="m in group" :key="m.noAbsen" class="text-[12px] font-bold opacity-80 flex items-center gap-3 uppercase tracking-tighter"><span class="w-6 h-6 rounded-xl bg-emerald-50 text-[10px] flex items-center justify-center font-black text-emerald-700 shadow-sm">{{ m.noAbsen }}</span>{{ m.name }}</p>
+                                <p v-for="m in group" :key="m.noAbsen" class="text-sm font-bold opacity-80 flex items-center gap-3 uppercase"><span class="w-6 h-6 rounded-xl bg-emerald-50 text-[10px] flex items-center justify-center font-black text-emerald-700 shadow-inner">{{ m.noAbsen }}</span>{{ m.name }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 7. VIEW: CALCULATOR HUB (PRO UPDATE) -->
-            <section v-if="currentTab === 'calculator'" class="space-y-10 animate-in slide-in-from-bottom-10">
-                <h2 class="text-4xl font-black">Bhawara <span class="text-emerald-600">Calculators</span></h2>
-                <div class="flex gap-2 overflow-x-auto pb-4 no-scrollbar">
-                    <button v-for="c in ['Saintifik', 'Mata Uang', 'Zakat']" :key="c" @click="calcTab = c" :class="calcTab === c ? 'bg-emerald-600 text-white shadow-2xl scale-105' : 'bg-white dark:bg-slate-800 opacity-50'" class="flex-none px-10 py-3 rounded-full font-black text-xs uppercase tracking-widest border transition-all">{{ c }}</button>
+            <!-- 8. VIEW: CALCULATOR HUB (GRAND SUPREME) -->
+            <section v-if="currentTab === 'calculator'" class="space-y-12 animate-in slide-in-from-bottom-10">
+                <h2 class="text-4xl font-black text-center uppercase tracking-widest">Supreme <span class="text-emerald-600">Calculators</span></h2>
+                <div class="flex gap-4 justify-center overflow-x-auto pb-10 no-scrollbar">
+                    <button v-for="c in ['Saintifik', 'Mata Uang', 'Zakat']" :key="c" @click="calcTab = c" :class="calcTab === c ? 'bg-emerald-600 text-white shadow-2xl scale-110' : 'bg-white dark:bg-slate-800 opacity-60'" class="flex-none px-12 py-4 rounded-full font-black text-sm uppercase tracking-widest border border-emerald-500/10 transition-all">{{ c }}</button>
                 </div>
 
-                <!-- SCIENTIFIC PRO -->
-                <div v-if="calcTab === 'Saintifik'" class="glass p-10 rounded-[4rem] shadow-2xl max-w-md mx-auto relative overflow-hidden">
-                    <div class="bg-emerald-950/10 dark:bg-emerald-900/40 p-10 rounded-[2.5rem] mb-8 text-right border border-emerald-500/10 shadow-inner overflow-hidden">
-                        <div class="text-[11px] opacity-40 font-mono h-6 truncate tracking-widest mb-1">{{ calcHistory || '' }}</div>
-                        <div class="text-5xl font-mono font-black truncate tracking-tighter">{{ calcScreen || '0' }}</div>
+                <!-- 5A. SCIENTIFIC -->
+                <div v-if="calcTab === 'Saintifik'" class="glass p-10 rounded-[4rem] shadow-2xl border border-emerald-500/10 max-w-sm mx-auto animate-in zoom-in">
+                    <div class="bg-emerald-950 p-10 rounded-[3rem] mb-10 text-right border-4 border-emerald-500/30 shadow-inner overflow-hidden text-white font-mono">
+                        <div class="text-xs opacity-60 h-8 truncate tracking-widest uppercase mb-1">{{ calcHistory || 'SYSTEM READY' }}</div>
+                        <div class="text-6xl font-black truncate tracking-tighter text-white leading-none">{{ calcScreen || '0' }}</div>
                     </div>
                     <div class="grid grid-cols-4 gap-4">
-                        <button @click="calcOp('sin')" class="calc-btn bg-emerald-100 text-emerald-700">sin</button>
-                        <button @click="calcOp('cos')" class="calc-btn bg-emerald-100 text-emerald-700">cos</button>
-                        <button @click="calcOp('tan')" class="calc-btn bg-emerald-100 text-emerald-700">tan</button>
-                        <button @click="calcOp('log')" class="calc-btn bg-emerald-100 text-emerald-700">log</button>
-                        
-                        <button @click="calcIn('(')" class="calc-btn bg-emerald-50 text-emerald-600">(</button>
-                        <button @click="calcIn(')')" class="calc-btn bg-emerald-50 text-emerald-600">)</button>
-                        <button @click="calcOp('sqrt')" class="calc-btn bg-emerald-50 text-emerald-600">√</button>
-                        <button @click="calcIn('%')" class="calc-btn bg-orange-100 text-orange-600">%</button>
-
-                        <button @click="calcClear" class="calc-btn bg-red-500 text-white col-span-2 font-black uppercase tracking-widest shadow-lg">AC</button>
-                        <button @click="calcDel" class="calc-btn bg-slate-500 text-white">DEL</button>
-                        <button @click="calcIn('/')" class="calc-btn bg-orange-500 text-white text-2xl">÷</button>
-                        
-                        <button v-for="n in ['7','8','9']" @click="calcIn(n)" class="calc-btn bg-white dark:bg-slate-800 text-xl font-black">{{ n }}</button>
-                        <button @click="calcIn('*')" class="calc-btn bg-orange-500 text-white text-2xl">×</button>
-                        
-                        <button v-for="n in ['4','5','6']" @click="calcIn(n)" class="calc-btn bg-white dark:bg-slate-800 text-xl font-black">{{ n }}</button>
-                        <button @click="calcIn('-')" class="calc-btn bg-orange-500 text-white text-2xl">-</button>
-                        
-                        <button v-for="n in ['1','2','3']" @click="calcIn(n)" class="calc-btn bg-white dark:bg-slate-800 text-xl font-black">{{ n }}</button>
-                        <button @click="calcIn('+')" class="calc-btn bg-orange-500 text-white text-2xl">+</button>
-                        
-                        <button @click="calcIn('0')" class="calc-btn bg-white dark:bg-slate-800 col-span-2 text-xl font-black">0</button>
-                        <button @click="calcIn('.')" class="calc-btn bg-white dark:bg-slate-800 text-xl font-black">.</button>
-                        <button @click="calcResult" class="calc-btn bg-emerald-600 text-white shadow-xl text-2xl font-black">=</button>
+                        <button v-for="op in ['sin','cos','tan','log']" :key="op" @click="calcOp(op)" class="calc-btn bg-emerald-100 text-emerald-800 border-emerald-200"><b>{{ op }}</b></button>
+                        <button v-for="sm in ['(',')','sqrt','%']" :key="sm" @click="sm === 'sqrt' ? calcOp('sqrt') : calcIn(sm)" class="calc-btn bg-slate-100 text-slate-800 border-slate-200">{{ sm === 'sqrt' ? '√' : sm }}</button>
+                        <button @click="calcClear" class="calc-btn bg-red-600 text-white col-span-2 border-red-800">RESET</button><button @click="calcDel" class="calc-btn bg-slate-700 text-white border-slate-900">DEL</button><button @click="calcIn('/')" class="calc-btn bg-orange-500 text-white border-orange-800">÷</button>
+                        <button v-for="n in ['7','8','9']" :key="n" @click="calcIn(n)" class="calc-btn bg-white dark:bg-slate-800 border-slate-200">{{ n }}</button><button @click="calcIn('*')" class="calc-btn bg-orange-500 text-white border-orange-800">×</button>
+                        <button v-for="n in ['4','5','6']" :key="n" @click="calcIn(n)" class="calc-btn bg-white dark:bg-slate-800 border-slate-200">{{ n }}</button><button @click="calcIn('-')" class="calc-btn bg-orange-500 text-white border-orange-800">-</button>
+                        <button v-for="n in ['1','2','3']" :key="n" @click="calcIn(n)" class="calc-btn bg-white dark:bg-slate-800 border-slate-200">{{ n }}</button><button @click="calcIn('+')" class="calc-btn bg-orange-500 text-white border-orange-800">+</button>
+                        <button @click="calcIn('0')" class="calc-btn bg-white dark:bg-slate-800 col-span-2 border-slate-200">0</button><button @click="calcIn('.')" class="calc-btn bg-white dark:bg-slate-800 border-slate-200">.</button><button @click="calcResult" class="calc-btn bg-emerald-600 text-white shadow-xl border-emerald-800 transition-all hover:scale-110 active:scale-90">=</button>
                     </div>
                 </div>
 
-                <!-- LIVE CURRENCY -->
-                <div v-if="calcTab === 'Mata Uang'" class="glass p-12 rounded-[4rem] space-y-10 shadow-2xl border border-emerald-500/10 animate-in fade-in">
-                    <div class="text-center space-y-2"><i class="ph-fill ph-arrows-left-right text-6xl text-emerald-600"></i><h3 class="font-black text-2xl uppercase tracking-tighter">Live Currency Engine</h3></div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="space-y-4">
-                            <label class="text-[11px] font-black uppercase opacity-40 px-6 tracking-widest">Asal</label>
-                            <div class="flex gap-4">
-                                <select v-model="currFrom" class="p-5 rounded-[2rem] bg-white dark:bg-slate-800 border-2 border-emerald-500/10 w-32 font-black shadow-xl transition-all"><option v-for="c in currencies" :key="c" :value="c">{{ c }}</option></select>
-                                <input v-model.number="currAmount" type="number" class="flex-1 p-5 rounded-[2rem] bg-white dark:bg-slate-800 border-2 border-emerald-500/10 font-black shadow-xl">
-                            </div>
-                        </div>
-                        <div class="space-y-4">
-                            <label class="text-[11px] font-black uppercase opacity-40 px-6 tracking-widest">Hasil</label>
-                            <div class="flex gap-4">
-                                <select v-model="currTo" class="p-5 rounded-[2rem] bg-white dark:bg-slate-800 border-2 border-emerald-500/10 w-32 font-black shadow-xl transition-all"><option v-for="c in currencies" :key="c" :value="c">{{ c }}</option></select>
-                                <div class="flex-1 p-5 rounded-[2rem] bg-emerald-900 text-white font-black text-xl flex items-center justify-center shadow-2xl border-4 border-emerald-500/20 tracking-widest">{{ formatNumber(convertedAmount) }}</div>
-                            </div>
-                        </div>
+                <!-- 5B. LIVE CURRENCY -->
+                <div v-if="calcTab === 'Mata Uang'" class="glass p-12 rounded-[5rem] space-y-12 shadow-2xl border-4 border-white/20 animate-in fade-in">
+                    <div class="text-center space-y-4"><i class="ph-fill ph-globe-hemisphere-west text-9xl text-emerald-600"></i><h3 class="font-black text-3xl uppercase tracking-tighter">Live Currency Engine</h3></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-center px-10">
+                        <div class="space-y-6"><label class="text-xs font-black uppercase opacity-40 tracking-widest">Asal</label><div class="flex gap-4 justify-center"><select v-model="currFrom" class="p-5 rounded-[2rem] bg-white dark:bg-slate-800 border-2 border-emerald-500/10 w-32 font-black shadow-xl outline-none"><option v-for="c in currencies" :key="c" :value="c">{{ c }}</option></select><input v-model.number="currAmount" type="number" class="flex-1 p-5 rounded-[2rem] bg-white dark:bg-slate-800 border-2 border-emerald-500/10 font-black text-4xl shadow-inner text-center"></div></div>
+                        <div class="space-y-6"><label class="text-xs font-black uppercase opacity-40 tracking-widest">Hasil Konversi</label><div class="flex gap-4 justify-center"><select v-model="currTo" class="p-5 rounded-[2rem] bg-white dark:bg-slate-800 border-2 border-emerald-500/10 w-32 font-black shadow-xl outline-none"><option v-for="c in currencies" :key="c" :value="c">{{ c }}</option></select><div class="flex-1 p-5 rounded-[2rem] bg-emerald-950 text-white font-black text-3xl flex items-center justify-center border-4 border-emerald-500/30 tracking-tighter shadow-inner">{{ formatNumber(convertedAmount) }}</div></div></div>
                     </div>
-                    <button @click="fetchRates" class="w-full p-6 rounded-[2.5rem] bg-emerald-600 text-white font-black tracking-widest uppercase shadow-2xl hover:bg-emerald-700 transition-all btn-interact">Update Kurs Dunia</button>
+                    <button @click="fetchRates" class="w-full p-8 rounded-[3rem] bg-emerald-600 text-white font-black tracking-widest text-2xl uppercase shadow-2xl hover:bg-emerald-700 transition-all active:scale-95">SYNC LIVE</button>
                 </div>
 
-                <!-- ZAKAT (FIXED) -->
-                <div v-if="calcTab === 'Zakat'" class="glass p-12 rounded-[4rem] space-y-12 shadow-2xl border-l-[15px] border-emerald-600 animate-in fade-in">
-                    <div class="flex gap-2 justify-center mb-6">
-                        <button @click="zakatSubTab = 'fitrah'" :class="zakatSubTab === 'fitrah' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-500'" class="px-6 py-2 rounded-full font-black text-[10px] uppercase transition-all">Zakat Fitrah</button>
-                        <button @click="zakatSubTab = 'maal'" :class="zakatSubTab === 'maal' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-500'" class="px-6 py-2 rounded-full font-black text-[10px] uppercase transition-all">Zakat Maal</button>
+                <!-- 5C. ZAKAT -->
+                <div v-if="calcTab === 'Zakat'" class="glass p-12 rounded-[5rem] space-y-12 shadow-2xl border-l-[30px] border-emerald-700 animate-in fade-in">
+                    <div class="flex gap-4 justify-center">
+                        <button @click="zakatSubTab = 'fitrah'" :class="zakatSubTab === 'fitrah' ? 'bg-emerald-600 text-white shadow-xl scale-110' : 'bg-slate-100 text-slate-500 opacity-40'" class="px-12 py-4 rounded-[2.5rem] font-black text-xs uppercase tracking-widest transition-all">Zakat Fitrah</button>
+                        <button @click="zakatSubTab = 'maal'" :class="zakatSubTab === 'maal' ? 'bg-emerald-600 text-white shadow-xl scale-110' : 'bg-slate-100 text-slate-500 opacity-40'" class="px-12 py-4 rounded-[2.5rem] font-black text-xs uppercase tracking-widest transition-all">Zakat Maal</button>
                     </div>
 
-                    <!-- FITRAH -->
-                    <div v-if="zakatSubTab === 'fitrah'" class="space-y-8 animate-in zoom-in">
-                        <div class="text-center space-y-2"><i class="ph-fill ph-hand-heart text-6xl text-emerald-700"></i><h3 class="font-black text-2xl uppercase tracking-tighter">Hitung Zakat Fitrah</h3></div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="space-y-2"><label class="text-[11px] font-black uppercase opacity-40 px-6">Jumlah Jiwa</label><input v-model.number="zakatSouls" type="number" class="w-full p-6 rounded-[3rem] bg-white dark:bg-slate-800 border-4 border-emerald-500/10 font-black text-2xl text-center shadow-inner outline-none"></div>
-                            <div class="space-y-2"><label class="text-[11px] font-black uppercase opacity-40 px-6">Harga Beras / Jiwa (Rp)</label><input v-model.number="zakatRicePrice" type="number" class="w-full p-6 rounded-[3rem] bg-white dark:bg-slate-800 border-4 border-emerald-500/10 font-black text-2xl text-center shadow-inner outline-none"></div>
+                    <div v-if="zakatSubTab === 'fitrah'" class="space-y-10 animate-in zoom-in text-center px-10">
+                        <div class="space-y-4"><i class="ph-fill ph-hand-heart text-8xl text-emerald-700"></i><h3 class="font-black text-4xl uppercase tracking-tighter">Zakat Fitrah</h3><p class="text-xs opacity-50 font-black uppercase tracking-[0.5em]">Standard 2.5 KG Beras / Jiwa</p></div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div class="space-y-4 text-center"><label class="text-xs font-black uppercase opacity-40">Cacah Jiwa</label><input v-model.number="zakatSouls" type="number" class="w-full p-8 rounded-[3rem] bg-white dark:bg-slate-800 border-4 border-emerald-500/10 font-black text-6xl text-center shadow-inner outline-none"></div>
+                            <div class="space-y-4 text-center"><label class="text-xs font-black uppercase opacity-40">Harga Beras (Rp)</label><input v-model.number="zakatRicePrice" type="number" class="w-full p-8 rounded-[3rem] bg-white dark:bg-slate-800 border-4 border-emerald-500/10 font-black text-4xl text-center shadow-inner outline-none"></div>
                         </div>
-                        <div class="p-10 bg-emerald-700 text-white rounded-[4rem] text-center shadow-2xl border-4 border-white/20"><div class="text-[11px] font-black opacity-70 uppercase tracking-[0.3em] mb-3">Total Zakat Fitrah (Uang)</div><div class="text-5xl font-black tracking-tighter leading-none">Rp {{ formatNumber(zakatSouls * zakatRicePrice) }}</div><p class="mt-4 text-[10px] font-bold opacity-50 italic">Atau setara dengan {{ (zakatSouls * 2.5).toFixed(1) }} Kg Beras</p></div>
+                        <div class="p-12 bg-emerald-800 text-white rounded-[4rem] text-center shadow-2xl border-4 border-white/20"><div class="text-xs font-black opacity-70 uppercase tracking-widest mb-6">Wajib Dibayar (Uang)</div><div class="text-7xl font-black tracking-tighter leading-none mb-6">Rp {{ formatNumber(zakatSouls * zakatRicePrice) }}</div><p class="text-xl font-bold opacity-60 uppercase tracking-[0.2em]">Setara {{ (zakatSouls * 2.5).toFixed(1) }} Kg Beras</p></div>
                     </div>
 
-                    <!-- MAAL -->
-                    <div v-if="zakatSubTab === 'maal'" class="space-y-8 animate-in zoom-in">
-                        <div class="text-center space-y-2"><i class="ph-fill ph-coins text-6xl text-emerald-700"></i><h3 class="font-black text-2xl uppercase tracking-tighter">Hitung Zakat Maal</h3></div>
-                        <div class="space-y-3"><label class="text-[11px] font-black uppercase opacity-50 px-6">Total Harta Tabungan (Haul 1 Tahun)</label><input v-model.number="zakatWealth" type="number" placeholder="Rp 0" class="w-full p-7 rounded-[3rem] bg-white dark:bg-slate-800 border-4 border-emerald-500/10 font-black text-3xl outline-none text-emerald-700 shadow-inner"></div>
-                        <div class="grid grid-cols-2 gap-6">
-                            <div class="p-8 bg-emerald-50 dark:bg-emerald-950/30 rounded-[3rem] border border-emerald-500/10 text-center"><div class="text-[10px] font-black opacity-50 uppercase mb-1">Batas Nisab (85g Emas)</div><div class="text-xl font-black">Rp {{ formatNumber(85 * goldPrice) }}</div></div>
-                            <div class="p-8 bg-emerald-50 dark:bg-emerald-950/30 rounded-[3rem] border border-emerald-500/10 text-center"><div class="text-[10px] font-black opacity-50 uppercase mb-1">Status Kewajiban</div><div class="text-xl font-black" :class="zakatWealth >= (85 * goldPrice) ? 'text-green-600' : 'text-red-500'">{{ zakatWealth >= (85 * goldPrice) ? 'WAJIB' : 'BELUM' }}</div></div>
-                        </div>
-                        <div v-if="zakatWealth >= (85 * goldPrice)" class="p-10 bg-emerald-700 text-white rounded-[4rem] text-center shadow-2xl border-4 border-white/20"><div class="text-[11px] font-black opacity-70 uppercase tracking-[0.3em] mb-3">Zakat Maal (2.5%)</div><div class="text-5xl font-black tracking-tighter leading-none">Rp {{ formatNumber(zakatWealth * 0.025) }}</div></div>
+                    <div v-if="zakatSubTab === 'maal'" class="space-y-10 animate-in zoom-in text-center px-10">
+                        <div class="space-y-4"><i class="ph-fill ph-coins text-8xl text-emerald-700"></i><h3 class="font-black text-4xl uppercase tracking-tighter leading-none">Zakat Maal</h3><p class="text-xs font-black opacity-40 uppercase tracking-[0.5em]">NISAB 85G EMAS</p></div>
+                        <div class="space-y-6 text-center max-w-2xl mx-auto"><label class="text-sm font-black uppercase opacity-40 tracking-[0.5em]">Total Harta Simpanan (1 Thn)</label><input v-model.number="zakatWealth" type="number" placeholder="Rp 0" class="w-full p-12 rounded-[4rem] bg-white dark:bg-slate-800 border-[10px] border-emerald-500/10 font-black text-7xl text-center text-emerald-700 shadow-2xl outline-none focus:border-emerald-600 transition-all leading-none"></div>
+                        <div v-if="zakatWealth >= (85 * goldPrice)" class="p-16 bg-emerald-900 text-white rounded-[5rem] text-center shadow-2xl border-[15px] border-emerald-500/40 animate-in zoom-in duration-700"><div class="text-xs font-black opacity-70 uppercase tracking-[1em] mb-10 leading-none">Zakat Maal (2.5%)</div><div class="text-[8rem] font-black tracking-tighter leading-none drop-shadow-xl text-center w-full">Rp {{ formatNumber(zakatWealth * 0.025) }}</div></div>
                     </div>
                 </div>
             </section>
 
-            <!-- 8. VIEW: UANG KAS -->
-            <section v-if="currentTab === 'kas'" class="space-y-8 animate-in fade-in">
-                 <div class="flex justify-between items-center">
-                    <h2 class="text-4xl font-black">Uang <span class="text-emerald-600">Kas Kelas</span></h2>
-                    <button v-if="cashTransactions.length > 0" @click="exportCashReport" class="text-[11px] font-black bg-emerald-600 text-white p-4 px-10 rounded-full uppercase tracking-widest shadow-2xl">Laporan CSV</button>
+            <!-- 9. VIEW KAS -->
+            <section v-if="currentTab === 'kas'" class="space-y-12 animate-in fade-in">
+                <div class="flex justify-between items-center px-4">
+                    <h2 class="text-5xl font-black text-slate-900 dark:text-white leading-none tracking-tighter uppercase">Uang <span class="text-emerald-600">Kas</span></h2>
+                    <button v-if="cashTransactions.length > 0" @click="exportCashReport" class="text-xs bg-emerald-600 text-white p-4 px-10 rounded-full font-black tracking-widest uppercase shadow-xl active:scale-90 transition-all">EXPORT CSV</button>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="glass p-10 rounded-[3rem] border-l-[20px] border-emerald-600 shadow-2xl"><div class="text-[11px] font-black opacity-50 uppercase tracking-widest">Saldo Bersih Saat Ini</div><div class="text-4xl font-black text-emerald-700 dark:text-emerald-400 mt-2">Rp {{ formatNumber(cashBalance.total) }}</div></div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 px-4">
+                    <div class="glass p-16 rounded-[4rem] border-l-[30px] border-emerald-600 shadow-2xl relative overflow-hidden group hover:scale-[1.03] transition-all">
+                        <div class="absolute -right-10 -bottom-10 opacity-5 transition-transform group-hover:rotate-12"><i class="ph-bold ph-money text-[15rem]"></i></div>
+                        <div class="text-sm font-black opacity-30 uppercase tracking-[1.5em] mb-6 leading-none">Total Saldo Bersih</div>
+                        <div class="text-6xl font-black text-emerald-800 dark:text-emerald-400 mt-2 tracking-tighter leading-none">Rp {{ formatNumber(cashBalance.total) }}</div>
+                    </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div v-for="t in cashTransactions" :key="t.id" class="glass p-8 rounded-[3rem] flex justify-between items-center shadow-lg border border-emerald-500/5 transition-all hover:bg-emerald-50/10">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-4">
+                    <div v-for="t in cashTransactions" :key="t.id" class="glass p-10 rounded-[3rem] flex justify-between items-center shadow-2xl border-4 border-white/20 hover:scale-[1.02] transition-all">
                         <div class="flex flex-col">
-                            <span class="font-black text-[10px] uppercase tracking-widest mb-1" :class="t.type === 'in' ? 'text-blue-600' : 'text-red-600'">{{ t.type === 'in' ? 'Masuk' : 'Keluar' }}</span>
-                            <span class="font-black text-base uppercase tracking-tight text-slate-800 dark:text-emerald-100">{{ t.note }}</span>
-                            <span class="text-[9px] opacity-40 font-mono mt-1 uppercase">{{ t.date }}</span>
+                            <span class="font-black text-[11px] uppercase tracking-[0.5em] mb-4" :class="t.type === 'in' ? 'text-blue-600' : 'text-red-600'">{{ t.type === 'in' ? 'MASUK' : 'KELUAR' }}</span>
+                            <span class="font-black text-3xl uppercase tracking-tighter text-slate-800 dark:text-emerald-100 leading-tight">{{ t.note }}</span>
+                            <span class="text-xs opacity-30 font-black mt-6 uppercase tracking-widest">{{ t.date }}</span>
                         </div>
-                        <div class="font-black text-xl tracking-tighter" :class="t.type === 'in' ? 'text-blue-600' : 'text-red-600'">{{ t.type === 'in' ? '+' : '-' }} {{ formatNumber(t.amount) }}</div>
+                        <div class="font-black text-4xl tracking-tighter leading-none" :class="t.type === 'in' ? 'text-blue-600' : 'text-red-600'">{{ t.type === 'in' ? '+' : '-' }} {{ formatNumber(t.amount) }}</div>
                     </div>
                 </div>
             </section>
 
-            <!-- 9. VIEW: SECRET WALL -->
-            <section v-if="currentTab === 'chat'" class="space-y-8">
-                <h2 class="text-4xl font-black">Secret <span class="text-emerald-600">Wall</span></h2>
-                <div class="glass p-10 rounded-[4rem] shadow-2xl space-y-6 border border-emerald-500/10">
-                    <textarea v-model="newMessage" rows="4" placeholder="Kirim pesan anonim (Islami & Sopan)..." class="w-full p-8 rounded-[3rem] bg-white text-slate-900 border-4 border-emerald-500/10 outline-none focus:border-emerald-500 text-lg font-medium resize-none shadow-inner"></textarea>
-                    <button @click="addMessage" class="w-full bg-emerald-700 text-white p-8 rounded-[3rem] font-black tracking-[0.2em] uppercase shadow-2xl shadow-emerald-700/20 btn-interact">Kirim Pesan Anonim</button>
+            <!-- 10. VIEW CHAT WALL -->
+            <section v-if="currentTab === 'chat'" class="space-y-16 animate-in fade-in">
+                <h2 class="text-6xl font-black text-center text-slate-900 dark:text-white leading-none tracking-tighter uppercase">Secret <span class="text-emerald-600">Wall</span></h2>
+                <div class="glass p-12 rounded-[4.5rem] shadow-2xl space-y-10 border-[10px] border-white/30 relative">
+                    <textarea v-model="newMessage" rows="4" placeholder="Kirim pesan anonim (Sopan & Islami)..." class="w-full p-12 rounded-[3rem] bg-white text-slate-900 border-[8px] border-emerald-500/10 outline-none focus:border-emerald-600 text-3xl font-bold resize-none shadow-inner transition-all leading-relaxed"></textarea>
+                    <button @click="addMessage" class="w-full bg-emerald-700 text-white p-12 rounded-[4rem] font-black tracking-[1.5em] text-3xl uppercase shadow-[0_40px_100px_rgba(6,95,70,0.5)] border-b-[20px] border-emerald-950 active:scale-95 transition-all">T E R B I T K A N</button>
                 </div>
-                <div class="space-y-8">
-                    <div v-for="(m, msgIdx) in anonymousMessages" :key="m.id" class="glass p-10 rounded-[3.5rem] shadow-xl border-l-[15px] border-emerald-600 relative transition-all">
-                        <div class="text-lg font-bold leading-loose italic text-slate-800 dark:text-slate-200">"{{ m.text }}"</div>
-                        <div class="mt-8 flex flex-wrap items-center gap-4">
+                <div class="space-y-16 px-4">
+                    <div v-for="(m, msgIdx) in anonymousMessages" :key="m.id" class="glass p-16 rounded-[4.5rem] shadow-2xl border-l-[40px] border-emerald-700 relative transition-all hover:scale-[1.01]">
+                        <div class="text-4xl font-bold leading-relaxed italic text-slate-800 dark:text-slate-100">"{{ m.text }}"</div>
+                        <div class="mt-12 flex flex-wrap items-center gap-10">
                             <button v-for="(count, emoji) in m.reactions" :key="emoji" 
                                 @click="reactToMessage(msgIdx, emoji)" 
-                                :class="userReactions[m.id] === emoji ? 'bg-emerald-600 text-white scale-110 shadow-lg border-emerald-400' : 'bg-white/50 dark:bg-slate-800/50 border-emerald-500/20 opacity-80'"
-                                class="flex items-center gap-2.5 px-5 py-2.5 rounded-full border-2 transition-all hover:scale-110 active:scale-90">
-                                <span class="text-xl">{{ emoji }}</span><span class="text-xs font-black">{{ count }}</span>
+                                :class="userReactions[m.id] === emoji ? 'bg-emerald-600 text-white scale-125 shadow-2xl border-emerald-400 rotate-6' : 'bg-white/50 dark:bg-slate-800/50 border-emerald-500/20 opacity-80'"
+                                class="flex items-center gap-4 px-8 py-4 rounded-full border-4 transition-all hover:scale-125 active:rotate-[25deg]">
+                                <span class="text-4xl leading-none">{{ emoji }}</span><span class="text-xl font-black leading-none">{{ count }}</span>
                             </button>
-                            <div class="flex gap-4 ml-auto">
-                                <button v-for="e in ['❤️', '😂', '👍', '🔥', '🙏']" :key="e" @click="reactToMessage(msgIdx, e)" class="opacity-30 hover:opacity-100 hover:scale-150 transition-all text-2xl">{{ e }}</button>
+                            <div class="flex gap-8 ml-auto">
+                                <button v-for="e in ['❤️', '😂', '👍', '🔥', '🙏']" :key="e" @click="reactToMessage(msgIdx, e)" class="opacity-20 hover:opacity-100 hover:scale-[2.5] transition-all text-5xl active:scale-[3.5]">{{ e }}</button>
                             </div>
                         </div>
-                        <div class="mt-6 text-[10px] opacity-30 font-black uppercase tracking-widest text-right flex justify-between px-6 pt-4 border-t border-emerald-500/5"><span>Member Anonim</span><span>{{ m.timestamp }}</span></div>
+                        <div class="mt-12 text-sm opacity-30 font-black uppercase tracking-[1em] text-right flex justify-between px-6 pt-10 border-t-2 border-emerald-500/5 leading-none"><span>Anonymous Classmate</span><span>{{ m.timestamp }}</span></div>
                     </div>
                 </div>
             </section>
 
-            <!-- 10. VIEW: ADMIN VAULT (PROTECTED) -->
-            <section v-if="currentTab === 'admin' && !isAdmin" class="max-w-sm mx-auto py-24 text-center space-y-12 animate-in slide-in-from-bottom-10">
-                <div class="relative inline-block">
-                    <i class="ph-fill ph-lock-key text-[10rem] transition-colors duration-700" :class="isLocked ? 'text-red-500 scale-110' : 'text-emerald-700'"></i>
-                    <div v-if="isLocked" class="absolute -top-4 -right-4 bg-red-600 text-white text-[11px] font-black px-5 py-2 rounded-full animate-pulse shadow-2xl">LOCKED</div>
+            <!-- 11. GATE: LOGIN ADMIN (PIN 16 DIGIT) -->
+            <section v-if="currentTab === 'admin' && !isAdmin" class="max-w-xl mx-auto py-40 text-center space-y-24 animate-in slide-in-from-bottom-10">
+                <div class="relative inline-block scale-110">
+                    <i class="ph-fill ph-lock-key text-[15rem] transition-all duration-1000" :class="isLocked ? 'text-red-500 blur-3xl scale-125' : 'text-emerald-700'"></i>
+                    <div v-if="isLocked" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-3xl font-black px-16 py-8 rounded-full animate-pulse shadow-2xl border-[10px] border-white leading-none z-20">LOCKED</div>
                 </div>
-                <div class="space-y-4">
-                    <h2 class="text-5xl font-black uppercase tracking-tighter">Admin Vault</h2>
-                    <p class="text-xs font-black uppercase tracking-[0.5em] opacity-40" :class="isLocked ? 'text-red-600 opacity-100' : ''">{{ isLocked ? `Tunggu ${lockCountdown} detik` : 'Input 16 Digit PIN Keamanan' }}</p>
+                <div class="space-y-6">
+                    <h2 class="text-7xl font-black uppercase tracking-tighter leading-none text-slate-900 dark:text-white leading-none">Admin Vault</h2>
+                    <p class="text-xl font-black uppercase tracking-[1em] opacity-40 leading-relaxed" :class="isLocked ? 'text-red-600 opacity-100' : ''">{{ isLocked ? `TUNGGU ${lockCountdown}S` : 'INPUT 16 DIGIT PIN' }}</p>
                 </div>
-                <div class="space-y-8">
-                    <input v-model="pinInput" type="password" maxlength="16" :disabled="isLocked" class="w-full bg-white text-slate-900 border-[10px] border-emerald-500/10 rounded-[3.5rem] p-8 text-center text-3xl tracking-[0.4em] focus:outline-none focus:border-emerald-600 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.2)] transition-all font-mono" placeholder="••••••••••••••••">
-                    <div class="flex justify-between px-8"><span class="text-xs font-black opacity-30 uppercase tracking-widest">Sisa: {{ 5 - failedAttempts }}/5</span><span class="text-xs font-black opacity-30 uppercase tracking-widest">{{ pinInput.length }}/16</span></div>
-                    <button @click="verifyPin" :disabled="isLocked || pinInput.length < 16" class="w-full bg-emerald-700 text-white p-8 rounded-[3.5rem] font-black tracking-[0.4em] text-lg uppercase shadow-2xl disabled:opacity-30 btn-interact">BUKA AKSES</button>
+                <div class="space-y-12">
+                    <input v-model="pinInput" type="password" maxlength="16" :disabled="isLocked" class="w-full bg-white text-slate-900 border-[20px] border-emerald-500/10 rounded-[5rem] p-16 text-center text-8xl tracking-[0.6em] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.5)] transition-all font-mono leading-none h-[15rem] focus:border-emerald-600 outline-none">
+                    <div class="flex justify-between px-10 leading-none"><span class="text-xl font-black opacity-30 uppercase tracking-[0.5em]">Failed: {{ failedAttempts }}/5</span><span class="text-xl font-black opacity-30 uppercase tracking-[0.5em]">Auth: {{ pinInput.length }}/16</span></div>
+                    <button @click="verifyPin" :disabled="isLocked || pinInput.length < 16" class="w-full bg-emerald-700 text-white p-16 rounded-[6rem] font-black tracking-[1em] text-4xl uppercase shadow-2xl disabled:opacity-10 active:scale-95 transition-all border-[15px] border-white/10 h-[15rem] leading-none">AUTHORIZE</button>
                 </div>
             </section>
 
-            <section v-if="currentTab === 'admin' && isAdmin" class="space-y-12 animate-in slide-in-from-bottom-10">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-4xl font-black">Panel <span class="text-emerald-600">Kendali</span></h2>
-                    <button @click="logout" class="text-[11px] bg-red-600 text-white p-4 px-12 rounded-full font-black tracking-widest uppercase shadow-2xl hover:bg-red-700 transition-all">Logout</button>
+            <!-- 12. FULL ADMIN COMMANDER -->
+            <section v-if="currentTab === 'admin' && isAdmin" class="space-y-16 animate-in slide-in-from-bottom-10 duration-1000">
+                <div class="flex justify-between items-center px-10">
+                    <h2 class="text-6xl font-black text-slate-900 dark:text-white uppercase tracking-tighter leading-none">Admin <span class="text-emerald-600">Commander</span></h2>
+                    <button @click="logout" class="text-xl bg-red-600 text-white p-8 px-20 rounded-full font-black tracking-widest uppercase shadow-2xl border-[15px] border-white/20 active:scale-90 transition-all leading-none">EXIT</button>
                 </div>
-                <div class="flex gap-3 overflow-x-auto pb-6 no-scrollbar"><button v-for="t in adminTabs" :key="t.id" @click="adminSubTab = t.id" :class="subTabClass(t.id)">{{ t.label }}</button></div>
+                <div class="flex gap-4 overflow-x-auto pb-8 no-scrollbar px-6"><button v-for="t in adminTabs" :key="t.id" @click="adminSubTab = t.id" :class="subTabClass(t.id)">{{ t.label }}</button></div>
 
-                <div class="glass p-12 rounded-[4.5rem] space-y-12 shadow-2xl border border-emerald-500/10">
-                    <!-- Form Students Admin -->
-                    <div v-if="adminSubTab === 'students'" class="space-y-8">
-                        <div class="grid grid-cols-4 gap-6"><input v-model.number="newStudent.noAbsen" type="number" placeholder="Abs" class="p-6 rounded-[2rem] input-admin font-black col-span-1 shadow-sm text-center text-xl transition-all focus:ring-4 ring-emerald-500/10"><input v-model="newStudent.name" type="text" placeholder="Nama Lengkap" class="p-6 rounded-[2rem] input-admin font-black col-span-3 shadow-sm text-xl transition-all focus:ring-4 ring-emerald-500/10"></div>
-                        <div class="grid grid-cols-2 gap-6"><select v-model="newStudent.gender" class="p-6 rounded-[2rem] input-admin font-black text-lg outline-none shadow-sm"><option value="L">Laki-laki</option><option value="P">Perempuan</option></select><input v-model="newStudent.photo" type="text" placeholder="URL Foto" class="p-6 rounded-[2rem] input-admin font-black text-lg outline-none shadow-sm"></div>
-                        <button @click="addStudent" class="w-full bg-emerald-700 text-white p-8 rounded-[3rem] font-black text-xl uppercase tracking-widest shadow-2xl btn-interact">SIMPAN</button>
-                        <div class="space-y-4 mt-12 max-h-[500px] overflow-y-auto no-scrollbar"><div v-for="s in sortedStudents" :key="s.noAbsen" class="flex justify-between items-center p-6 bg-white rounded-[2.5rem] shadow-sm border border-slate-100 transition-all hover:bg-emerald-50"><span class="font-black uppercase text-sm tracking-tighter text-slate-800"><b>{{ s.noAbsen }}.</b> {{ s.name }}</span><button @click="deleteStudent(s.noAbsen)" class="text-red-500 p-4 hover:bg-red-50 rounded-3xl transition-all"><i class="ph-bold ph-trash-simple text-2xl"></i></button></div></div>
+                <div class="glass p-16 rounded-[7rem] space-y-16 shadow-[0_150px_300px_-100px_rgba(0,0,0,0.7)] border-[20px] border-white/40">
+                    
+                    <!-- ADMIN: SISWA -->
+                    <div v-if="adminSubTab === 'students'" class="space-y-10 animate-in fade-in">
+                        <div class="grid grid-cols-4 gap-10"><input v-model.number="newStudent.noAbsen" type="number" placeholder="No" class="input-admin col-span-1 text-center text-4xl h-[12rem] leading-none shadow-xl"><input v-model="newStudent.name" type="text" placeholder="Full Student Name" class="input-admin col-span-3 text-3xl h-[12rem] leading-none shadow-xl"></div>
+                        <div class="grid grid-cols-2 gap-10"><select v-model="newStudent.gender" class="input-admin text-2xl h-[10rem] shadow-xl"><option value="L">Laki-laki</option><option value="P">Perempuan</option></select><input v-model="newStudent.photo" type="text" placeholder="URL Profil" class="input-admin text-2xl h-[10rem] shadow-xl"></div>
+                        <button @click="addStudent" class="w-full p-12 bg-emerald-700 text-white rounded-[4rem] font-black text-4xl tracking-widest uppercase shadow-2xl border-b-[20px] border-emerald-950 active:scale-95 leading-none h-[15rem]">SIMPAN SISWA</button>
+                        <div class="space-y-6 mt-16 max-h-[1000px] overflow-y-auto no-scrollbar px-4"><div v-for="s in sortedStudents" :key="s.noAbsen" class="flex justify-between items-center p-10 bg-white rounded-[4rem] shadow-2xl border-4 border-slate-50 transition-all hover:bg-emerald-50"><span class="font-black uppercase text-3xl text-slate-800"><b>{{ s.noAbsen }}.</b> {{ s.name }}</span><button @click="deleteStudent(s.noAbsen)" class="text-red-500 p-8 bg-red-50 rounded-[3rem] hover:bg-red-600 hover:text-white transition-all shadow-xl"><i class="ph-bold ph-trash-simple text-5xl"></i></button></div></div>
                     </div>
-                    <!-- Form Struktur Admin -->
-                    <div v-if="adminSubTab === 'structure'" class="space-y-8">
-                        <select v-model="newMember.role" class="w-full p-6 rounded-[2.5rem] input-admin font-black text-lg shadow-sm"><option v-for="r in ['Wali Kelas', 'Ketua Kelas', 'Wakil Ketua', 'Bendahara', 'Sekretaris', 'Sie Keamanan', 'Sie Kebersihan', 'Sie Kerohanian', 'Lainnya']" :key="r" :value="r">{{ r }}</option></select>
-                        <input v-model="newMember.name" type="text" placeholder="Nama Personil" class="w-full p-6 rounded-[2.5rem] input-admin font-black text-lg shadow-sm"><input v-model="newMember.photo" type="text" placeholder="Link Foto" class="w-full p-6 rounded-[2.5rem] input-admin font-black text-lg shadow-sm"><button @click="addStructure" class="w-full bg-emerald-700 text-white p-8 rounded-[3rem] font-black text-xl uppercase shadow-2xl">UPDATE</button>
-                        <div class="space-y-4 mt-8"><div v-for="m in structure" :key="m.id" class="flex justify-between items-center p-5 bg-white rounded-[2rem] shadow-sm"><div><span class="text-[10px] font-black uppercase text-emerald-600 block">{{ m.role }}</span><span class="font-black uppercase text-xs">{{ m.name }}</span></div><button @click="deleteStructure(m.id)" class="text-red-500 p-3 hover:bg-red-50 rounded-2xl"><i class="ph-bold ph-trash text-xl"></i></button></div></div>
+
+                    <!-- ADMIN: STRUKTUR -->
+                    <div v-if="adminSubTab === 'structure'" class="space-y-10 animate-in fade-in">
+                        <select v-model="newMember.role" class="input-admin text-3xl h-[12rem] shadow-xl"><option v-for="r in ['Wali Kelas', 'Ketua Kelas', 'Wakil Ketua', 'Bendahara', 'Sekretaris', 'Sie Keamanan', 'Sie Kebersihan', 'Sie Kerohanian', 'Lainnya']" :key="r" :value="r">{{ r }}</option></select>
+                        <input v-model="newMember.name" type="text" placeholder="Nama Lengkap Pejabat" class="input-admin text-3xl h-[12rem] shadow-xl"><input v-model="newMember.photo" type="text" placeholder="Tautan Foto Profil (URL)" class="input-admin text-2xl h-[12rem] shadow-xl"><button @click="addStructure" class="w-full p-16 bg-emerald-700 text-white rounded-[5rem] font-black text-5xl uppercase shadow-2xl active:scale-95 h-[15rem] leading-none">UPDATE JABATAN</button>
+                        <div class="space-y-8 mt-20"><div v-for="m in structure" :key="m.id" class="flex justify-between items-center p-10 bg-white rounded-[4rem] shadow-2xl border-4 border-slate-50"><div><span class="text-xl font-black uppercase text-emerald-600 block tracking-[0.5em] mb-3">{{ m.role }}</span><span class="font-black uppercase text-4xl text-slate-800 tracking-tighter">{{ m.name }}</span></div><button @click="deleteStructure(m.id)" class="text-red-500 p-10 bg-red-50 rounded-[3rem] hover:bg-red-600 hover:text-white transition-all shadow-xl"><i class="ph-bold ph-trash text-5xl"></i></button></div></div>
                     </div>
-                    <!-- Tab Chat moderasi (Pesan bisa dihapus admin di sini) -->
-                    <div v-if="adminSubTab === 'chat'" class="space-y-6">
-                        <h3 class="font-black text-xs text-emerald-700 uppercase tracking-widest border-l-[8px] border-emerald-700 pl-6">Moderasi Pesan Wall</h3>
-                        <div class="space-y-4"><div v-for="(m, i) in anonymousMessages" :key="m.id" class="flex justify-between items-center p-6 bg-white rounded-[2rem] shadow-sm border border-slate-100 transition-all hover:bg-red-50"><span class="truncate pr-4 italic text-xs font-bold text-slate-600">"{{ m.text }}"</span><button @click="deleteMessage(i)" class="text-red-500 p-3 bg-red-100 rounded-2xl hover:bg-red-200 transition-colors"><i class="ph-bold ph-trash-simple text-2xl"></i></button></div></div>
+
+                    <!-- ADMIN: JADWAL -->
+                    <div v-if="adminSubTab === 'schedule'" class="space-y-10 animate-in fade-in text-center px-10">
+                        <div class="grid grid-cols-2 gap-10"><select v-model="newSchedule.day" class="input-admin text-4xl h-[12rem] shadow-xl"><option v-for="d in days" :key="d" :value="d">{{ d }}</option></select><input v-model="newSchedule.time" type="text" placeholder="Jam" class="input-admin text-4xl h-[12rem] shadow-xl text-center"></div><input v-model="newSchedule.subject" type="text" placeholder="Mata Pelajaran" class="input-admin text-4xl h-[12rem] shadow-xl text-center"><button @click="addSchedule" class="w-full bg-emerald-700 text-white p-16 rounded-[4rem] font-black text-[5rem] uppercase shadow-2xl h-[15rem] leading-none">TERBITKAN</button>
+                        <div class="space-y-6 mt-16 max-h-[800px] overflow-y-auto no-scrollbar"><div v-for="s in schedule" :key="s.id" class="flex justify-between items-center p-12 bg-white rounded-[4rem] shadow-xl border-4 border-slate-50"><span class="font-black uppercase text-3xl"><b>{{ s.day }}</b>: {{ s.subject }}</span><button @click="deleteSchedule(s.id)" class="text-red-500 p-8"><i class="ph-bold ph-trash text-5xl"></i></button></div></div>
+                    </div>
+
+                    <!-- ADMIN: PIKET -->
+                    <div v-if="adminSubTab === 'piket'" class="space-y-10 animate-in fade-in text-center px-10">
+                        <div class="flex gap-10"><select v-model="newPiket.day" class="input-admin text-4xl h-[12rem] shadow-xl flex-1"><option v-for="d in days" :key="d" :value="d">{{ d }}</option></select><input v-model="newPiket.name" type="text" placeholder="Nama Petugas" class="input-admin text-4xl h-[12rem] shadow-xl flex-[2] text-center"></div><button @click="addPiket" class="w-full bg-emerald-700 text-white p-16 rounded-[4rem] font-black text-[5rem] uppercase shadow-2xl h-[15rem] leading-none">SIMPAN</button>
+                        <div class="space-y-6 mt-16 max-h-[800px] overflow-y-auto no-scrollbar"><div v-for="p in piket" :key="p.id" class="flex justify-between items-center p-12 bg-white rounded-[4rem] shadow-xl border-4 border-slate-50"><span class="font-black uppercase text-3xl"><b>{{ p.day }}</b>: {{ p.name }}</span><button @click="deletePiket(p.id)" class="text-red-500 p-8"><i class="ph-bold ph-trash text-5xl"></i></button></div></div>
+                    </div>
+
+                    <!-- ADMIN: KEUANGAN -->
+                    <div v-if="adminSubTab === 'kas'" class="space-y-10 animate-in fade-in text-center px-10">
+                        <div class="grid grid-cols-2 gap-10"><select v-model="newKas.type" class="input-admin text-4xl h-[15rem] shadow-xl"><option value="in">MASUK (+)</option><option value="out">KELUAR (-)</option></select><input v-model.number="newKas.amount" type="number" placeholder="Nominal Rp" class="input-admin text-7xl h-[15rem] shadow-xl text-center"></div><input v-model="newKas.note" type="text" placeholder="Keterangan Transaksi" class="input-admin text-4xl h-[12rem] shadow-xl text-center"><button @click="addTransaction" class="w-full bg-emerald-700 text-white p-16 rounded-[4rem] font-black text-[5rem] uppercase shadow-2xl h-[15rem] leading-none">INPUT KAS</button>
+                        <div class="space-y-6 mt-16"><div v-for="t in cashTransactions" :key="t.id" class="flex justify-between items-center p-10 bg-white rounded-[4rem] shadow-xl border-4 border-slate-50"><span class="font-black uppercase text-3xl"><b>{{ t.type }}</b>: {{ t.note }}</span><button @click="deleteTransaction(t.id)" class="text-red-500 p-8"><i class="ph-bold ph-trash text-5xl"></i></button></div></div>
+                    </div>
+
+                    <!-- ADMIN: MODERASI CHAT -->
+                    <div v-if="adminSubTab === 'chat'" class="space-y-10 animate-in fade-in text-center px-10">
+                         <div class="space-y-6 max-h-[1000px] overflow-y-auto no-scrollbar"><div v-for="(m, i) in anonymousMessages" :key="m.id" class="flex justify-between items-center p-16 bg-white rounded-[5rem] shadow-2xl border-4 border-slate-50"><span class="truncate pr-16 italic text-4xl font-bold text-slate-600 leading-relaxed">"{{ m.text }}"</span><button @click="deleteMessage(i)" class="text-red-500 p-12 bg-red-50 rounded-[3rem] hover:bg-red-600 hover:text-white transition-all shadow-xl leading-none"><i class="ph-bold ph-trash-simple text-[5rem]"></i></button></div></div>
+                    </div>
+
+                    <!-- ADMIN: SISTEM NAIK/TURUN (RE-MASTERED) -->
+                    <div v-if="adminSubTab === 'settings'" class="text-center py-20 space-y-32 animate-in fade-in">
+                        <div class="space-y-8">
+                            <div class="text-3xl font-black text-emerald-700 uppercase tracking-[2em] opacity-40 leading-none">Angkatan</div>
+                            <div class="text-[30rem] font-black text-emerald-900 uppercase tracking-tighter leading-none drop-shadow-2xl animate-pulse">{{ classInfo.name }}</div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-24 max-w-[140rem] mx-auto px-20">
+                            <div class="space-y-16 p-24 glass rounded-[8rem] border-[15px] border-emerald-500/20 shadow-2xl relative group overflow-hidden transition-all hover:scale-105">
+                                <h4 class="font-black uppercase text-[10rem] text-emerald-600 tracking-[1.5em] mb-12 leading-none">UP</h4>
+                                <p class="text-3xl font-black text-emerald-700 underline decoration-[20px] decoration-double mb-12 tracking-tighter">PIN: ruxxi123</p>
+                                <input v-model="promotionPinInput" type="password" placeholder="PIN 2" class="w-full p-16 rounded-[8rem] bg-white border-[25px] border-emerald-500/10 text-center font-black text-[15rem] shadow-inner focus:border-emerald-600 outline-none transition-all text-emerald-900 h-[30rem] leading-none">
+                                <button @click="promoteClassWithPin" class="bg-emerald-700 text-white p-24 rounded-[10rem] font-black uppercase text-[10rem] shadow-[0_150px_300px_-50px_rgba(6,95,70,1)] w-full border-[30px] border-emerald-600/30 transition-all active:scale-90 leading-none h-[30rem]">NAIK</button>
+                            </div>
+                            <div class="space-y-16 p-24 glass rounded-[8rem] border-[15px] border-red-500/20 shadow-2xl relative group overflow-hidden transition-all hover:scale-105">
+                                <h4 class="font-black uppercase text-[10rem] text-red-600 tracking-[1.5em] mb-12 leading-none">DOWN</h4>
+                                <div class="h-[750px]"></div> <!-- Giant Spacer -->
+                                <button @click="demoteClass" class="bg-red-600 text-white p-24 rounded-[10rem] font-black uppercase text-[10rem] shadow-[0_150px_300px_-50px_rgba(220,38,38,1)] w-full border-[30px] border-red-600/30 active:scale-90 transition-all leading-none h-[30rem]">TURUN</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
         </main>
 
-        <!-- FOOTER MASTER -->
-        <footer class="mt-20 py-32 text-center opacity-30 text-[10px] space-y-4 pb-64 border-t border-emerald-500/10 uppercase font-black tracking-[0.3em]">
+        <!-- FOOTER MASTER (NORMAL SIZE) -->
+        <footer class="mt-20 py-24 text-center opacity-30 text-[10px] space-y-4 pb-64 border-t border-emerald-500/10 uppercase font-black tracking-[0.5em]">
             <p>BHAWARA {{ classInfo.name }} • ANGKATAN 64 • SMPN 8 YOGYAKARTA</p>
-            <p>Platform Architect by <span class="font-bold text-emerald-700 underline">Ruxxi & Denis Pedia (2026)</span></p>
-            <div class="font-arabic text-6xl mt-12 tracking-widest text-emerald-800 animate-pulse">تَفَاؤَلُوا بِالْخَيْرِ تَجِدُوهُ</div>
+            <p>Platform Engine by <span class="font-bold text-emerald-700 underline">Ruxxi (2026)</span></p>
+            <div class="font-arabic text-6xl mt-12 tracking-widest text-emerald-800">تَفَاؤَلُوا بِالْخَيْرِ تَجِدُوهُ</div>
         </footer>
 
-        <!-- TOAST SYSTEM -->
-        <div v-if="toast.show" class="fixed top-12 left-1/2 -translate-x-1/2 z-[300] bg-emerald-950 text-white px-10 py-5 rounded-[2.5rem] shadow-2xl border border-emerald-500 flex items-center gap-4 animate-in fade-in zoom-in duration-300">
-            <i class="ph-bold ph-check-circle text-2xl" :class="toast.isError ? 'text-red-500' : 'text-emerald-400'"></i>
-            <span class="font-black text-[11px] tracking-widest uppercase">{{ toast.message }}</span>
+        <!-- GLOBAL TOAST (HP READY) -->
+        <div v-if="toast.show" class="fixed top-12 left-1/2 -translate-x-1/2 z-[400] bg-emerald-950 text-white px-10 py-6 rounded-[3rem] shadow-[0_30px_100px_rgba(0,0,0,0.8)] border-4 border-emerald-500 flex items-center gap-6 animate-in fade-in zoom-in duration-300">
+            <i class="ph-bold ph-check-circle text-4xl" :class="toast.isError ? 'text-red-500' : 'text-emerald-400'"></i>
+            <span class="font-black text-base tracking-[0.2em] uppercase">{{ toast.message }}</span>
         </div>
     </div>
 
@@ -524,9 +531,9 @@
 
         createApp({
             setup() {
-                const storageKey = (key) => `bh_v91_omega_${key}`;
+                const storageKey = (key) => `bh_v12_stable_${key}`;
                 
-                // STATE & SETTINGS
+                // --- STATE ---
                 const isDarkMode = ref(localStorage.getItem('theme') === 'dark' || false);
                 const currentTab = ref('home');
                 const adminSubTab = ref('students');
@@ -536,28 +543,45 @@
                 const digitalTime = ref('');
                 const searchSurah = ref('');
                 const pinInput = ref('');
-                
-                // SECURITY ENGINE
+                const promotionPinInput = ref('');
+                const PROMOTION_PIN = "ruxxi123";
+
+                // --- SECURITY ---
                 const failedAttempts = ref(parseInt(localStorage.getItem(storageKey('failed_attempts')) || '0'));
                 const lockUntil = ref(parseInt(localStorage.getItem(storageKey('lock_until')) || '0'));
                 const lockCountdown = ref(0);
                 const isLocked = computed(() => lockUntil.value && Date.now() < lockUntil.value);
 
-                // PERSISTENT DATABASES
-                const classInfo = ref(JSON.parse(localStorage.getItem(storageKey('config')) || '{"name": "8G"}'));
-                const students = ref(JSON.parse(localStorage.getItem(storageKey('students')) || '[]'));
-                const structure = ref(JSON.parse(localStorage.getItem(storageKey('structure')) || '[]'));
-                const schedule = ref(JSON.parse(localStorage.getItem(storageKey('schedule')) || '[]'));
-                const piket = ref(JSON.parse(localStorage.getItem(storageKey('piket')) || '[]'));
-                const events = ref(JSON.parse(localStorage.getItem(storageKey('events')) || '[]'));
-                const cashTransactions = ref(JSON.parse(localStorage.getItem(storageKey('kas')) || '[]'));
-                const anonymousMessages = ref(JSON.parse(localStorage.getItem(storageKey('chats')) || '[]'));
-                const userReactions = ref(JSON.parse(localStorage.getItem(storageKey('user_reactions')) || '{}'));
+                // --- DB FAIL-SAFE ---
+                const classInfo = ref({ name: '8G' });
+                const students = ref([]);
+                const structure = ref([]);
+                const schedule = ref([]);
+                const piket = ref([]);
+                const events = ref([]);
+                const cashTransactions = ref([]);
+                const anonymousMessages = ref([]);
+                const userReactions = ref({});
 
-                // QURAN & CALC
+                const initData = () => {
+                    try {
+                        classInfo.value = JSON.parse(localStorage.getItem(storageKey('config')) || '{"name": "8G"}');
+                        students.value = JSON.parse(localStorage.getItem(storageKey('students')) || '[]');
+                        structure.value = JSON.parse(localStorage.getItem(storageKey('structure')) || '[]');
+                        schedule.value = JSON.parse(localStorage.getItem(storageKey('schedule')) || '[]');
+                        piket.value = JSON.parse(localStorage.getItem(storageKey('piket')) || '[]');
+                        events.value = JSON.parse(localStorage.getItem(storageKey('events')) || '[]');
+                        cashTransactions.value = JSON.parse(localStorage.getItem(storageKey('kas')) || '[]');
+                        anonymousMessages.value = JSON.parse(localStorage.getItem(storageKey('chats')) || '[]');
+                        userReactions.value = JSON.parse(localStorage.getItem(storageKey('user_reactions')) || '{}');
+                    } catch (e) { console.error("Data Reset Engine."); }
+                };
+
+                // --- API DHATA ---
                 const quranList = ref([]);
                 const selectedSurah = ref(null);
                 const exchangeRates = ref({});
+                const currencies = ['IDR', 'USD', 'SAR', 'EUR', 'JPY', 'GBP', 'MYR', 'SGD', 'CNY', 'AUD'];
                 const currAmount = ref(1);
                 const currFrom = ref('IDR');
                 const currTo = ref('USD');
@@ -568,7 +592,7 @@
                 const zakatRicePrice = ref(45000);
                 const goldPrice = ref(1100000);
 
-                // ADMIN FORMS
+                // --- FORMS ---
                 const newStudent = ref({ noAbsen: null, name: '', photo: '', gender: 'L' });
                 const newMember = ref({ role: 'Wali Kelas', name: '', photo: '' });
                 const newSchedule = ref({ day: 'Senin', time: '', subject: '' });
@@ -577,7 +601,7 @@
                 const newKas = ref({ type: 'in', amount: null, note: '' });
                 const newMessage = ref('');
 
-                // TOOLS STATE
+                // --- TOOLS ---
                 const wheelPool = ref([]);
                 const wheelRotation = ref(0);
                 const wheelFilter = ref('Campur');
@@ -589,19 +613,18 @@
                 const groupCount = ref('2');
 
                 const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
-                const currencies = ['IDR', 'USD', 'SAR', 'EUR', 'JPY', 'GBP', 'MYR', 'SGD', 'CNY', 'AUD'];
                 const adminTabs = [
                     { id: 'students', label: 'Siswa' }, { id: 'structure', label: 'Struktur' },
                     { id: 'schedule', label: 'Jadwal' }, { id: 'piket', label: 'Piket' },
                     { id: 'events', label: 'Agenda' }, { id: 'kas', label: 'Uang Kas' },
-                    { id: 'chat', label: 'Moderasi' }, { id: 'settings', label: 'Sistem' }
+                    { id: 'chat', label: 'Chat Wall' }, { id: 'settings', label: 'Sistem' }
                 ];
 
                 const SECRET_PIN = "1472583691234560"; 
                 const toast = ref({ show: false, message: '', isError: false });
                 const forbiddenWords = ['anjing', 'babi', 'monyet', 'bangsat', 'kontol', 'memek', 'jembut', 'asu', 'perek', 'lonte', 'bajingan', 'tolol', 'goblok', 'fuck', 'shit', 'ngentot', 'anf', 'tol', 'pekok'];
 
-                // CORE ENGINE
+                // --- METHODS ---
                 const toggleDarkMode = () => { isDarkMode.value = !isDarkMode.value; localStorage.setItem('theme', isDarkMode.value ? 'dark' : 'light'); };
                 const updateTime = () => {
                     const now = Date.now();
@@ -609,17 +632,17 @@
                     if (isLocked.value) lockCountdown.value = Math.ceil((lockUntil.value - now) / 1000);
                 };
 
-                const tabClass = (tab) => `p-4 px-4 rounded-2xl transition-all btn-interact shrink-0 ${currentTab.value === tab ? 'bg-emerald-600 text-white shadow-2xl scale-110' : 'nav-icon-inactive hover:scale-110'}`;
-                const subTabClass = (tab) => `flex-none p-3 px-6 rounded-2xl font-black text-[11px] uppercase tracking-widest border transition-all ${adminSubTab.value === tab ? 'bg-emerald-700 text-white border-emerald-600 shadow-xl' : 'bg-white text-slate-400 border-slate-200'}`;
+                const tabClass = (tab) => `p-3 px-4 rounded-2xl transition-all btn-interact shrink-0 ${currentTab.value === tab ? 'bg-emerald-600 text-white shadow-xl scale-110' : 'nav-icon-inactive hover:scale-105'}`;
+                const subTabClass = (tab) => `flex-none p-3 px-8 rounded-2xl font-black text-xs uppercase tracking-widest border-2 transition-all ${adminSubTab.value === tab ? 'bg-emerald-700 text-white border-emerald-600 shadow-xl' : 'bg-white text-slate-400 border-slate-100'}`;
 
                 const verifyPin = () => {
                     if (isLocked.value) return;
                     if (pinInput.value === SECRET_PIN) {
                         failedAttempts.value = 0; lockUntil.value = 0; isAdmin.value = true;
-                        sessionStorage.setItem('isAdmin', 'true'); saveSecurity(); showToast("VAULT UNLOCKED");
+                        sessionStorage.setItem('isAdmin', 'true'); saveSecurity(); showToast("LOGIN BERHASIL");
                     } else {
                         failedAttempts.value++; pinInput.value = "";
-                        if (failedAttempts.value >= 5) { lockUntil.value = Date.now() + (10 * 60 * 1000); showToast("SECURITY ALERT: SYSTEM LOCKED", true); }
+                        if (failedAttempts.value >= 5) { lockUntil.value = Date.now() + (10 * 60 * 1000); showToast("SISTEM TERKUNCI 10 MENIT", true); }
                         else showToast(`PIN SALAH! SISA ${5 - failedAttempts.value}`, true);
                         saveSecurity();
                     }
@@ -630,12 +653,12 @@
 
                 // QURAN & API
                 const fetchSurahs = async () => { try { const r = await fetch('https://equran.id/api/v2/surat'); const d = await r.json(); quranList.value = d.data; } catch(e) { console.error(e); } };
-                const filteredSurahs = computed(() => quranList.value.filter(s => s.namaLatin.toLowerCase().includes(searchSurah.value.toLowerCase())));
+                const filteredSurahs = computed(() => (quranList.value || []).filter(s => s.namaLatin.toLowerCase().includes(searchSurah.value.toLowerCase())));
                 const fetchSurahDetail = async (no) => { try { const r = await fetch(`https://equran.id/api/v2/surat/${no}`); const d = await r.json(); selectedSurah.value = d.data; } catch(e) { console.error(e); } };
                 const fetchRates = async () => { try { const r = await fetch(`https://open.er-api.com/v6/latest/${currFrom.value}`); const d = await r.json(); exchangeRates.value = d.rates; showToast("Rates Live!"); } catch(e) { console.error(e); } };
                 const convertedAmount = computed(() => currAmount.value * (exchangeRates.value[currTo.value] || 0));
 
-                // CALC PRO
+                // CALC
                 const calcIn = (v) => calcScreen.value += v;
                 const calcClear = () => { calcScreen.value = ''; calcHistory.value = ''; };
                 const calcDel = () => calcScreen.value = calcScreen.value.slice(0, -1);
@@ -648,7 +671,7 @@
                 };
                 const calcResult = () => { try { calcHistory.value = calcScreen.value; calcScreen.value = String(eval(calcScreen.value)); } catch(e) { calcScreen.value = 'Error'; } };
 
-                // CRUD METHODS
+                // CRUD
                 const sortedStudents = computed(() => [...students.value].sort((a, b) => a.noAbsen - b.noAbsen));
                 const addStudent = () => { if (!newStudent.value.name || !newStudent.value.noAbsen) return; students.value.push({...newStudent.value}); saveData('students', students.value); newStudent.value = { noAbsen: null, name: '', photo: '', gender: 'L' }; showToast("OK"); resetWheelPool(); };
                 const deleteStudent = (no) => { students.value = students.value.filter(s => s.noAbsen !== no); saveData('students', students.value); resetWheelPool(); };
@@ -657,43 +680,44 @@
                 const addStructure = () => { if (!newMember.value.name) return; if (['Wali Kelas', 'Ketua Kelas', 'Wakil Ketua'].includes(newMember.value.role)) { structure.value = structure.value.filter(m => m.role !== newMember.value.role); } structure.value.push({...newMember.value, id: Date.now()}); saveData('structure', structure.value); newMember.value = { role: 'Wali Kelas', name: '', photo: '' }; showToast("OK"); };
                 const deleteStructure = (id) => { structure.value = structure.value.filter(m => m.id !== id); saveData('structure', structure.value); };
                 const addSchedule = () => { if (!newSchedule.value.subject) return; schedule.value.push({...newSchedule.value, id: Date.now()}); saveData('schedule', schedule.value); newSchedule.value = { day: 'Senin', time: '', subject: '' }; showToast("OK"); };
-                const getScheduleForDay = (day) => schedule.value.filter(s => s.day === day);
+                const getScheduleForDay = (day) => (schedule.value || []).filter(s => s.day === day);
                 const deleteSchedule = (id) => { schedule.value = schedule.value.filter(s => s.id !== id); saveData('schedule', schedule.value); };
                 const addPiket = () => { if (!newPiket.value.name) return; piket.value.push({...newPiket.value, id: Date.now()}); saveData('piket', piket.value); newPiket.value.name = ''; showToast("OK"); };
-                const getPiketForDay = (day) => piket.value.filter(p => p.day === day).map(p => p.name);
-                const deletePiket = (id) => { piket.value = piket.value.filter(p => p.id !== id); saveData('piket', piket.value); };
+                const getPiketForDay = (day) => (piket.value || []).filter(p => p.day === day).map(p => p.name);
+                const deletePiket = (id) => { piket.value = (piket.value || []).filter(p => p.id !== id); saveData('piket', piket.value); };
                 const addEvent = () => { if (!newEvent.value.title) return; events.value.unshift({...newEvent.value}); saveData('events', events.value); newEvent.value = { title:'', date:'', location:'' }; showToast("OK"); };
                 const deleteEvent = (i) => { events.value.splice(i, 1); saveData('events', events.value); };
                 const cashBalance = computed(() => { let i = cashTransactions.value.filter(t=>t.type==='in').reduce((a,b)=>a+(Number(b.amount)||0),0); let e = cashTransactions.value.filter(t=>t.type==='out').reduce((a,b)=>a+(Number(b.amount)||0),0); return { total: i - e }; });
-                const addTransaction = () => { if (!newKas.value.amount || !newKas.value.note) return; cashTransactions.value.unshift({ id: Date.now(), ...newKas.value, date: new Date().toLocaleDateString('id-ID') }); saveData('kas', cashTransactions.value); newKas.value = { type: 'in', amount: null, note: '' }; showToast("Tersimpan"); };
-                const deleteTransaction = (i) => { cashTransactions.value.splice(i, 1); saveData('kas', cashTransactions.value); };
-                const exportCashReport = () => { let csv = "Tipe,Ket,Jumlah,Tanggal\n"; cashTransactions.value.forEach(t=> csv+=`${t.type==='in'?'Masuk':'Keluar'},${t.note},${t.amount},${t.date}\n`); const blob = new Blob([csv], {type:'text/csv'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href=url; a.download='Kas_Bhawara.csv'; a.click(); };
+                const addTransaction = () => { if (!newKas.value.amount || !newKas.value.note) return; cashTransactions.value.unshift({ id: Date.now(), ...newKas.value, date: new Date().toLocaleDateString('id-ID') }); saveData('kas', cashTransactions.value); newKas.value = { type: 'in', amount: null, note: '' }; showToast("OK"); };
+                const deleteTransaction = (id) => { cashTransactions.value = cashTransactions.value.filter(t => t.id !== id); saveData('kas', cashTransactions.value); };
+                const exportCashReport = () => { let csv = "Tipe,Ket,Jumlah,Tanggal\n"; cashTransactions.value.forEach(t=> csv+=`${t.type==='in'?'Masuk':'Keluar'},${t.note},${t.amount},${t.date}\n`); const blob = new Blob([csv], {type:'text/csv'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href=url; a.download='Kas.csv'; a.click(); };
 
-                // TOOLS & WALL
-                const addMessage = () => { if (!newMessage.value.trim()) return; if (forbiddenWords.some(w => newMessage.value.toLowerCase().includes(w))) return showToast("KONTEN DIBLOKIR!", true); anonymousMessages.value.unshift({ id: Date.now(), text: newMessage.value, reactions: {'❤️':0,'😂':0,'👍':0,'🔥':0,'🙏':0}, timestamp: new Date().toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'}) }); saveData('chats', anonymousMessages.value); newMessage.value = ""; };
+                // TOOLS
+                const addMessage = () => { if (!newMessage.value.trim()) return; if (forbiddenWords.some(w => newMessage.value.toLowerCase().includes(w))) return showToast("BLOKIR!", true); anonymousMessages.value.unshift({ id: Date.now(), text: newMessage.value, reactions: {'❤️':0,'😂':0,'👍':0,'🔥':0,'🙏':0}, timestamp: new Date().toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'}) }); saveData('chats', anonymousMessages.value); newMessage.value = ""; showToast("OK"); };
                 const reactToMessage = (msgIdx, emoji) => { const msg = anonymousMessages.value[msgIdx]; const msgId = msg.id; const prev = userReactions.value[msgId]; if (prev === emoji) { msg.reactions[emoji] = Math.max(0, msg.reactions[emoji]-1); delete userReactions.value[msgId]; } else { if (prev) msg.reactions[prev]--; msg.reactions[emoji]++; userReactions.value[msgId] = emoji; } saveData('chats', anonymousMessages.value); saveData('user_reactions', userReactions.value); };
                 const deleteMessage = (i) => { anonymousMessages.value.splice(i, 1); saveData('chats', anonymousMessages.value); };
                 const resetWheelPool = () => { let src = [...students.value]; if (wheelFilter.value === 'Laki-laki') src = src.filter(s => s.gender === 'L'); if (wheelFilter.value === 'Perempuan') src = src.filter(s => s.gender === 'P'); wheelPool.value = src; };
                 const setWheelFilter = (f) => { wheelFilter.value = f; resetWheelPool(); };
-                const wheelSegmentStyle = (idx) => { const tot = wheelPool.value.length || 1; return { transform: `rotate(${(360/tot)*idx}deg)`, height: '150px', width: `${300*Math.PI/tot}px`, backgroundColor: idx%2===0?'#065f46':'#d4af37', color: idx%2===0?'white':'black', clipPath: 'polygon(50% 100%, 0 0, 100% 0)' }; };
-                const spinWheel = () => { if (isSpinning.value || wheelPool.value.length === 0) return; isSpinning.value = true; wheelWinner.value = null; const rand = Math.floor(Math.random()*360) + (360*5); wheelRotation.value += rand; setTimeout(() => { const tot = wheelPool.value.length; const deg = wheelRotation.value % 360; const winIdx = Math.floor(((360 - deg + (360/tot/2)) % 360) / (360/tot)) % tot; wheelWinner.value = wheelPool.value[winIdx].name; isSpinning.value = false; if (removeAfterSpin.value) wheelPool.value.splice(winIdx, 1); }, 4000); };
+                const wheelSegmentStyle = (idx) => { const tot = wheelPool.value.length || 1; return { transform: `rotate(${(360/tot)*idx}deg)`, height: '160px', width: `${320*Math.PI/tot}px`, backgroundColor: idx%2===0?'#065f46':'#d4af37', color: idx%2===0?'white':'black', clipPath: 'polygon(50% 100%, 0 0, 100% 0)' }; };
+                const spinWheel = () => { if (isSpinning.value || wheelPool.value.length === 0) return; isSpinning.value = true; wheelWinner.value = null; const rand = Math.floor(Math.random()*360) + (360*5); wheelRotation.value += rand; setTimeout(() => { const tot = wheelPool.value.length; const deg = wheelRotation.value % 360; const winIdx = Math.floor(((360 - deg + (360/tot/2)) % 360) / (360/tot)) % tot; wheelWinner.value = wheelPool.value[winIdx].name; isSpinning.value = false; if (removeAfterSpin.value) wheelPool.value.splice(winIdx, 1); }, 4500); };
                 const getWinnerPhoto = () => students.value.find(s => s.name === wheelWinner.value)?.photo || '';
-                const generateGroups = () => { let pool = groupFilter.value === 'Campur' ? [...students.value] : students.value.filter(s => s.gender === groupFilter.value); if (pool.length < groupCount.value) return showToast("Siswa kurang!", true); pool.sort(()=>Math.random()-0.5); const n = parseInt(groupCount.value); const res = Array.from({length:n}, ()=>[]); pool.forEach((s,i)=> res[i%n].push(s)); generatedGroups.value = res; };
-                const resetTools = () => { resetWheelPool(); generatedGroups.value = []; wheelWinner.value = null; showToast("RESET SELESAI"); };
-                const promoteClass = () => { const n = parseInt(classInfo.value.name); if (!isNaN(n)) { classInfo.value.name = (n+1)+'G'; saveData('config', classInfo.value); showToast("NAIK KELAS!"); } };
+                const generateGroups = () => { let pool = groupFilter.value === 'Campur' ? [...students.value] : students.value.filter(s => s.gender === groupFilter.value); if (pool.length < groupCount.value) return showToast("DATA TIDAK CUKUP!", true); pool.sort(()=>Math.random()-0.5); const n = parseInt(groupCount.value); const res = Array.from({length:n}, ()=>[]); pool.forEach((s,i)=> res[i%n].push(s)); generatedGroups.value = res; };
+                const resetTools = () => { resetWheelPool(); generatedGroups.value = []; wheelWinner.value = null; showToast("RESET"); };
+                const promoteClassWithPin = () => { if (promotionPinInput.value === PROMOTION_PIN) { const n = parseInt(classInfo.value.name); if (!isNaN(n)) { classInfo.value.name = (n+1)+'G'; saveData('config', classInfo.value); showToast("CONGRATS!"); promotionPinInput.value = ""; } } else { showToast("PIN SALAH!", true); } };
+                const demoteClass = () => { const n = parseInt(classInfo.value.name); if (!isNaN(n) && n > 1) { classInfo.value.name = (n-1)+'G'; saveData('config', classInfo.value); showToast("TURUN"); } };
 
                 const formatNumber = (n) => new Intl.NumberFormat('id-ID').format(n);
-                const showToast = (m, e = false) => { toast.value = { show: true, message: m, isError: e }; setTimeout(() => toast.value.show = false, 3000); };
+                const showToast = (m, e = false) => { toast.value = { show: true, message: m, isError: e }; setTimeout(() => toast.value.show = false, 3500); };
 
-                onMounted(() => { updateTime(); setInterval(updateTime, 1000); fetchSurahs(); fetchRates(); resetWheelPool(); });
+                onMounted(() => { updateTime(); setInterval(updateTime, 1000); fetchSurahs(); fetchRates(); initData(); resetWheelPool(); });
 
                 return {
                     isDarkMode, currentTab, adminSubTab, calcTab, zakatSubTab, isAdmin, digitalTime, classInfo,
                     students, sortedStudents, structure, schedule, piket, events, cashTransactions, anonymousMessages, userReactions, days, adminTabs,
                     pinInput, isLocked, failedAttempts, lockCountdown, toast, searchSurah, quranList, selectedSurah, filteredSurahs, fetchSurahDetail, calcScreen, calcHistory, zakatWealth, zakatSouls, zakatRicePrice, goldPrice,
                     currencies, currFrom, currTo, currAmount, convertedAmount, wheelPool, wheelRotation, wheelFilter, wheelWinner, isSpinning, removeAfterSpin, generatedGroups, groupFilter, groupCount,
-                    newStudent, newMember, newSchedule, newPiket, newEvent, newKas, newMessage,
-                    toggleDarkMode, tabClass, subTabClass, verifyPin, logout, promoteClass, formatNumber, fetchRates, 
+                    newStudent, newMember, newSchedule, newPiket, newEvent, newKas, newMessage, promotionPinInput,
+                    toggleDarkMode, tabClass, subTabClass, verifyPin, logout, promoteClassWithPin, demoteClass, formatNumber, fetchRates, 
                     calcIn, calcClear, calcDel, calcOp, calcResult, resetTools, setWheelFilter, resetWheelPool, spinWheel, wheelSegmentStyle, getWinnerPhoto, generateGroups,
                     addStudent, deleteStudent, addStructure, deleteStructure, getStructureByRole, otherStructure, addSchedule, getScheduleForDay, getPiketForDay, cashBalance, 
                     deleteSchedule, deletePiket, deleteEvent, addTransaction, deleteTransaction, exportCashReport, addMessage, reactToMessage, deleteMessage
