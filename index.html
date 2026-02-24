@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BHAWARA - CLASS PLATFORM V8</title>
-    <!-- Frameworks & UI Kits -->
+    <title>BHAWARA - CLASS PLATFORM V9.1 (GRAND MASTER)</title>
+    <!-- Frameworks -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -20,21 +20,14 @@
             transition: background-color 0.4s ease, color 0.4s ease;
         }
         .font-arabic { font-family: 'Amiri', serif; }
+        .dark { background-color: #0f172a; color: #f8fafc; }
         
-        .dark {
-            background-color: #0f172a;
-            color: #f8fafc;
-        }
-        
-        /* Islamic Moving Background */
+        /* Islamic Moving Background Animation */
         .bg-pattern {
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l15 30-15 30L15 30z' fill='%23065f46' fill-opacity='0.04'/%3E%3C/svg%3E");
-            animation: move-bg 35s linear infinite;
+            animation: move-bg 40s linear infinite;
         }
-        @keyframes move-bg {
-            from { background-position: 0 0; }
-            to { background-position: 150px 150px; }
-        }
+        @keyframes move-bg { from { background-position: 0 0; } to { background-position: 200px 200px; } }
 
         .glass {
             background: rgba(255, 255, 255, 0.3);
@@ -46,238 +39,224 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .btn-interact {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .btn-interact { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .btn-interact:active { transform: scale(0.92); }
-
         .no-scrollbar::-webkit-scrollbar { display: none; }
         [v-cloak] { display: none; }
 
-        /* Admin Dashboard UI */
-        .input-admin {
-            background-color: #ffffff !important;
-            color: #1e293b !important;
-            border: 1px solid #cbd5e1;
-        }
+        /* Quran High Contrast - Specific Requirement */
+        .quran-text-black { color: #000000 !important; }
+        .quran-card { background-color: #ffffff !important; color: #000000 !important; }
 
-        /* Nav Icon Contrast */
-        .nav-icon-inactive {
-            color: #000000 !important;
-            opacity: 0.8;
-        }
-        .dark .nav-icon-inactive {
-            color: #ffffff !important;
-            opacity: 0.4;
-        }
+        .calc-btn { @apply p-4 rounded-2xl font-bold text-sm transition-all active:scale-90 flex items-center justify-center shadow-sm border border-black/5; }
+        .input-admin { background-color: #ffffff !important; color: #1e293b !important; border: 1px solid #cbd5e1; }
+        
+        .nav-icon-inactive { color: #000000 !important; opacity: 0.8; }
+        .dark .nav-icon-inactive { color: #ffffff !important; opacity: 0.4; }
 
-        /* Wheel Styling */
+        /* Spinning Wheel Geometry */
         .wheel-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 0 auto;
-            border: 8px solid var(--islamic-green);
-            border-radius: 50%;
-            overflow: hidden;
-            transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1);
-            box-shadow: 0 0 30px rgba(6, 95, 70, 0.2);
+            position: relative; width: 300px; height: 300px; margin: 0 auto;
+            border: 10px solid var(--islamic-green); border-radius: 50%; overflow: hidden;
+            transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1); background: white;
+            box-shadow: 0 0 50px rgba(6, 95, 70, 0.2);
         }
         .wheel-pointer {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0; height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-top: 30px solid #ef4444;
-            z-index: 30;
+            position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent;
+            border-top: 35px solid #ef4444; z-index: 40; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
         }
 
-        /* Winner Card Animation */
-        .winner-pop {
-            animation: pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-        @keyframes pop {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        .winner-pop { animation: winner-scale 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes winner-scale { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-        /* Confetti */
-        .confetti {
-            position: absolute;
-            width: 8px; height: 8px;
-            animation: fall 3s ease-out infinite;
-        }
-        @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(60vh) rotate(720deg); opacity: 0; }
-        }
+        .confetti { position: absolute; width: 10px; height: 10px; animation: fall 3s ease-out infinite; z-index: 101; pointer-events: none; }
+        @keyframes fall { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(80vh) rotate(720deg); opacity: 0; } }
     </style>
 </head>
 <body :class="{ 'dark': isDarkMode }" class="bg-slate-50 text-slate-900 min-h-screen bg-pattern">
     <div id="app" v-cloak>
         <!-- NAVIGATION BAR -->
-        <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-2xl glass rounded-[2.5rem] p-2.5 flex items-center shadow-2xl border-t border-white/40">
+        <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[96%] max-w-5xl glass rounded-[2.5rem] p-2.5 flex items-center shadow-2xl border-t border-white/40">
             <div class="flex justify-around w-full overflow-x-auto no-scrollbar gap-1 px-2">
                 <button @click="currentTab = 'home'" :class="tabClass('home')"><i class="ph-bold ph-house-line text-xl"></i></button>
+                <button @click="currentTab = 'quran'" :class="tabClass('quran')"><i class="ph-bold ph-book-open text-xl"></i></button>
                 <button @click="currentTab = 'students'" :class="tabClass('students')"><i class="ph-bold ph-users text-xl"></i></button>
                 <button @click="currentTab = 'structure'" :class="tabClass('structure')"><i class="ph-bold ph-identification-card text-xl"></i></button>
                 <button @click="currentTab = 'schedule'" :class="tabClass('schedule')"><i class="ph-bold ph-calendar-blank text-xl"></i></button>
                 <button @click="currentTab = 'piket'" :class="tabClass('piket')"><i class="ph-bold ph-broom text-xl"></i></button>
                 <button @click="currentTab = 'tools'" :class="tabClass('tools')"><i class="ph-bold ph-spinner text-xl"></i></button>
+                <button @click="currentTab = 'calculator'" :class="tabClass('calculator')"><i class="ph-bold ph-calculator text-xl"></i></button>
                 <button @click="currentTab = 'kas'" :class="tabClass('kas')"><i class="ph-bold ph-bank text-xl"></i></button>
                 <button @click="currentTab = 'chat'" :class="tabClass('chat')"><i class="ph-bold ph-chat-centered-text text-xl"></i></button>
                 <button @click="currentTab = 'admin'" :class="tabClass('admin')"><i class="ph-bold ph-lock-key text-xl"></i></button>
                 <div class="h-8 w-[1px] bg-black/10 dark:bg-white/10 shrink-0 mx-1"></div>
-                <button @click="toggleDarkMode" class="p-3 rounded-2xl transition-all" :class="isDarkMode ? 'text-yellow-400' : 'text-orange-500'">
+                <button @click="toggleDarkMode" class="p-3 rounded-2xl transition-all btn-interact" :class="isDarkMode ? 'text-yellow-400' : 'text-orange-500'">
                     <i :class="isDarkMode ? 'ph-bold ph-sun' : 'ph-bold ph-moon'"></i>
                 </button>
             </div>
         </nav>
 
-        <!-- MAIN CONTENT -->
-        <main class="max-w-4xl mx-auto px-4 pt-10 pb-40">
+        <!-- MAIN CONTAINER -->
+        <main class="max-w-6xl mx-auto px-4 pt-10 pb-44">
             
-            <!-- VIEW: HOME -->
-            <section v-if="currentTab === 'home'" class="space-y-10 animate-in fade-in duration-700">
-                <div class="text-center space-y-4">
-                    <div class="inline-block p-2 px-6 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 font-bold text-[10px] tracking-widest uppercase">
-                        BHAWARA {{ classInfo.name }} • SMPN 8 YOGYAKARTA
+            <!-- 1. HOME VIEW -->
+            <section v-if="currentTab === 'home'" class="space-y-12 animate-in fade-in duration-700">
+                <div class="text-center space-y-6">
+                    <div class="inline-block p-2 px-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 font-black text-[10px] tracking-[0.3em] uppercase shadow-sm">
+                        BHAWARA {{ classInfo.name }} • ANGKATAN 64
                     </div>
                     <h1 class="text-4xl md:text-5xl font-arabic font-bold text-emerald-800 dark:text-emerald-400">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</h1>
-                    <h2 class="text-6xl md:text-8xl font-black tracking-tighter uppercase">BHAWARA <span class="text-emerald-600">{{ classInfo.name }}</span></h2>
-                    <p class="text-lg font-medium italic opacity-60">"Berkarakter, Bermutu"</p>
+                    <h2 class="text-7xl md:text-9xl font-black tracking-tighter uppercase drop-shadow-sm">BHAWARA <span class="text-emerald-600">{{ classInfo.name }}</span></h2>
+                    <p class="text-xl font-medium italic opacity-60 text-center">"Berkarakter, Bermutu"</p>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="glass p-8 rounded-[2.5rem] text-center space-y-2 border-emerald-500/20 border-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass p-10 rounded-[3rem] text-center space-y-2 border-emerald-500/20 border-2 shadow-inner">
                         <div class="text-5xl font-mono font-bold text-emerald-600 tracking-tighter">{{ digitalTime }}</div>
                         <div class="text-[9px] uppercase tracking-[0.4em] opacity-50 font-black">Yogyakarta • WIB</div>
                     </div>
-                    <a href="https://www.instagram.com/bhawara_8g" target="_blank" class="glass p-8 rounded-[2.5rem] flex items-center justify-between group hover:bg-emerald-600 transition-all duration-500 overflow-hidden relative shadow-lg">
+                    <a href="https://www.instagram.com/bhawara_8g" target="_blank" class="glass p-10 rounded-[3rem] flex items-center justify-between group hover:bg-emerald-600 transition-all duration-700 overflow-hidden relative shadow-lg">
                         <div class="z-10 text-left">
-                            <h3 class="font-bold text-xl group-hover:text-white">Instagram</h3>
+                            <h3 class="font-black text-2xl group-hover:text-white transition-colors">Official Instagram</h3>
                             <p class="text-sm opacity-60 group-hover:text-emerald-100 font-mono">@bhawara_{{ classInfo.name.toLowerCase() }}</p>
                         </div>
-                        <i class="ph-fill ph-instagram-logo text-7xl opacity-20 group-hover:opacity-100 group-hover:text-white group-hover:scale-125 transition-all z-10"></i>
+                        <i class="ph-fill ph-instagram-logo text-7xl opacity-20 group-hover:opacity-100 group-hover:text-white group-hover:scale-110 transition-all z-10"></i>
                         <div class="absolute inset-0 bg-gradient-to-tr from-purple-600 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </a>
                 </div>
-
-                <div v-if="events && events.length > 0" class="relative overflow-hidden rounded-[2.5rem] bg-emerald-900 text-white p-10 shadow-2xl">
-                    <div class="relative z-10">
-                        <span class="bg-yellow-500 text-black text-[9px] font-black px-3 py-1 rounded-full mb-4 inline-block tracking-widest uppercase">AGENDA KELAS</span>
-                        <h3 class="text-3xl font-bold tracking-tight">{{ events[0].title }}</h3>
-                        <p class="opacity-80 mt-1 font-medium">{{ events[0].date }} • {{ events[0].location }}</p>
+                <div v-if="events && events.length > 0" class="relative overflow-hidden rounded-[3rem] bg-emerald-900 text-white p-12 shadow-2xl animate-in slide-in-from-bottom">
+                    <div class="relative z-10 space-y-4">
+                        <span class="bg-yellow-500 text-black text-[10px] font-black px-4 py-1.5 rounded-full inline-block tracking-widest uppercase shadow-lg">Agenda Terdekat</span>
+                        <h3 class="text-4xl font-black tracking-tight">{{ events[0].title }}</h3>
+                        <p class="opacity-80 text-sm font-bold flex gap-4"><i class="ph-bold ph-calendar"></i> {{ events[0].date }} | <i class="ph-bold ph-map-pin"></i> {{ events[0].location }}</p>
                     </div>
-                    <i class="ph-bold ph-star-four text-[12rem] absolute -right-16 -bottom-16 opacity-10 animate-spin-slow"></i>
+                    <i class="ph-bold ph-sparkle text-[15rem] absolute -right-20 -bottom-20 opacity-10 animate-pulse"></i>
                 </div>
             </section>
 
-            <!-- VIEW: STUDENTS -->
-            <section v-if="currentTab === 'students'" class="space-y-6">
-                <h2 class="text-3xl font-black">Daftar <span class="text-emerald-600">Siswa</span></h2>
-                <div v-if="students.length === 0" class="text-center py-24 glass rounded-[3rem] border-dashed border-2 border-emerald-500/20">
-                    <p class="opacity-40 font-bold uppercase tracking-widest">Database Kosong</p>
-                </div>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    <div v-for="student in sortedStudents" :key="student.noAbsen" class="glass p-4 rounded-[2rem] text-center group transition-all hover:-translate-y-2 relative overflow-hidden shadow-md">
-                        <div class="absolute top-3 left-3 bg-emerald-600 text-white text-[9px] font-black w-6 h-6 rounded-full flex items-center justify-center z-10 shadow-lg">{{ student.noAbsen }}</div>
-                        <div class="aspect-square rounded-2xl bg-slate-200 dark:bg-slate-800 mb-4 overflow-hidden border-2 border-emerald-500/10">
-                            <img :src="student.photo || 'https://via.placeholder.com/400?text=No+Photo'" class="w-full h-full object-cover transition-all duration-500 group-hover:scale-110">
-                        </div>
-                        <h3 class="font-black text-[10px] truncate uppercase text-emerald-900 dark:text-emerald-400">{{ student.name }}</h3>
-                        <span class="text-[8px] opacity-40 font-bold uppercase">{{ student.gender === 'L' ? 'Laki-laki' : 'Perempuan' }}</span>
+            <!-- 2. AL-QURAN VIEW -->
+            <section v-if="currentTab === 'quran'" class="space-y-8 animate-in slide-in-from-bottom-10">
+                <div v-if="!selectedSurah">
+                    <h2 class="text-4xl font-black">Al-Qur'an <span class="text-emerald-600">Digital</span></h2>
+                    <div class="glass p-5 rounded-[2.5rem] mb-8 flex items-center gap-4 border border-emerald-500/10">
+                        <i class="ph-bold ph-magnifying-glass text-xl opacity-40 text-emerald-700"></i>
+                        <input v-model="searchSurah" type="text" placeholder="Cari nama surah..." class="bg-transparent w-full outline-none font-bold text-base">
                     </div>
-                </div>
-            </section>
-
-            <!-- VIEW: STRUCTURE (KOTAK-KOTAK LENGKAP) -->
-            <section v-if="currentTab === 'structure'" class="space-y-12 text-center">
-                <h2 class="text-3xl font-black">Struktur <span class="text-emerald-600">Kelas</span></h2>
-                
-                <div v-if="structure.length === 0" class="py-24 glass rounded-[3rem] border-dashed border-2 border-emerald-500/20">
-                    <p class="opacity-40 font-bold uppercase tracking-widest">Belum diatur.</p>
-                </div>
-
-                <div class="space-y-16">
-                    <!-- LEVEL 1: WALI KELAS -->
-                    <div v-if="getStructureByRole('Wali Kelas')" class="flex justify-center">
-                        <div class="w-56 space-y-4 animate-in slide-in-from-bottom duration-500">
-                            <div class="aspect-square rounded-[3rem] border-8 border-emerald-600 p-2 bg-white shadow-2xl overflow-hidden ring-12 ring-emerald-500/5">
-                                <img :src="getStructureByRole('Wali Kelas').photo" class="w-full h-full object-cover rounded-[2rem]">
-                            </div>
-                            <div>
-                                <h4 class="font-black text-emerald-600 text-xs uppercase tracking-widest">Wali Kelas</h4>
-                                <p class="font-bold text-lg leading-tight mt-1">{{ getStructureByRole('Wali Kelas').name }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- LEVEL 2: KETUA & WAKIL -->
-                    <div class="grid grid-cols-2 gap-8 max-w-lg mx-auto">
-                        <div v-for="role in ['Ketua Kelas', 'Wakil Ketua']" :key="role">
-                            <div v-if="getStructureByRole(role)" class="space-y-3">
-                                <div class="aspect-square rounded-full border-4 border-emerald-500 p-1 bg-white shadow-xl overflow-hidden ring-4 ring-emerald-500/10">
-                                    <img :src="getStructureByRole(role).photo" class="w-full h-full object-cover rounded-full">
-                                </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                        <div v-for="s in filteredSurahs" :key="s.nomor" @click="fetchSurahDetail(s.nomor)" class="glass p-6 rounded-[2.5rem] flex items-center justify-between cursor-pointer hover:bg-emerald-600 transition-all border border-emerald-500/5 group">
+                            <div class="flex items-center gap-5">
+                                <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-black text-sm shadow-lg group-hover:bg-white group-hover:text-emerald-600 transition-colors">{{ s.nomor }}</div>
                                 <div>
-                                    <h4 class="font-black text-emerald-600 text-[10px] uppercase tracking-widest">{{ role }}</h4>
-                                    <p class="font-bold text-sm mt-1">{{ getStructureByRole(role).name }}</p>
+                                    <h4 class="font-black text-sm uppercase group-hover:text-white">{{ s.namaLatin }}</h4>
+                                    <p class="text-[10px] opacity-40 font-black uppercase tracking-widest group-hover:text-emerald-100">{{ s.arti }}</p>
                                 </div>
                             </div>
+                            <div class="font-arabic text-2xl text-emerald-700 dark:text-emerald-400 group-hover:text-white transition-transform">{{ s.nama }}</div>
                         </div>
                     </div>
+                </div>
+                <div v-else class="animate-in fade-in duration-500">
+                    <button @click="selectedSurah = null" class="flex items-center gap-2 text-xs font-black text-emerald-600 uppercase mb-8 hover:translate-x-[-4px] transition-transform"><i class="ph-bold ph-arrow-left"></i> Kembali</button>
+                    <div class="glass p-12 rounded-[4rem] text-center space-y-4 border-b-[12px] border-emerald-600 shadow-2xl mb-12">
+                        <h2 class="font-arabic text-6xl text-emerald-800">{{ selectedSurah.nama }}</h2>
+                        <h3 class="text-3xl font-black uppercase tracking-tighter">{{ selectedSurah.namaLatin }}</h3>
+                        <p class="text-[10px] font-black opacity-40 uppercase tracking-[0.4em]">{{ selectedSurah.arti }} • {{ selectedSurah.tempatTurun }}</p>
+                    </div>
+                    <div class="space-y-8">
+                        <div v-if="selectedSurah.nomor !== 1 && selectedSurah.nomor !== 9" class="text-center py-10 font-arabic text-4xl opacity-80 quran-text-black tracking-widest">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+                        <div v-for="a in selectedSurah.ayat" :key="a.nomorAyat" class="quran-card p-10 rounded-[3rem] space-y-8 shadow-xl border-l-[12px] border-emerald-600 transition-all hover:scale-[1.01]">
+                            <div class="flex justify-between items-start gap-8">
+                                <div class="w-10 h-10 shrink-0 rounded-2xl bg-emerald-50 flex items-center justify-center text-xs font-black quran-text-black border border-emerald-500/20">{{ a.nomorAyat }}</div>
+                                <div class="text-right font-arabic text-4xl leading-[2.2] quran-text-black tracking-wide">{{ a.teksArab }}</div>
+                            </div>
+                            <div class="space-y-4 border-t border-slate-100 pt-6">
+                                <p class="text-[11px] quran-text-black font-black italic tracking-wide leading-relaxed">{{ a.teksLatin }}</p>
+                                <p class="text-sm leading-relaxed font-semibold quran-text-black text-slate-600">{{ a.teksIndonesia }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-                    <!-- LEVEL 3: LAINNYA (Bendahara, Sekretaris, dll) -->
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                        <div v-for="member in otherStructure" :key="member.id" class="glass p-5 rounded-[2rem] space-y-3 shadow-sm border border-emerald-500/10 transition-transform hover:scale-105">
-                            <div class="w-16 h-16 mx-auto rounded-2xl overflow-hidden border-2 border-emerald-500/30 bg-white">
-                                <img :src="member.photo" class="w-full h-full object-cover">
+            <!-- 3. VIEW: STUDENTS -->
+            <section v-if="currentTab === 'students'" class="space-y-8 animate-in slide-in-from-right">
+                <h2 class="text-4xl font-black">Database <span class="text-emerald-600">Siswa</span></h2>
+                <div v-if="students.length === 0" class="py-32 text-center glass rounded-[3rem] border-dashed border-4 border-emerald-500/10"><p class="opacity-40 uppercase font-black text-xs tracking-widest">Database Kosong</p></div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                    <div v-for="student in sortedStudents" :key="student.noAbsen" class="glass p-5 rounded-[2.5rem] text-center group transition-all hover:-translate-y-3 relative overflow-hidden shadow-lg border border-emerald-500/5">
+                        <div class="absolute top-4 left-4 bg-emerald-600 text-white text-[10px] font-black w-8 h-8 rounded-2xl flex items-center justify-center z-10 shadow-xl ring-4 ring-white/10">{{ student.noAbsen }}</div>
+                        <div class="aspect-square rounded-3xl bg-slate-200 dark:bg-slate-800 mb-5 overflow-hidden border-2 border-emerald-500/10 shadow-inner">
+                            <img :src="student.photo || 'https://via.placeholder.com/400?text=Siswa'" class="w-full h-full object-cover transition-all duration-700 group-hover:scale-125">
+                        </div>
+                        <h3 class="font-black text-xs truncate uppercase text-emerald-900 dark:text-emerald-300">{{ student.name }}</h3>
+                        <p class="text-[8px] font-black opacity-30 uppercase mt-1">{{ student.gender === 'L' ? 'LAKI-LAKI' : 'PEREMPUAN' }}</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. VIEW: STRUCTURE (HIERARCHY) -->
+            <section v-if="currentTab === 'structure'" class="space-y-16 text-center animate-in slide-in-from-top">
+                <h2 class="text-4xl font-black">Struktur <span class="text-emerald-600">Kepengurusan</span></h2>
+                <div v-if="structure.length === 0" class="py-24 glass rounded-[4rem] border-dashed border-4 border-emerald-500/10"><p class="opacity-30 uppercase font-black text-xs">Belum diatur admin.</p></div>
+                <div v-else class="space-y-20">
+                    <div v-if="getStructureByRole('Wali Kelas')" class="flex justify-center">
+                        <div class="w-64 space-y-5 animate-in zoom-in">
+                            <div class="aspect-square rounded-[4rem] border-[10px] border-emerald-600 p-2.5 bg-white shadow-2xl overflow-hidden ring-[15px] ring-emerald-500/5 transition-transform hover:scale-105">
+                                <img :src="getStructureByRole('Wali Kelas').photo" class="w-full h-full object-cover rounded-[3rem]" onerror="this.src='https://via.placeholder.com/300?text=Wali+Kelas'">
                             </div>
                             <div>
-                                <h4 class="font-black text-[9px] text-emerald-600 uppercase tracking-widest">{{ member.role }}</h4>
-                                <p class="font-bold text-xs mt-1 leading-tight">{{ member.name }}</p>
+                                <h4 class="font-black text-emerald-700 text-sm uppercase tracking-[0.3em]">Wali Kelas</h4>
+                                <p class="font-black text-2xl mt-2 text-slate-800 dark:text-emerald-100">{{ getStructureByRole('Wali Kelas').name }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-12 max-w-2xl mx-auto">
+                        <div v-for="role in ['Ketua Kelas', 'Wakil Ketua']" :key="role">
+                            <div v-if="getStructureByRole(role)" class="space-y-5 animate-in fade-in">
+                                <div class="aspect-square rounded-full border-8 border-emerald-500 p-1.5 bg-white shadow-2xl overflow-hidden ring-8 ring-emerald-500/10">
+                                    <img :src="getStructureByRole(role).photo" class="w-full h-full object-cover rounded-full" onerror="this.src='https://via.placeholder.com/200?text=Profil'">
+                                </div>
+                                <h4 class="font-black text-emerald-600 text-[11px] uppercase tracking-widest">{{ role }}</h4>
+                                <p class="font-black text-lg mt-1 tracking-tight leading-tight">{{ getStructureByRole(role).name }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                        <div v-for="member in otherStructure" :key="member.id" class="glass p-6 rounded-[3rem] space-y-4 shadow-md border border-emerald-500/10 transition-all hover:scale-105">
+                            <div class="w-20 h-20 mx-auto rounded-3xl overflow-hidden border-4 border-emerald-500/20 bg-white"><img :src="member.photo" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150?text=Profil'"></div>
+                            <div><h4 class="font-black text-[9px] text-emerald-600 uppercase tracking-widest">{{ member.role }}</h4><p class="font-black text-xs mt-1">{{ member.name }}</p></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. VIEW: SCHEDULE & PIKET (GRID KOTAK) -->
+            <section v-if="currentTab === 'schedule'" class="space-y-8 animate-in slide-in-from-bottom-10">
+                <h2 class="text-4xl font-black">Jadwal <span class="text-emerald-600">Pelajaran</span></h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div v-for="day in days" :key="day" class="glass overflow-hidden rounded-[3rem] border border-emerald-500/10 shadow-lg">
+                        <div class="bg-emerald-800 p-6 text-white font-black flex justify-between items-center shadow-xl uppercase text-sm tracking-widest">
+                            <span>{{ day }}</span><i class="ph-bold ph-book-open-text text-2xl"></i>
+                        </div>
+                        <div class="p-8 space-y-4">
+                            <div v-if="getScheduleForDay(day).length === 0" class="text-[9px] opacity-20 font-black py-8 text-center tracking-[0.3em]">KOSONG</div>
+                            <div v-for="item in getScheduleForDay(day)" :key="item.id" class="flex justify-between items-center text-sm p-5 bg-white dark:bg-slate-800 rounded-3xl border shadow-sm transition-all hover:translate-x-2">
+                                <span class="font-black text-emerald-900 dark:text-emerald-100 uppercase text-xs">{{ item.subject }}</span>
+                                <span class="opacity-40 text-[10px] font-mono font-black">{{ item.time }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- VIEW: SCHEDULE (KOTAK-KOTAK) -->
-            <section v-if="currentTab === 'schedule'" class="space-y-6">
-                <h2 class="text-3xl font-black">Jadwal <span class="text-emerald-600">Pelajaran</span></h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div v-for="day in days" :key="day" class="glass overflow-hidden rounded-[2.5rem] border border-emerald-500/10 shadow-sm transition-all hover:shadow-xl">
-                        <div class="bg-emerald-800 p-5 text-white font-black flex justify-between items-center shadow-lg uppercase text-xs tracking-widest">
-                            <span>{{ day }}</span>
-                            <i class="ph-bold ph-book-open"></i>
-                        </div>
-                        <div class="p-5 space-y-3">
-                            <div v-if="getScheduleForDay(day).length === 0" class="text-[9px] opacity-30 font-black py-4 text-center tracking-[0.4em]">BELUM DIISI</div>
-                            <div v-for="item in getScheduleForDay(day)" class="flex justify-between items-center text-sm p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-white/5 transition-all hover:translate-x-1">
-                                <span class="font-bold text-emerald-900 dark:text-emerald-100 tracking-tight">{{ item.subject }}</span>
-                                <span class="opacity-40 text-[9px] font-mono font-black">{{ item.time }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VIEW: PIKET (KOTAK-KOTAK) -->
-            <section v-if="currentTab === 'piket'" class="space-y-6">
-                <h2 class="text-3xl font-black">Jadwal <span class="text-emerald-600">Piket</span></h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div v-for="day in days" :key="day" class="glass rounded-[2.5rem] p-8 border-l-[12px] border-emerald-700 shadow-md transition-all hover:-translate-y-1">
-                        <h3 class="text-2xl font-black mb-6 flex items-center gap-3 tracking-tighter uppercase">
-                            <i class="ph-bold ph-broom text-emerald-600"></i>
-                            {{ day }}
-                        </h3>
-                        <div class="flex flex-wrap gap-2">
-                            <div v-if="getPiketForDay(day).length === 0" class="text-[9px] opacity-30 font-black tracking-widest uppercase">Belum ada petugas</div>
-                            <span v-for="name in getPiketForDay(day)" class="bg-emerald-50 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-200 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest border border-emerald-600/10 shadow-sm">
+            <section v-if="currentTab === 'piket'" class="space-y-8 animate-in slide-in-from-bottom-10">
+                <h2 class="text-4xl font-black">Jadwal <span class="text-emerald-600">Piket</span></h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div v-for="day in days" :key="day" class="glass rounded-[3rem] p-10 border-l-[15px] border-emerald-700 shadow-xl transition-all hover:-translate-y-2">
+                        <h3 class="text-3xl font-black mb-8 flex items-center gap-4 tracking-tighter uppercase text-emerald-800 dark:text-emerald-400"><i class="ph-bold ph-broom text-4xl"></i>{{ day }}</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <div v-if="getPiketForDay(day).length === 0" class="text-[10px] opacity-20 font-black uppercase tracking-[0.5em]">Kosong</div>
+                            <span v-for="name in getPiketForDay(day)" :key="name" class="bg-emerald-50 dark:bg-emerald-900/40 text-emerald-800 dark:text-emerald-200 px-5 py-2.5 rounded-2xl text-[11px] font-black uppercase tracking-widest shadow-sm">
                                 {{ name }}
                             </span>
                         </div>
@@ -285,272 +264,256 @@
                 </div>
             </section>
 
-            <!-- VIEW: TOOLS (Spinning Wheel & Randomizer) -->
-            <section v-if="currentTab === 'tools'" class="space-y-10">
+            <!-- 6. VIEW: TOOLS (WHEEL & GROUPS) -->
+            <section v-if="currentTab === 'tools'" class="space-y-12 animate-in zoom-in">
                 <div class="flex justify-between items-end">
-                    <h2 class="text-3xl font-black">Class <span class="text-emerald-600">Tools</span></h2>
-                    <button @click="resetTools" class="text-[9px] font-black uppercase tracking-widest bg-slate-200 text-slate-600 p-2 px-5 rounded-full hover:bg-slate-300">Reset All</button>
+                    <h2 class="text-4xl font-black">Class <span class="text-emerald-600">Tools</span></h2>
+                    <button @click="resetTools" class="text-[9px] font-black uppercase tracking-widest bg-red-500 text-white p-3 px-8 rounded-full shadow-lg hover:bg-red-600 transition-all btn-interact">Reset Semua</button>
                 </div>
                 
-                <div class="glass p-8 rounded-[3rem] text-center space-y-8 shadow-2xl relative overflow-hidden border border-emerald-500/10">
-                    <div class="flex flex-wrap justify-center gap-2">
-                        <button v-for="f in ['Campur', 'Laki-laki', 'Perempuan']" @click="setWheelFilter(f)" :class="wheelFilter === f ? 'bg-emerald-600 text-white' : 'bg-white dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-white/10'" class="p-2 px-6 rounded-full text-[10px] font-black transition-all">{{ f }}</button>
+                <div class="glass p-12 rounded-[4rem] text-center space-y-10 shadow-2xl relative border border-emerald-500/10">
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <button v-for="f in ['Campur', 'Laki-laki', 'Perempuan']" :key="f" @click="setWheelFilter(f)" :class="wheelFilter === f ? 'bg-emerald-600 text-white shadow-xl scale-110' : 'bg-white dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-white/10'" class="p-3 px-8 rounded-full text-[11px] font-black transition-all">{{ f }}</button>
                     </div>
-
-                    <div class="relative py-10">
+                    <div class="relative py-12">
                         <div class="wheel-pointer"></div>
                         <div class="wheel-container" :style="{ transform: `rotate(${wheelRotation}deg)` }">
-                            <div v-for="(s, i) in wheelPool" :key="s.noAbsen" :style="wheelSegmentStyle(i)" class="absolute inset-0 flex items-start justify-center pt-10 text-[8px] font-black uppercase origin-bottom">
-                                <span class="rotate-[-90deg] translate-y-4">{{ s.name.split(' ')[0] }}</span>
+                            <div v-for="(s, i) in wheelPool" :key="s.noAbsen" :style="wheelSegmentStyle(i)" class="absolute inset-0 flex items-start justify-center pt-10 text-[9px] font-black uppercase origin-bottom">
+                                <span class="rotate-[-90deg] translate-y-6">{{ s.name.split(' ')[0] }}</span>
                             </div>
                         </div>
                     </div>
-
-                    <div class="flex flex-wrap items-center justify-center gap-6 py-4 border-t border-emerald-500/10">
-                        <label class="flex items-center gap-3 cursor-pointer group">
-                            <input type="checkbox" v-model="removeAfterSpin" class="w-5 h-5 rounded accent-emerald-600">
-                            <span class="text-[10px] font-black uppercase tracking-widest opacity-60">Hapus Pemenang</span>
-                        </label>
-                        <button @click="resetWheelPool" class="text-[10px] font-black text-emerald-600 hover:underline uppercase">Reset Daftar ({{ wheelPool.length }})</button>
+                    <div class="flex flex-wrap items-center justify-center gap-8 py-6 border-t border-emerald-500/10">
+                        <label class="flex items-center gap-4 cursor-pointer group"><input type="checkbox" v-model="removeAfterSpin" class="w-6 h-6 rounded-lg accent-emerald-600"><span class="text-[11px] font-black uppercase tracking-widest opacity-60">Hapus Jika Menang</span></label>
+                        <button @click="resetWheelPool" class="text-[11px] font-black text-emerald-600 hover:underline uppercase tracking-widest">Reset Daftar (Tersisa {{ wheelPool.length }})</button>
                     </div>
-
-                    <button @click="spinWheel" :disabled="isSpinning || wheelPool.length === 0" class="w-full bg-emerald-700 text-white p-5 rounded-[2rem] font-black tracking-widest btn-interact uppercase shadow-xl">Putar Roda!</button>
+                    <button @click="spinWheel" :disabled="isSpinning || wheelPool.length === 0" class="w-full bg-emerald-700 text-white p-6 rounded-[3rem] font-black text-lg uppercase shadow-2xl btn-interact">PUTAR SEKARANG</button>
                     
-                    <!-- Winner Modal -->
-                    <div v-if="wheelWinner" class="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-emerald-950/80 backdrop-blur-md">
-                        <div v-for="i in 15" :key="i" class="confetti" :style="{ left: Math.random() * 100 + 'vw', backgroundColor: i%2===0?'#d4af37':'#065f46', animationDelay: Math.random() * 2 + 's' }"></div>
-                        <div class="winner-pop glass bg-white dark:bg-slate-900 p-12 rounded-[4rem] text-center shadow-2xl border-4 border-emerald-500/30 space-y-6 max-w-sm w-full">
-                            <h4 class="text-xs font-black uppercase tracking-[0.4em] text-emerald-600">Pemenang!</h4>
-                            <div class="aspect-square w-32 h-32 mx-auto rounded-full border-4 border-emerald-500 p-1 bg-white overflow-hidden shadow-xl">
-                                <img :src="getWinnerPhoto()" class="w-full h-full object-cover rounded-full">
-                            </div>
-                            <h2 class="text-3xl font-black uppercase tracking-tighter text-slate-900 dark:text-white">{{ wheelWinner }}</h2>
-                            <button @click="wheelWinner = null" class="w-full bg-emerald-600 text-white p-4 rounded-3xl font-black uppercase tracking-widest shadow-lg">Lanjut</button>
+                    <div v-if="wheelWinner" class="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-emerald-950/90 backdrop-blur-xl animate-in fade-in">
+                        <div v-for="i in 30" :key="i" class="confetti" :style="{ left: Math.random() * 100 + 'vw', backgroundColor: i%2===0?'#d4af37':'#f8fafc', animationDelay: Math.random() * 3 + 's' }"></div>
+                        <div class="winner-pop glass bg-white dark:bg-slate-900 p-16 rounded-[5rem] text-center shadow-2xl border-4 border-emerald-500/40 space-y-8 max-w-md w-full relative">
+                            <div class="aspect-square w-48 h-48 mx-auto rounded-[3rem] border-[8px] border-emerald-500 p-2 bg-white overflow-hidden shadow-2xl"><img :src="getWinnerPhoto()" class="w-full h-full object-cover rounded-[2rem]" onerror="this.src='https://via.placeholder.com/200?text=Winner'"></div>
+                            <h2 class="text-5xl font-black uppercase tracking-tighter text-slate-900 dark:text-white leading-none">{{ wheelWinner }}</h2>
+                            <button @click="wheelWinner = null" class="w-full bg-emerald-700 text-white p-5 rounded-[2rem] font-black uppercase shadow-lg btn-interact">Tutup</button>
                         </div>
                     </div>
                 </div>
-
-                <!-- RANDOMIZER -->
-                <div class="glass p-8 rounded-[3rem] space-y-6 shadow-2xl border border-emerald-500/10">
-                    <h3 class="font-black uppercase tracking-widest text-xs text-emerald-700 text-center">Group Randomizer</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <select v-model="groupFilter" class="p-4 rounded-2xl input-admin font-bold text-xs outline-none">
-                            <option value="Campur">Campur</option>
-                            <option value="L">Laki-laki saja</option>
-                            <option value="P">Perempuan saja</option>
-                        </select>
-                        <select v-model="groupCount" class="p-4 rounded-2xl input-admin font-bold text-xs outline-none">
-                            <option value="2">2 Kelompok</option>
-                            <option value="4">4 Kelompok</option>
-                            <option value="8">8 Kelompok</option>
-                            <option v-if="groupFilter === 'Campur'" value="16">16 Kelompok</option>
-                        </select>
+                <div class="glass p-12 rounded-[4rem] space-y-8 shadow-2xl border border-emerald-500/10">
+                    <h3 class="font-black uppercase text-sm text-emerald-700 text-center tracking-widest">Group Randomizer</h3>
+                    <div class="grid grid-cols-2 gap-6">
+                        <select v-model="groupFilter" class="p-5 rounded-[2rem] input-admin font-black text-xs shadow-sm"><option value="Campur">Campur</option><option value="L">Hanya Laki-laki</option><option value="P">Hanya Perempuan</option></select>
+                        <select v-model="groupCount" class="p-5 rounded-[2rem] input-admin font-black text-xs shadow-sm"><option value="2">2 Kelompok</option><option value="4">4 Kelompok</option><option value="8">8 Kelompok</option><option v-if="groupFilter === 'Campur'" value="16">16 Kelompok</option></select>
                     </div>
-                    <button @click="generateGroups" class="w-full bg-emerald-800 text-white p-4 rounded-2xl font-black tracking-widest btn-interact uppercase shadow-lg">Acak Sekarang!</button>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                        <div v-for="(group, idx) in generatedGroups" :key="idx" class="p-6 bg-white dark:bg-slate-800 rounded-[2.5rem] border border-emerald-500/10 shadow-sm transition-all hover:translate-x-1">
-                            <h4 class="font-black text-emerald-600 uppercase text-[10px] mb-4">Kelompok {{ idx + 1 }}</h4>
-                            <div class="space-y-2">
-                                <p v-for="m in group" :key="m.noAbsen" class="text-[11px] font-bold opacity-80 flex items-center gap-2">
-                                    <span class="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-700 text-[8px] flex items-center justify-center font-black">{{ m.noAbsen }}</span>
-                                    {{ m.name }}
-                                </p>
+                    <button @click="generateGroups" class="w-full bg-emerald-800 text-white p-5 rounded-[2.5rem] font-black tracking-widest btn-interact uppercase shadow-xl">ACAK KELOMPOK</button>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                        <div v-for="(group, idx) in generatedGroups" :key="idx" class="p-8 bg-white dark:bg-slate-800 rounded-[3.5rem] border-2 border-emerald-500/10 shadow-xl">
+                            <h4 class="font-black text-emerald-600 uppercase text-xs mb-6 flex justify-between border-b pb-4"><span>Kelompok {{ idx + 1 }}</span><span class="opacity-40">{{ group.length }} Org</span></h4>
+                            <div class="space-y-3">
+                                <p v-for="m in group" :key="m.noAbsen" class="text-[12px] font-bold opacity-80 flex items-center gap-3 uppercase tracking-tighter"><span class="w-6 h-6 rounded-xl bg-emerald-50 text-[10px] flex items-center justify-center font-black text-emerald-700 shadow-sm">{{ m.noAbsen }}</span>{{ m.name }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- OTHER VIEWS (UANG KAS, CHAT, ADMIN) - Simplified Layout -->
-            <section v-if="currentTab === 'kas'" class="space-y-6">
+            <!-- 7. VIEW: CALCULATOR HUB (PRO UPDATE) -->
+            <section v-if="currentTab === 'calculator'" class="space-y-10 animate-in slide-in-from-bottom-10">
+                <h2 class="text-4xl font-black">Bhawara <span class="text-emerald-600">Calculators</span></h2>
+                <div class="flex gap-2 overflow-x-auto pb-4 no-scrollbar">
+                    <button v-for="c in ['Saintifik', 'Mata Uang', 'Zakat']" :key="c" @click="calcTab = c" :class="calcTab === c ? 'bg-emerald-600 text-white shadow-2xl scale-105' : 'bg-white dark:bg-slate-800 opacity-50'" class="flex-none px-10 py-3 rounded-full font-black text-xs uppercase tracking-widest border transition-all">{{ c }}</button>
+                </div>
+
+                <!-- SCIENTIFIC PRO -->
+                <div v-if="calcTab === 'Saintifik'" class="glass p-10 rounded-[4rem] shadow-2xl max-w-md mx-auto relative overflow-hidden">
+                    <div class="bg-emerald-950/10 dark:bg-emerald-900/40 p-10 rounded-[2.5rem] mb-8 text-right border border-emerald-500/10 shadow-inner overflow-hidden">
+                        <div class="text-[11px] opacity-40 font-mono h-6 truncate tracking-widest mb-1">{{ calcHistory || '' }}</div>
+                        <div class="text-5xl font-mono font-black truncate tracking-tighter">{{ calcScreen || '0' }}</div>
+                    </div>
+                    <div class="grid grid-cols-4 gap-4">
+                        <button @click="calcOp('sin')" class="calc-btn bg-emerald-100 text-emerald-700">sin</button>
+                        <button @click="calcOp('cos')" class="calc-btn bg-emerald-100 text-emerald-700">cos</button>
+                        <button @click="calcOp('tan')" class="calc-btn bg-emerald-100 text-emerald-700">tan</button>
+                        <button @click="calcOp('log')" class="calc-btn bg-emerald-100 text-emerald-700">log</button>
+                        
+                        <button @click="calcIn('(')" class="calc-btn bg-emerald-50 text-emerald-600">(</button>
+                        <button @click="calcIn(')')" class="calc-btn bg-emerald-50 text-emerald-600">)</button>
+                        <button @click="calcOp('sqrt')" class="calc-btn bg-emerald-50 text-emerald-600">√</button>
+                        <button @click="calcIn('%')" class="calc-btn bg-orange-100 text-orange-600">%</button>
+
+                        <button @click="calcClear" class="calc-btn bg-red-500 text-white col-span-2 font-black uppercase tracking-widest shadow-lg">AC</button>
+                        <button @click="calcDel" class="calc-btn bg-slate-500 text-white">DEL</button>
+                        <button @click="calcIn('/')" class="calc-btn bg-orange-500 text-white text-2xl">÷</button>
+                        
+                        <button v-for="n in ['7','8','9']" @click="calcIn(n)" class="calc-btn bg-white dark:bg-slate-800 text-xl font-black">{{ n }}</button>
+                        <button @click="calcIn('*')" class="calc-btn bg-orange-500 text-white text-2xl">×</button>
+                        
+                        <button v-for="n in ['4','5','6']" @click="calcIn(n)" class="calc-btn bg-white dark:bg-slate-800 text-xl font-black">{{ n }}</button>
+                        <button @click="calcIn('-')" class="calc-btn bg-orange-500 text-white text-2xl">-</button>
+                        
+                        <button v-for="n in ['1','2','3']" @click="calcIn(n)" class="calc-btn bg-white dark:bg-slate-800 text-xl font-black">{{ n }}</button>
+                        <button @click="calcIn('+')" class="calc-btn bg-orange-500 text-white text-2xl">+</button>
+                        
+                        <button @click="calcIn('0')" class="calc-btn bg-white dark:bg-slate-800 col-span-2 text-xl font-black">0</button>
+                        <button @click="calcIn('.')" class="calc-btn bg-white dark:bg-slate-800 text-xl font-black">.</button>
+                        <button @click="calcResult" class="calc-btn bg-emerald-600 text-white shadow-xl text-2xl font-black">=</button>
+                    </div>
+                </div>
+
+                <!-- LIVE CURRENCY -->
+                <div v-if="calcTab === 'Mata Uang'" class="glass p-12 rounded-[4rem] space-y-10 shadow-2xl border border-emerald-500/10 animate-in fade-in">
+                    <div class="text-center space-y-2"><i class="ph-fill ph-arrows-left-right text-6xl text-emerald-600"></i><h3 class="font-black text-2xl uppercase tracking-tighter">Live Currency Engine</h3></div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-4">
+                            <label class="text-[11px] font-black uppercase opacity-40 px-6 tracking-widest">Asal</label>
+                            <div class="flex gap-4">
+                                <select v-model="currFrom" class="p-5 rounded-[2rem] bg-white dark:bg-slate-800 border-2 border-emerald-500/10 w-32 font-black shadow-xl transition-all"><option v-for="c in currencies" :key="c" :value="c">{{ c }}</option></select>
+                                <input v-model.number="currAmount" type="number" class="flex-1 p-5 rounded-[2rem] bg-white dark:bg-slate-800 border-2 border-emerald-500/10 font-black shadow-xl">
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <label class="text-[11px] font-black uppercase opacity-40 px-6 tracking-widest">Hasil</label>
+                            <div class="flex gap-4">
+                                <select v-model="currTo" class="p-5 rounded-[2rem] bg-white dark:bg-slate-800 border-2 border-emerald-500/10 w-32 font-black shadow-xl transition-all"><option v-for="c in currencies" :key="c" :value="c">{{ c }}</option></select>
+                                <div class="flex-1 p-5 rounded-[2rem] bg-emerald-900 text-white font-black text-xl flex items-center justify-center shadow-2xl border-4 border-emerald-500/20 tracking-widest">{{ formatNumber(convertedAmount) }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button @click="fetchRates" class="w-full p-6 rounded-[2.5rem] bg-emerald-600 text-white font-black tracking-widest uppercase shadow-2xl hover:bg-emerald-700 transition-all btn-interact">Update Kurs Dunia</button>
+                </div>
+
+                <!-- ZAKAT (FIXED) -->
+                <div v-if="calcTab === 'Zakat'" class="glass p-12 rounded-[4rem] space-y-12 shadow-2xl border-l-[15px] border-emerald-600 animate-in fade-in">
+                    <div class="flex gap-2 justify-center mb-6">
+                        <button @click="zakatSubTab = 'fitrah'" :class="zakatSubTab === 'fitrah' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-500'" class="px-6 py-2 rounded-full font-black text-[10px] uppercase transition-all">Zakat Fitrah</button>
+                        <button @click="zakatSubTab = 'maal'" :class="zakatSubTab === 'maal' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-500'" class="px-6 py-2 rounded-full font-black text-[10px] uppercase transition-all">Zakat Maal</button>
+                    </div>
+
+                    <!-- FITRAH -->
+                    <div v-if="zakatSubTab === 'fitrah'" class="space-y-8 animate-in zoom-in">
+                        <div class="text-center space-y-2"><i class="ph-fill ph-hand-heart text-6xl text-emerald-700"></i><h3 class="font-black text-2xl uppercase tracking-tighter">Hitung Zakat Fitrah</h3></div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2"><label class="text-[11px] font-black uppercase opacity-40 px-6">Jumlah Jiwa</label><input v-model.number="zakatSouls" type="number" class="w-full p-6 rounded-[3rem] bg-white dark:bg-slate-800 border-4 border-emerald-500/10 font-black text-2xl text-center shadow-inner outline-none"></div>
+                            <div class="space-y-2"><label class="text-[11px] font-black uppercase opacity-40 px-6">Harga Beras / Jiwa (Rp)</label><input v-model.number="zakatRicePrice" type="number" class="w-full p-6 rounded-[3rem] bg-white dark:bg-slate-800 border-4 border-emerald-500/10 font-black text-2xl text-center shadow-inner outline-none"></div>
+                        </div>
+                        <div class="p-10 bg-emerald-700 text-white rounded-[4rem] text-center shadow-2xl border-4 border-white/20"><div class="text-[11px] font-black opacity-70 uppercase tracking-[0.3em] mb-3">Total Zakat Fitrah (Uang)</div><div class="text-5xl font-black tracking-tighter leading-none">Rp {{ formatNumber(zakatSouls * zakatRicePrice) }}</div><p class="mt-4 text-[10px] font-bold opacity-50 italic">Atau setara dengan {{ (zakatSouls * 2.5).toFixed(1) }} Kg Beras</p></div>
+                    </div>
+
+                    <!-- MAAL -->
+                    <div v-if="zakatSubTab === 'maal'" class="space-y-8 animate-in zoom-in">
+                        <div class="text-center space-y-2"><i class="ph-fill ph-coins text-6xl text-emerald-700"></i><h3 class="font-black text-2xl uppercase tracking-tighter">Hitung Zakat Maal</h3></div>
+                        <div class="space-y-3"><label class="text-[11px] font-black uppercase opacity-50 px-6">Total Harta Tabungan (Haul 1 Tahun)</label><input v-model.number="zakatWealth" type="number" placeholder="Rp 0" class="w-full p-7 rounded-[3rem] bg-white dark:bg-slate-800 border-4 border-emerald-500/10 font-black text-3xl outline-none text-emerald-700 shadow-inner"></div>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="p-8 bg-emerald-50 dark:bg-emerald-950/30 rounded-[3rem] border border-emerald-500/10 text-center"><div class="text-[10px] font-black opacity-50 uppercase mb-1">Batas Nisab (85g Emas)</div><div class="text-xl font-black">Rp {{ formatNumber(85 * goldPrice) }}</div></div>
+                            <div class="p-8 bg-emerald-50 dark:bg-emerald-950/30 rounded-[3rem] border border-emerald-500/10 text-center"><div class="text-[10px] font-black opacity-50 uppercase mb-1">Status Kewajiban</div><div class="text-xl font-black" :class="zakatWealth >= (85 * goldPrice) ? 'text-green-600' : 'text-red-500'">{{ zakatWealth >= (85 * goldPrice) ? 'WAJIB' : 'BELUM' }}</div></div>
+                        </div>
+                        <div v-if="zakatWealth >= (85 * goldPrice)" class="p-10 bg-emerald-700 text-white rounded-[4rem] text-center shadow-2xl border-4 border-white/20"><div class="text-[11px] font-black opacity-70 uppercase tracking-[0.3em] mb-3">Zakat Maal (2.5%)</div><div class="text-5xl font-black tracking-tighter leading-none">Rp {{ formatNumber(zakatWealth * 0.025) }}</div></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. VIEW: UANG KAS -->
+            <section v-if="currentTab === 'kas'" class="space-y-8 animate-in fade-in">
                  <div class="flex justify-between items-center">
-                    <h2 class="text-3xl font-black">Uang <span class="text-emerald-600">Kas</span></h2>
-                    <button v-if="cashTransactions.length > 0" @click="exportCashReport" class="text-[9px] font-black bg-emerald-600 text-white p-2 px-4 rounded-full uppercase">Export CSV</button>
+                    <h2 class="text-4xl font-black">Uang <span class="text-emerald-600">Kas Kelas</span></h2>
+                    <button v-if="cashTransactions.length > 0" @click="exportCashReport" class="text-[11px] font-black bg-emerald-600 text-white p-4 px-10 rounded-full uppercase tracking-widest shadow-2xl">Laporan CSV</button>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="glass p-6 rounded-[2rem] border-l-8 border-emerald-600 shadow-xl">
-                        <div class="text-[10px] font-black opacity-50 uppercase tracking-widest">Total Saldo</div>
-                        <div class="text-2xl font-black text-emerald-700 dark:text-emerald-400">Rp {{ formatNumber(cashBalance.total) }}</div>
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass p-10 rounded-[3rem] border-l-[20px] border-emerald-600 shadow-2xl"><div class="text-[11px] font-black opacity-50 uppercase tracking-widest">Saldo Bersih Saat Ini</div><div class="text-4xl font-black text-emerald-700 dark:text-emerald-400 mt-2">Rp {{ formatNumber(cashBalance.total) }}</div></div>
                 </div>
-                <!-- Transactions List Kotak-Kotak -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div v-for="t in cashTransactions" :key="t.id" class="glass p-4 rounded-[2rem] flex justify-between items-center shadow-sm border border-emerald-500/5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div v-for="t in cashTransactions" :key="t.id" class="glass p-8 rounded-[3rem] flex justify-between items-center shadow-lg border border-emerald-500/5 transition-all hover:bg-emerald-50/10">
                         <div class="flex flex-col">
-                            <span class="font-black text-[9px] uppercase" :class="t.type === 'in' ? 'text-blue-600' : 'text-red-600'">{{ t.type === 'in' ? 'Masuk' : 'Keluar' }}</span>
-                            <span class="font-bold text-xs">{{ t.note }}</span>
-                            <span class="text-[8px] opacity-40 uppercase">{{ t.date }}</span>
+                            <span class="font-black text-[10px] uppercase tracking-widest mb-1" :class="t.type === 'in' ? 'text-blue-600' : 'text-red-600'">{{ t.type === 'in' ? 'Masuk' : 'Keluar' }}</span>
+                            <span class="font-black text-base uppercase tracking-tight text-slate-800 dark:text-emerald-100">{{ t.note }}</span>
+                            <span class="text-[9px] opacity-40 font-mono mt-1 uppercase">{{ t.date }}</span>
                         </div>
-                        <div class="font-black text-sm" :class="t.type === 'in' ? 'text-blue-600' : 'text-red-600'">
-                            {{ t.type === 'in' ? '+' : '-' }} {{ formatNumber(t.amount) }}
-                        </div>
+                        <div class="font-black text-xl tracking-tighter" :class="t.type === 'in' ? 'text-blue-600' : 'text-red-600'">{{ t.type === 'in' ? '+' : '-' }} {{ formatNumber(t.amount) }}</div>
                     </div>
                 </div>
             </section>
 
-            <section v-if="currentTab === 'chat'" class="space-y-6">
-                <h2 class="text-3xl font-black">Secret <span class="text-emerald-600">Wall</span></h2>
-                <div class="glass p-6 rounded-[2.5rem] shadow-2xl space-y-4">
-                    <textarea v-model="newMessage" rows="3" placeholder="Tulis sesuatu secara anonim... (Filter Aktif!)" class="w-full p-4 rounded-2xl bg-white text-slate-900 border border-slate-200 outline-none focus:ring-4 ring-emerald-500/10 text-sm font-medium resize-none shadow-inner"></textarea>
-                    <button @click="addMessage" class="w-full bg-emerald-700 text-white p-4 rounded-2xl font-black tracking-widest btn-interact uppercase shadow-lg">Kirim Pesan</button>
+            <!-- 9. VIEW: SECRET WALL -->
+            <section v-if="currentTab === 'chat'" class="space-y-8">
+                <h2 class="text-4xl font-black">Secret <span class="text-emerald-600">Wall</span></h2>
+                <div class="glass p-10 rounded-[4rem] shadow-2xl space-y-6 border border-emerald-500/10">
+                    <textarea v-model="newMessage" rows="4" placeholder="Kirim pesan anonim (Islami & Sopan)..." class="w-full p-8 rounded-[3rem] bg-white text-slate-900 border-4 border-emerald-500/10 outline-none focus:border-emerald-500 text-lg font-medium resize-none shadow-inner"></textarea>
+                    <button @click="addMessage" class="w-full bg-emerald-700 text-white p-8 rounded-[3rem] font-black tracking-[0.2em] uppercase shadow-2xl shadow-emerald-700/20 btn-interact">Kirim Pesan Anonim</button>
+                </div>
+                <div class="space-y-8">
+                    <div v-for="(m, msgIdx) in anonymousMessages" :key="m.id" class="glass p-10 rounded-[3.5rem] shadow-xl border-l-[15px] border-emerald-600 relative transition-all">
+                        <div class="text-lg font-bold leading-loose italic text-slate-800 dark:text-slate-200">"{{ m.text }}"</div>
+                        <div class="mt-8 flex flex-wrap items-center gap-4">
+                            <button v-for="(count, emoji) in m.reactions" :key="emoji" 
+                                @click="reactToMessage(msgIdx, emoji)" 
+                                :class="userReactions[m.id] === emoji ? 'bg-emerald-600 text-white scale-110 shadow-lg border-emerald-400' : 'bg-white/50 dark:bg-slate-800/50 border-emerald-500/20 opacity-80'"
+                                class="flex items-center gap-2.5 px-5 py-2.5 rounded-full border-2 transition-all hover:scale-110 active:scale-90">
+                                <span class="text-xl">{{ emoji }}</span><span class="text-xs font-black">{{ count }}</span>
+                            </button>
+                            <div class="flex gap-4 ml-auto">
+                                <button v-for="e in ['❤️', '😂', '👍', '🔥', '🙏']" :key="e" @click="reactToMessage(msgIdx, e)" class="opacity-30 hover:opacity-100 hover:scale-150 transition-all text-2xl">{{ e }}</button>
+                            </div>
+                        </div>
+                        <div class="mt-6 text-[10px] opacity-30 font-black uppercase tracking-widest text-right flex justify-between px-6 pt-4 border-t border-emerald-500/5"><span>Member Anonim</span><span>{{ m.timestamp }}</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 10. VIEW: ADMIN VAULT (PROTECTED) -->
+            <section v-if="currentTab === 'admin' && !isAdmin" class="max-w-sm mx-auto py-24 text-center space-y-12 animate-in slide-in-from-bottom-10">
+                <div class="relative inline-block">
+                    <i class="ph-fill ph-lock-key text-[10rem] transition-colors duration-700" :class="isLocked ? 'text-red-500 scale-110' : 'text-emerald-700'"></i>
+                    <div v-if="isLocked" class="absolute -top-4 -right-4 bg-red-600 text-white text-[11px] font-black px-5 py-2 rounded-full animate-pulse shadow-2xl">LOCKED</div>
                 </div>
                 <div class="space-y-4">
-                    <div v-for="(m, msgIdx) in anonymousMessages" :key="m.id" class="glass p-6 rounded-[2rem] shadow-md border-l-4 border-emerald-600 relative">
-                        <div class="text-sm font-medium leading-relaxed italic text-slate-800 dark:text-slate-200">"{{ m.text }}"</div>
-                        <div class="mt-4 flex flex-wrap items-center gap-2">
-                            <button v-for="(count, emoji) in m.reactions" :key="emoji" @click="reactToMessage(msgIdx, emoji)" class="flex items-center gap-1.5 px-3 py-1 bg-white/50 dark:bg-slate-800/50 rounded-full border border-emerald-500/20 hover:border-emerald-500 transition-all">
-                                <span class="text-sm">{{ emoji }}</span>
-                                <span class="text-[10px] font-black opacity-60">{{ count }}</span>
-                            </button>
-                            <div class="flex gap-2 ml-auto">
-                                <button v-for="e in ['❤️', '😂', '👍', '🔥', '🙏']" @click="reactToMessage(msgIdx, e)" class="opacity-40 hover:opacity-100 hover:scale-125 transition-all text-sm">{{ e }}</button>
-                            </div>
-                        </div>
-                    </div>
+                    <h2 class="text-5xl font-black uppercase tracking-tighter">Admin Vault</h2>
+                    <p class="text-xs font-black uppercase tracking-[0.5em] opacity-40" :class="isLocked ? 'text-red-600 opacity-100' : ''">{{ isLocked ? `Tunggu ${lockCountdown} detik` : 'Input 16 Digit PIN Keamanan' }}</p>
+                </div>
+                <div class="space-y-8">
+                    <input v-model="pinInput" type="password" maxlength="16" :disabled="isLocked" class="w-full bg-white text-slate-900 border-[10px] border-emerald-500/10 rounded-[3.5rem] p-8 text-center text-3xl tracking-[0.4em] focus:outline-none focus:border-emerald-600 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.2)] transition-all font-mono" placeholder="••••••••••••••••">
+                    <div class="flex justify-between px-8"><span class="text-xs font-black opacity-30 uppercase tracking-widest">Sisa: {{ 5 - failedAttempts }}/5</span><span class="text-xs font-black opacity-30 uppercase tracking-widest">{{ pinInput.length }}/16</span></div>
+                    <button @click="verifyPin" :disabled="isLocked || pinInput.length < 16" class="w-full bg-emerald-700 text-white p-8 rounded-[3.5rem] font-black tracking-[0.4em] text-lg uppercase shadow-2xl disabled:opacity-30 btn-interact">BUKA AKSES</button>
                 </div>
             </section>
 
-            <!-- VIEW: ADMIN DASHBOARD (LENGKAP) -->
-            <section v-if="currentTab === 'admin' && !isAdmin" class="max-w-sm mx-auto py-24 text-center space-y-8">
-                <i class="ph-fill ph-lock-key text-8xl text-emerald-700 drop-shadow-lg"></i>
-                <h2 class="text-3xl font-black uppercase tracking-tighter">Admin Vault</h2>
-                <input v-model="pinInput" type="password" maxlength="6" class="w-full bg-white text-slate-900 border-4 border-emerald-500/10 rounded-[2rem] p-6 text-center text-4xl tracking-[0.5em] focus:outline-none focus:border-emerald-600 shadow-2xl transition-all" placeholder="••••••">
-                <button @click="verifyPin" class="w-full bg-emerald-700 text-white p-6 rounded-[2rem] font-black tracking-widest btn-interact shadow-xl uppercase text-sm">Masuk</button>
-            </section>
-
-            <section v-if="currentTab === 'admin' && isAdmin" class="space-y-8 animate-in slide-in-from-bottom-10 duration-500">
+            <section v-if="currentTab === 'admin' && isAdmin" class="space-y-12 animate-in slide-in-from-bottom-10">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-3xl font-black">Panel <span class="text-emerald-600">Kendali</span></h2>
-                    <button @click="logout" class="text-[10px] bg-red-600 text-white p-2 px-6 rounded-full font-black tracking-widest uppercase">Logout</button>
+                    <h2 class="text-4xl font-black">Panel <span class="text-emerald-600">Kendali</span></h2>
+                    <button @click="logout" class="text-[11px] bg-red-600 text-white p-4 px-12 rounded-full font-black tracking-widest uppercase shadow-2xl hover:bg-red-700 transition-all">Logout</button>
                 </div>
+                <div class="flex gap-3 overflow-x-auto pb-6 no-scrollbar"><button v-for="t in adminTabs" :key="t.id" @click="adminSubTab = t.id" :class="subTabClass(t.id)">{{ t.label }}</button></div>
 
-                <div class="flex gap-2 overflow-x-auto pb-4 no-scrollbar">
-                    <button v-for="t in adminTabs" @click="adminSubTab = t.id" :class="subTabClass(t.id)">{{ t.label }}</button>
-                </div>
-
-                <!-- ADMIN FORMS: ALL OPERATIONAL -->
-                <div class="glass p-8 rounded-[3rem] space-y-6 shadow-2xl border border-emerald-500/10">
-                    
-                    <!-- Form: Siswa -->
-                    <div v-if="adminSubTab === 'students'" class="space-y-4">
-                        <h3 class="font-black uppercase text-xs text-emerald-700 border-l-4 border-emerald-700 pl-4 mb-4">Input Siswa</h3>
-                        <div class="grid grid-cols-4 gap-3">
-                            <input v-model.number="newStudent.noAbsen" type="number" placeholder="Absen" class="p-4 rounded-2xl input-admin font-bold text-sm col-span-1 shadow-sm">
-                            <input v-model="newStudent.name" type="text" placeholder="Nama Lengkap" class="p-4 rounded-2xl input-admin font-bold text-sm col-span-3 shadow-sm">
-                        </div>
-                        <div class="grid grid-cols-2 gap-3">
-                            <select v-model="newStudent.gender" class="p-4 rounded-2xl input-admin font-bold text-sm outline-none">
-                                <option value="L">Laki-laki</option>
-                                <option value="P">Perempuan</option>
-                            </select>
-                            <input v-model="newStudent.photo" type="text" placeholder="Link URL Foto" class="p-4 rounded-2xl input-admin font-bold text-sm">
-                        </div>
-                        <button @click="addStudent" class="w-full bg-emerald-700 text-white p-4 rounded-2xl font-black uppercase shadow-lg">Simpan Siswa</button>
-                        <div class="space-y-2 mt-8">
-                            <div v-for="s in sortedStudents" :key="s.noAbsen" class="flex justify-between items-center p-3 bg-white rounded-2xl text-[10px] shadow-sm border border-slate-100">
-                                <span><b>{{ s.noAbsen }}.</b> {{ s.name }}</span>
-                                <button @click="deleteStudent(s.noAbsen)" class="text-red-500 p-2"><i class="ph-bold ph-trash-simple"></i></button>
-                            </div>
-                        </div>
+                <div class="glass p-12 rounded-[4.5rem] space-y-12 shadow-2xl border border-emerald-500/10">
+                    <!-- Form Students Admin -->
+                    <div v-if="adminSubTab === 'students'" class="space-y-8">
+                        <div class="grid grid-cols-4 gap-6"><input v-model.number="newStudent.noAbsen" type="number" placeholder="Abs" class="p-6 rounded-[2rem] input-admin font-black col-span-1 shadow-sm text-center text-xl transition-all focus:ring-4 ring-emerald-500/10"><input v-model="newStudent.name" type="text" placeholder="Nama Lengkap" class="p-6 rounded-[2rem] input-admin font-black col-span-3 shadow-sm text-xl transition-all focus:ring-4 ring-emerald-500/10"></div>
+                        <div class="grid grid-cols-2 gap-6"><select v-model="newStudent.gender" class="p-6 rounded-[2rem] input-admin font-black text-lg outline-none shadow-sm"><option value="L">Laki-laki</option><option value="P">Perempuan</option></select><input v-model="newStudent.photo" type="text" placeholder="URL Foto" class="p-6 rounded-[2rem] input-admin font-black text-lg outline-none shadow-sm"></div>
+                        <button @click="addStudent" class="w-full bg-emerald-700 text-white p-8 rounded-[3rem] font-black text-xl uppercase tracking-widest shadow-2xl btn-interact">SIMPAN</button>
+                        <div class="space-y-4 mt-12 max-h-[500px] overflow-y-auto no-scrollbar"><div v-for="s in sortedStudents" :key="s.noAbsen" class="flex justify-between items-center p-6 bg-white rounded-[2.5rem] shadow-sm border border-slate-100 transition-all hover:bg-emerald-50"><span class="font-black uppercase text-sm tracking-tighter text-slate-800"><b>{{ s.noAbsen }}.</b> {{ s.name }}</span><button @click="deleteStudent(s.noAbsen)" class="text-red-500 p-4 hover:bg-red-50 rounded-3xl transition-all"><i class="ph-bold ph-trash-simple text-2xl"></i></button></div></div>
                     </div>
-
-                    <!-- Form: Struktur -->
-                    <div v-if="adminSubTab === 'structure'" class="space-y-4">
-                        <h3 class="font-black uppercase text-xs text-emerald-700 border-l-4 border-emerald-700 pl-4 mb-4">Update Struktur</h3>
-                        <select v-model="newMember.role" class="w-full p-4 rounded-2xl input-admin font-bold text-sm">
-                            <option value="Wali Kelas">Wali Kelas</option>
-                            <option value="Ketua Kelas">Ketua Kelas</option>
-                            <option value="Wakil Ketua">Wakil Ketua</option>
-                            <option value="Bendahara">Bendahara</option>
-                            <option value="Sekretaris">Sekretaris</option>
-                            <option value="Sie Keamanan">Sie Keamanan</option>
-                            <option value="Sie Kebersihan">Sie Kebersihan</option>
-                            <option value="Sie Kerohanian">Sie Kerohanian</option>
-                            <option value="Lainnya">Lainnya</option>
-                        </select>
-                        <input v-model="newMember.name" type="text" placeholder="Nama Personil" class="w-full p-4 rounded-2xl input-admin font-bold text-sm">
-                        <input v-model="newMember.photo" type="text" placeholder="Link URL Foto" class="w-full p-4 rounded-2xl input-admin font-bold text-sm">
-                        <button @click="addStructure" class="w-full bg-emerald-700 text-white p-4 rounded-2xl font-black uppercase shadow-lg">Simpan Jabatan</button>
-                        <div class="space-y-2 mt-4">
-                            <div v-for="(m, i) in structure" :key="i" class="flex justify-between items-center p-3 bg-white rounded-2xl text-[10px] shadow-sm">
-                                <span><b>[{{ m.role }}]</b> {{ m.name }}</span>
-                                <button @click="deleteStructure(i)" class="text-red-500 p-2"><i class="ph-bold ph-trash-simple"></i></button>
-                            </div>
-                        </div>
+                    <!-- Form Struktur Admin -->
+                    <div v-if="adminSubTab === 'structure'" class="space-y-8">
+                        <select v-model="newMember.role" class="w-full p-6 rounded-[2.5rem] input-admin font-black text-lg shadow-sm"><option v-for="r in ['Wali Kelas', 'Ketua Kelas', 'Wakil Ketua', 'Bendahara', 'Sekretaris', 'Sie Keamanan', 'Sie Kebersihan', 'Sie Kerohanian', 'Lainnya']" :key="r" :value="r">{{ r }}</option></select>
+                        <input v-model="newMember.name" type="text" placeholder="Nama Personil" class="w-full p-6 rounded-[2.5rem] input-admin font-black text-lg shadow-sm"><input v-model="newMember.photo" type="text" placeholder="Link Foto" class="w-full p-6 rounded-[2.5rem] input-admin font-black text-lg shadow-sm"><button @click="addStructure" class="w-full bg-emerald-700 text-white p-8 rounded-[3rem] font-black text-xl uppercase shadow-2xl">UPDATE</button>
+                        <div class="space-y-4 mt-8"><div v-for="m in structure" :key="m.id" class="flex justify-between items-center p-5 bg-white rounded-[2rem] shadow-sm"><div><span class="text-[10px] font-black uppercase text-emerald-600 block">{{ m.role }}</span><span class="font-black uppercase text-xs">{{ m.name }}</span></div><button @click="deleteStructure(m.id)" class="text-red-500 p-3 hover:bg-red-50 rounded-2xl"><i class="ph-bold ph-trash text-xl"></i></button></div></div>
                     </div>
-
-                    <!-- Form: Jadwal -->
-                    <div v-if="adminSubTab === 'schedule'" class="space-y-4">
-                         <h3 class="font-black uppercase text-xs text-emerald-700 border-l-4 border-emerald-700 pl-4 mb-4">Input Mata Pelajaran</h3>
-                         <div class="grid grid-cols-2 gap-3">
-                            <select v-model="newSchedule.day" class="p-4 rounded-2xl input-admin font-bold text-sm">
-                                <option v-for="d in days" :value="d">{{ d }}</option>
-                            </select>
-                            <input v-model="newSchedule.time" type="text" placeholder="07:00 - 08:30" class="p-4 rounded-2xl input-admin font-bold text-sm">
-                        </div>
-                        <input v-model="newSchedule.subject" type="text" placeholder="Nama Mata Pelajaran" class="w-full p-4 rounded-2xl input-admin font-bold text-sm">
-                        <button @click="addSchedule" class="w-full bg-emerald-700 text-white p-4 rounded-2xl font-black uppercase shadow-lg">Simpan Jadwal</button>
-                        <div class="space-y-2 mt-4">
-                            <div v-for="(s, i) in schedule" :key="i" class="flex justify-between items-center p-3 bg-white rounded-2xl text-[10px] shadow-sm">
-                                <span><b>{{ s.day }}</b> - {{ s.subject }}</span>
-                                <button @click="deleteSchedule(i)" class="text-red-500 p-2"><i class="ph-bold ph-trash-simple"></i></button>
-                            </div>
-                        </div>
+                    <!-- Tab Chat moderasi (Pesan bisa dihapus admin di sini) -->
+                    <div v-if="adminSubTab === 'chat'" class="space-y-6">
+                        <h3 class="font-black text-xs text-emerald-700 uppercase tracking-widest border-l-[8px] border-emerald-700 pl-6">Moderasi Pesan Wall</h3>
+                        <div class="space-y-4"><div v-for="(m, i) in anonymousMessages" :key="m.id" class="flex justify-between items-center p-6 bg-white rounded-[2rem] shadow-sm border border-slate-100 transition-all hover:bg-red-50"><span class="truncate pr-4 italic text-xs font-bold text-slate-600">"{{ m.text }}"</span><button @click="deleteMessage(i)" class="text-red-500 p-3 bg-red-100 rounded-2xl hover:bg-red-200 transition-colors"><i class="ph-bold ph-trash-simple text-2xl"></i></button></div></div>
                     </div>
-
-                    <!-- Form: Piket -->
-                    <div v-if="adminSubTab === 'piket'" class="space-y-4">
-                        <h3 class="font-black uppercase text-xs text-emerald-700 border-l-4 border-emerald-700 pl-4 mb-4">Input Petugas Piket</h3>
-                        <div class="flex gap-3">
-                            <select v-model="newPiket.day" class="p-4 rounded-2xl input-admin font-bold text-sm flex-1">
-                                <option v-for="d in days" :value="d">{{ d }}</option>
-                            </select>
-                            <input v-model="newPiket.name" type="text" placeholder="Nama Siswa" class="p-4 rounded-2xl input-admin font-bold text-sm flex-[2]">
-                        </div>
-                        <button @click="addPiket" class="w-full bg-emerald-700 text-white p-4 rounded-2xl font-black uppercase shadow-lg">Tambah Petugas</button>
-                        <div class="space-y-2 mt-4">
-                            <div v-for="(p, i) in piket" :key="i" class="flex justify-between items-center p-3 bg-white rounded-2xl text-[10px] shadow-sm">
-                                <span><b>{{ p.day }}</b> - {{ p.name }}</span>
-                                <button @click="deletePiket(i)" class="text-red-500 p-2"><i class="ph-bold ph-trash-simple"></i></button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Form: Kas & Event (Simplified) -->
-                    <div v-if="adminSubTab === 'kas'" class="space-y-4">
-                         <h3 class="font-black uppercase text-xs text-emerald-700 border-l-4 border-emerald-700 pl-4 mb-4">Input Keuangan</h3>
-                         <div class="grid grid-cols-2 gap-3">
-                            <select v-model="newKas.type" class="p-4 rounded-2xl input-admin font-bold text-sm">
-                                <option value="in">Uang Masuk (+)</option>
-                                <option value="out">Uang Keluar (-)</option>
-                            </select>
-                            <input v-model.number="newKas.amount" type="number" placeholder="Nominal" class="p-4 rounded-2xl input-admin font-bold text-sm">
-                        </div>
-                        <input v-model="newKas.note" type="text" placeholder="Catatan Transaksi" class="w-full p-4 rounded-2xl input-admin font-bold text-sm">
-                        <button @click="addTransaction" class="w-full bg-emerald-700 text-white p-4 rounded-2xl font-black uppercase shadow-lg">Simpan Kas</button>
-                    </div>
-
-                    <div v-if="adminSubTab === 'settings'" class="space-y-4 text-center py-6">
-                        <h3 class="font-black uppercase text-xs text-emerald-700 mb-6">Sistem Naik Kelas</h3>
-                        <div class="text-3xl font-black text-emerald-900 uppercase mb-6">{{ classInfo.name }}</div>
-                        <button @click="promoteClass" class="bg-emerald-700 text-white p-5 rounded-3xl font-black uppercase shadow-lg btn-interact">Naik Kelas (+1)</button>
-                    </div>
-
                 </div>
             </section>
-
         </main>
 
-        <!-- FOOTER -->
-        <footer class="mt-20 py-16 text-center opacity-30 text-[9px] space-y-2 pb-44 border-t border-emerald-500/10 uppercase font-black tracking-widest">
+        <!-- FOOTER MASTER -->
+        <footer class="mt-20 py-32 text-center opacity-30 text-[10px] space-y-4 pb-64 border-t border-emerald-500/10 uppercase font-black tracking-[0.3em]">
             <p>BHAWARA {{ classInfo.name }} • ANGKATAN 64 • SMPN 8 YOGYAKARTA</p>
-            <p>Designed by <span class="font-bold text-emerald-700">Ruxxi (2026)</span></p>
-            <div class="font-arabic text-3xl mt-8 tracking-widest text-emerald-800">تَفَاؤَلُوا بِالْخَيْرِ تَجِدُوهُ</div>
+            <p>Platform Architect by <span class="font-bold text-emerald-700 underline">Ruxxi & Denis Pedia (2026)</span></p>
+            <div class="font-arabic text-6xl mt-12 tracking-widest text-emerald-800 animate-pulse">تَفَاؤَلُوا بِالْخَيْرِ تَجِدُوهُ</div>
         </footer>
 
         <!-- TOAST SYSTEM -->
-        <div v-if="toast.show" class="fixed top-12 left-1/2 -translate-x-1/2 z-[200] bg-emerald-950 text-white px-10 py-5 rounded-[2.5rem] shadow-2xl border border-emerald-500 flex items-center gap-4 animate-in fade-in zoom-in duration-300">
+        <div v-if="toast.show" class="fixed top-12 left-1/2 -translate-x-1/2 z-[300] bg-emerald-950 text-white px-10 py-5 rounded-[2.5rem] shadow-2xl border border-emerald-500 flex items-center gap-4 animate-in fade-in zoom-in duration-300">
             <i class="ph-bold ph-check-circle text-2xl" :class="toast.isError ? 'text-red-500' : 'text-emerald-400'"></i>
             <span class="font-black text-[11px] tracking-widest uppercase">{{ toast.message }}</span>
         </div>
@@ -561,17 +524,26 @@
 
         createApp({
             setup() {
-                // Persistent Store Version 8 (Fresh Start)
-                const storageKey = (key) => `bh_v8_${key}`;
+                const storageKey = (key) => `bh_v91_omega_${key}`;
                 
-                // Config & State
+                // STATE & SETTINGS
                 const isDarkMode = ref(localStorage.getItem('theme') === 'dark' || false);
                 const currentTab = ref('home');
                 const adminSubTab = ref('students');
+                const calcTab = ref('Saintifik');
+                const zakatSubTab = ref('fitrah');
                 const isAdmin = ref(sessionStorage.getItem('isAdmin') === 'true');
                 const digitalTime = ref('');
+                const searchSurah = ref('');
+                const pinInput = ref('');
                 
-                // Databases
+                // SECURITY ENGINE
+                const failedAttempts = ref(parseInt(localStorage.getItem(storageKey('failed_attempts')) || '0'));
+                const lockUntil = ref(parseInt(localStorage.getItem(storageKey('lock_until')) || '0'));
+                const lockCountdown = ref(0);
+                const isLocked = computed(() => lockUntil.value && Date.now() < lockUntil.value);
+
+                // PERSISTENT DATABASES
                 const classInfo = ref(JSON.parse(localStorage.getItem(storageKey('config')) || '{"name": "8G"}'));
                 const students = ref(JSON.parse(localStorage.getItem(storageKey('students')) || '[]'));
                 const structure = ref(JSON.parse(localStorage.getItem(storageKey('structure')) || '[]'));
@@ -580,206 +552,151 @@
                 const events = ref(JSON.parse(localStorage.getItem(storageKey('events')) || '[]'));
                 const cashTransactions = ref(JSON.parse(localStorage.getItem(storageKey('kas')) || '[]'));
                 const anonymousMessages = ref(JSON.parse(localStorage.getItem(storageKey('chats')) || '[]'));
+                const userReactions = ref(JSON.parse(localStorage.getItem(storageKey('user_reactions')) || '{}'));
 
-                const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
-                const adminTabs = [
-                    { id: 'students', label: 'Siswa' },
-                    { id: 'structure', label: 'Struktur' },
-                    { id: 'schedule', label: 'Jadwal' },
-                    { id: 'piket', label: 'Piket' },
-                    { id: 'kas', label: 'Kas' },
-                    { id: 'chat', label: 'Moderasi' },
-                    { id: 'settings', label: 'Sistem' }
-                ];
+                // QURAN & CALC
+                const quranList = ref([]);
+                const selectedSurah = ref(null);
+                const exchangeRates = ref({});
+                const currAmount = ref(1);
+                const currFrom = ref('IDR');
+                const currTo = ref('USD');
+                const calcScreen = ref('');
+                const calcHistory = ref('');
+                const zakatWealth = ref(0);
+                const zakatSouls = ref(1);
+                const zakatRicePrice = ref(45000);
+                const goldPrice = ref(1100000);
 
-                // Profanity Filter
-                const forbiddenWords = ['anjing', 'babi', 'monyet', 'bangsat', 'kontol', 'memek', 'jembut', 'asu', 'perek', 'lonte', 'bajingan', 'tolol', 'goblok', 'idiot', 'fuck', 'shit', 'ngentot', 'anf', 'tol', 'pekok'];
-
-                // Forms & Tools
-                const pinInput = ref('');
-                const newMessage = ref('');
-                const newKas = ref({ type: 'in', amount: null, note: '' });
+                // ADMIN FORMS
                 const newStudent = ref({ noAbsen: null, name: '', photo: '', gender: 'L' });
+                const newMember = ref({ role: 'Wali Kelas', name: '', photo: '' });
                 const newSchedule = ref({ day: 'Senin', time: '', subject: '' });
                 const newPiket = ref({ day: 'Senin', name: '' });
-                const newMember = ref({ role: 'Wali Kelas', name: '', photo: '' });
                 const newEvent = ref({ title: '', date: '', location: '' });
-                const toast = ref({ show: false, message: '', isError: false });
+                const newKas = ref({ type: 'in', amount: null, note: '' });
+                const newMessage = ref('');
 
+                // TOOLS STATE
                 const wheelPool = ref([]);
                 const wheelRotation = ref(0);
                 const wheelFilter = ref('Campur');
                 const wheelWinner = ref(null);
                 const isSpinning = ref(false);
                 const removeAfterSpin = ref(false);
+                const generatedGroups = ref([]);
                 const groupFilter = ref('Campur');
                 const groupCount = ref('2');
-                const generatedGroups = ref([]);
 
-                const SECRET_PIN = "147258"; 
+                const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'];
+                const currencies = ['IDR', 'USD', 'SAR', 'EUR', 'JPY', 'GBP', 'MYR', 'SGD', 'CNY', 'AUD'];
+                const adminTabs = [
+                    { id: 'students', label: 'Siswa' }, { id: 'structure', label: 'Struktur' },
+                    { id: 'schedule', label: 'Jadwal' }, { id: 'piket', label: 'Piket' },
+                    { id: 'events', label: 'Agenda' }, { id: 'kas', label: 'Uang Kas' },
+                    { id: 'chat', label: 'Moderasi' }, { id: 'settings', label: 'Sistem' }
+                ];
 
-                // Basic Logic
-                const toggleDarkMode = () => {
-                    isDarkMode.value = !isDarkMode.value;
-                    localStorage.setItem('theme', isDarkMode.value ? 'dark' : 'light');
+                const SECRET_PIN = "1472583691234560"; 
+                const toast = ref({ show: false, message: '', isError: false });
+                const forbiddenWords = ['anjing', 'babi', 'monyet', 'bangsat', 'kontol', 'memek', 'jembut', 'asu', 'perek', 'lonte', 'bajingan', 'tolol', 'goblok', 'fuck', 'shit', 'ngentot', 'anf', 'tol', 'pekok'];
+
+                // CORE ENGINE
+                const toggleDarkMode = () => { isDarkMode.value = !isDarkMode.value; localStorage.setItem('theme', isDarkMode.value ? 'dark' : 'light'); };
+                const updateTime = () => {
+                    const now = Date.now();
+                    digitalTime.value = new Date().toLocaleTimeString('id-ID', { hour12: false });
+                    if (isLocked.value) lockCountdown.value = Math.ceil((lockUntil.value - now) / 1000);
                 };
-                const updateTime = () => digitalTime.value = new Date().toLocaleTimeString('id-ID', { hour12: false });
-                const tabClass = (tab) => `p-4 px-5 rounded-2xl transition-all btn-interact shrink-0 ${currentTab.value === tab ? 'bg-emerald-600 text-white shadow-xl scale-110' : 'nav-icon-inactive hover:scale-110'}`;
-                const subTabClass = (tab) => `flex-none p-3 px-6 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all border ${adminSubTab.value === tab ? 'bg-emerald-700 text-white border-emerald-600 shadow-lg' : 'bg-white text-slate-400 border-slate-200'}`;
-                
+
+                const tabClass = (tab) => `p-4 px-4 rounded-2xl transition-all btn-interact shrink-0 ${currentTab.value === tab ? 'bg-emerald-600 text-white shadow-2xl scale-110' : 'nav-icon-inactive hover:scale-110'}`;
+                const subTabClass = (tab) => `flex-none p-3 px-6 rounded-2xl font-black text-[11px] uppercase tracking-widest border transition-all ${adminSubTab.value === tab ? 'bg-emerald-700 text-white border-emerald-600 shadow-xl' : 'bg-white text-slate-400 border-slate-200'}`;
+
                 const verifyPin = () => {
+                    if (isLocked.value) return;
                     if (pinInput.value === SECRET_PIN) {
-                        isAdmin.value = true;
-                        sessionStorage.setItem('isAdmin', 'true');
-                        showToast("VAULT UNLOCKED");
+                        failedAttempts.value = 0; lockUntil.value = 0; isAdmin.value = true;
+                        sessionStorage.setItem('isAdmin', 'true'); saveSecurity(); showToast("VAULT UNLOCKED");
                     } else {
-                        showToast("PIN SALAH!", true);
-                        pinInput.value = "";
+                        failedAttempts.value++; pinInput.value = "";
+                        if (failedAttempts.value >= 5) { lockUntil.value = Date.now() + (10 * 60 * 1000); showToast("SECURITY ALERT: SYSTEM LOCKED", true); }
+                        else showToast(`PIN SALAH! SISA ${5 - failedAttempts.value}`, true);
+                        saveSecurity();
                     }
                 };
+                const saveSecurity = () => { localStorage.setItem(storageKey('failed_attempts'), failedAttempts.value); localStorage.setItem(storageKey('lock_until'), lockUntil.value); };
                 const logout = () => { isAdmin.value = false; sessionStorage.removeItem('isAdmin'); };
                 const saveData = (key, val) => localStorage.setItem(storageKey(key), JSON.stringify(val));
 
-                // Actions: Students
-                const sortedStudents = computed(() => [...students.value].sort((a, b) => a.noAbsen - b.noAbsen));
-                const addStudent = () => {
-                    if (!newStudent.value.name || !newStudent.value.noAbsen) return;
-                    students.value.push({...newStudent.value});
-                    saveData('students', students.value);
-                    newStudent.value = { noAbsen: null, name: '', photo: '', gender: 'L' };
-                    showToast("Siswa Tersimpan");
-                    resetWheelPool();
-                };
-                const deleteStudent = (no) => { students.value = students.value.filter(s => s.noAbsen !== no); saveData('students', students.value); resetWheelPool(); };
+                // QURAN & API
+                const fetchSurahs = async () => { try { const r = await fetch('https://equran.id/api/v2/surat'); const d = await r.json(); quranList.value = d.data; } catch(e) { console.error(e); } };
+                const filteredSurahs = computed(() => quranList.value.filter(s => s.namaLatin.toLowerCase().includes(searchSurah.value.toLowerCase())));
+                const fetchSurahDetail = async (no) => { try { const r = await fetch(`https://equran.id/api/v2/surat/${no}`); const d = await r.json(); selectedSurah.value = d.data; } catch(e) { console.error(e); } };
+                const fetchRates = async () => { try { const r = await fetch(`https://open.er-api.com/v6/latest/${currFrom.value}`); const d = await r.json(); exchangeRates.value = d.rates; showToast("Rates Live!"); } catch(e) { console.error(e); } };
+                const convertedAmount = computed(() => currAmount.value * (exchangeRates.value[currTo.value] || 0));
 
-                // Actions: Structure (The Requested hierarchy)
+                // CALC PRO
+                const calcIn = (v) => calcScreen.value += v;
+                const calcClear = () => { calcScreen.value = ''; calcHistory.value = ''; };
+                const calcDel = () => calcScreen.value = calcScreen.value.slice(0, -1);
+                const calcOp = (op) => {
+                    try { const n = Number(calcScreen.value) || 0; let r = 0;
+                        if(op === 'sin') r = Math.sin(n * Math.PI / 180); if(op === 'cos') r = Math.cos(n * Math.PI / 180);
+                        if(op === 'tan') r = Math.tan(n * Math.PI / 180); if(op === 'log') r = Math.log10(n);
+                        if(op === 'sqrt') r = Math.sqrt(n);
+                        calcHistory.value = `${op}(${n})`; calcScreen.value = String(r.toFixed(4)); } catch(e) { calcScreen.value = 'Error'; }
+                };
+                const calcResult = () => { try { calcHistory.value = calcScreen.value; calcScreen.value = String(eval(calcScreen.value)); } catch(e) { calcScreen.value = 'Error'; } };
+
+                // CRUD METHODS
+                const sortedStudents = computed(() => [...students.value].sort((a, b) => a.noAbsen - b.noAbsen));
+                const addStudent = () => { if (!newStudent.value.name || !newStudent.value.noAbsen) return; students.value.push({...newStudent.value}); saveData('students', students.value); newStudent.value = { noAbsen: null, name: '', photo: '', gender: 'L' }; showToast("OK"); resetWheelPool(); };
+                const deleteStudent = (no) => { students.value = students.value.filter(s => s.noAbsen !== no); saveData('students', students.value); resetWheelPool(); };
                 const getStructureByRole = (role) => structure.value.find(m => m.role === role);
                 const otherStructure = computed(() => structure.value.filter(m => !['Wali Kelas', 'Ketua Kelas', 'Wakil Ketua'].includes(m.role)));
-                const addStructure = () => {
-                    if (!newMember.value.name) return;
-                    // Replace existing if unique role like Wali Kelas
-                    if (['Wali Kelas', 'Ketua Kelas', 'Wakil Ketua'].includes(newMember.value.role)) {
-                        structure.value = structure.value.filter(m => m.role !== newMember.value.role);
-                    }
-                    structure.value.push({...newMember.value, id: Date.now()});
-                    saveData('structure', structure.value);
-                    newMember.value = { role: 'Wali Kelas', name: '', photo: '' };
-                    showToast("Jabatan Terupdate");
-                };
+                const addStructure = () => { if (!newMember.value.name) return; if (['Wali Kelas', 'Ketua Kelas', 'Wakil Ketua'].includes(newMember.value.role)) { structure.value = structure.value.filter(m => m.role !== newMember.value.role); } structure.value.push({...newMember.value, id: Date.now()}); saveData('structure', structure.value); newMember.value = { role: 'Wali Kelas', name: '', photo: '' }; showToast("OK"); };
                 const deleteStructure = (id) => { structure.value = structure.value.filter(m => m.id !== id); saveData('structure', structure.value); };
-
-                // Actions: Schedule & Piket
-                const addSchedule = () => {
-                    if (!newSchedule.value.subject) return;
-                    schedule.value.push({...newSchedule.value});
-                    saveData('schedule', schedule.value);
-                    newSchedule.value = { day: 'Senin', time: '', subject: '' };
-                    showToast("Jadwal Tersimpan");
-                };
-                const deleteSchedule = (i) => { schedule.value.splice(i, 1); saveData('schedule', schedule.value); };
+                const addSchedule = () => { if (!newSchedule.value.subject) return; schedule.value.push({...newSchedule.value, id: Date.now()}); saveData('schedule', schedule.value); newSchedule.value = { day: 'Senin', time: '', subject: '' }; showToast("OK"); };
                 const getScheduleForDay = (day) => schedule.value.filter(s => s.day === day);
-
-                const addPiket = () => {
-                    if (!newPiket.value.name) return;
-                    piket.value.push({...newPiket.value});
-                    saveData('piket', piket.value);
-                    newPiket.value.name = '';
-                    showToast("Piket Tersimpan");
-                };
-                const deletePiket = (i) => { piket.value.splice(i, 1); saveData('piket', piket.value); };
+                const deleteSchedule = (id) => { schedule.value = schedule.value.filter(s => s.id !== id); saveData('schedule', schedule.value); };
+                const addPiket = () => { if (!newPiket.value.name) return; piket.value.push({...newPiket.value, id: Date.now()}); saveData('piket', piket.value); newPiket.value.name = ''; showToast("OK"); };
                 const getPiketForDay = (day) => piket.value.filter(p => p.day === day).map(p => p.name);
+                const deletePiket = (id) => { piket.value = piket.value.filter(p => p.id !== id); saveData('piket', piket.value); };
+                const addEvent = () => { if (!newEvent.value.title) return; events.value.unshift({...newEvent.value}); saveData('events', events.value); newEvent.value = { title:'', date:'', location:'' }; showToast("OK"); };
+                const deleteEvent = (i) => { events.value.splice(i, 1); saveData('events', events.value); };
+                const cashBalance = computed(() => { let i = cashTransactions.value.filter(t=>t.type==='in').reduce((a,b)=>a+(Number(b.amount)||0),0); let e = cashTransactions.value.filter(t=>t.type==='out').reduce((a,b)=>a+(Number(b.amount)||0),0); return { total: i - e }; });
+                const addTransaction = () => { if (!newKas.value.amount || !newKas.value.note) return; cashTransactions.value.unshift({ id: Date.now(), ...newKas.value, date: new Date().toLocaleDateString('id-ID') }); saveData('kas', cashTransactions.value); newKas.value = { type: 'in', amount: null, note: '' }; showToast("Tersimpan"); };
+                const deleteTransaction = (i) => { cashTransactions.value.splice(i, 1); saveData('kas', cashTransactions.value); };
+                const exportCashReport = () => { let csv = "Tipe,Ket,Jumlah,Tanggal\n"; cashTransactions.value.forEach(t=> csv+=`${t.type==='in'?'Masuk':'Keluar'},${t.note},${t.amount},${t.date}\n`); const blob = new Blob([csv], {type:'text/csv'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href=url; a.download='Kas_Bhawara.csv'; a.click(); };
 
-                // Actions: Finance & Chat
-                const cashBalance = computed(() => {
-                    let income = cashTransactions.value.filter(t=>t.type==='in').reduce((a,b)=>a+b.amount,0);
-                    let expense = cashTransactions.value.filter(t=>t.type==='out').reduce((a,b)=>a+b.amount,0);
-                    return { income, expense, total: income - expense };
-                });
-                const addTransaction = () => {
-                    if (!newKas.value.amount || !newKas.value.note) return;
-                    cashTransactions.value.unshift({ id: Date.now(), ...newKas.value, date: new Date().toLocaleDateString('id-ID') });
-                    saveData('kas', cashTransactions.value);
-                    newKas.value = { type: 'in', amount: null, note: '' };
-                    showToast("Kas Tercatat");
-                };
-                const deleteTransaction = (i) => { cashTransactions.value.splice(i,1); saveData('kas', cashTransactions.value); };
-
-                const addMessage = () => {
-                    if (!newMessage.value.trim()) return;
-                    const text = newMessage.value.toLowerCase();
-                    if (forbiddenWords.some(w => text.includes(w))) return showToast("KONTEN DIBLOKIR", true);
-                    anonymousMessages.value.unshift({ id: Date.now(), text: newMessage.value, reactions: {'❤️':0,'😂':0,'👍':0,'🔥':0,'🙏':0}, timestamp: new Date().toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'}) });
-                    saveData('chats', anonymousMessages.value);
-                    newMessage.value = "";
-                };
-                const reactToMessage = (idx, e) => { anonymousMessages.value[idx].reactions[e]++; saveData('chats', anonymousMessages.value); };
-
-                // Tools: Wheel Logic
-                const resetWheelPool = () => {
-                    let source = [...students.value];
-                    if (wheelFilter.value === 'Laki-laki') source = source.filter(s => s.gender === 'L');
-                    if (wheelFilter.value === 'Perempuan') source = source.filter(s => s.gender === 'P');
-                    wheelPool.value = source;
-                };
+                // TOOLS & WALL
+                const addMessage = () => { if (!newMessage.value.trim()) return; if (forbiddenWords.some(w => newMessage.value.toLowerCase().includes(w))) return showToast("KONTEN DIBLOKIR!", true); anonymousMessages.value.unshift({ id: Date.now(), text: newMessage.value, reactions: {'❤️':0,'😂':0,'👍':0,'🔥':0,'🙏':0}, timestamp: new Date().toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'}) }); saveData('chats', anonymousMessages.value); newMessage.value = ""; };
+                const reactToMessage = (msgIdx, emoji) => { const msg = anonymousMessages.value[msgIdx]; const msgId = msg.id; const prev = userReactions.value[msgId]; if (prev === emoji) { msg.reactions[emoji] = Math.max(0, msg.reactions[emoji]-1); delete userReactions.value[msgId]; } else { if (prev) msg.reactions[prev]--; msg.reactions[emoji]++; userReactions.value[msgId] = emoji; } saveData('chats', anonymousMessages.value); saveData('user_reactions', userReactions.value); };
+                const deleteMessage = (i) => { anonymousMessages.value.splice(i, 1); saveData('chats', anonymousMessages.value); };
+                const resetWheelPool = () => { let src = [...students.value]; if (wheelFilter.value === 'Laki-laki') src = src.filter(s => s.gender === 'L'); if (wheelFilter.value === 'Perempuan') src = src.filter(s => s.gender === 'P'); wheelPool.value = src; };
                 const setWheelFilter = (f) => { wheelFilter.value = f; resetWheelPool(); };
-                const wheelSegmentStyle = (idx) => {
-                    const total = wheelPool.value.length || 1;
-                    const rotate = (360 / total) * idx;
-                    return { transform: `rotate(${rotate}deg)`, height: '150px', width: `${300 * Math.PI / total}px`, backgroundColor: idx % 2 === 0 ? '#065f46' : '#d4af37', color: idx % 2 === 0 ? 'white' : 'black', clipPath: 'polygon(50% 100%, 0 0, 100% 0)' };
-                };
-                const spinWheel = () => {
-                    if (isSpinning.value || wheelPool.value.length === 0) return;
-                    isSpinning.value = true;
-                    wheelWinner.value = null;
-                    const randRotate = Math.floor(Math.random() * 360) + (360 * 5); 
-                    wheelRotation.value += randRotate;
-                    setTimeout(() => {
-                        const actualDeg = wheelRotation.value % 360;
-                        const total = wheelPool.value.length;
-                        const winningIdx = Math.floor(((360 - actualDeg + (360/total/2)) % 360) / (360/total)) % total;
-                        const winner = wheelPool.value[winningIdx];
-                        wheelWinner.value = winner.name;
-                        isSpinning.value = false;
-                        if (removeAfterSpin.value) wheelPool.value.splice(winningIdx, 1);
-                    }, 4000);
-                };
-                const getWinnerPhoto = () => students.value.find(s => s.name === wheelWinner.value)?.photo || 'https://via.placeholder.com/150';
-                const generateGroups = () => {
-                    let pool = groupFilter.value === 'Campur' ? [...students.value] : students.value.filter(s => s.gender === groupFilter.value);
-                    if (pool.length === 0) return showToast("Siswa tidak ditemukan", true);
-                    pool.sort(() => Math.random() - 0.5);
-                    const n = parseInt(groupCount.value);
-                    const res = Array.from({ length: n }, () => []);
-                    pool.forEach((s, i) => res[i % n].push(s));
-                    generatedGroups.value = res;
-                    showToast("Kelompok Berhasil Diacak");
-                };
+                const wheelSegmentStyle = (idx) => { const tot = wheelPool.value.length || 1; return { transform: `rotate(${(360/tot)*idx}deg)`, height: '150px', width: `${300*Math.PI/tot}px`, backgroundColor: idx%2===0?'#065f46':'#d4af37', color: idx%2===0?'white':'black', clipPath: 'polygon(50% 100%, 0 0, 100% 0)' }; };
+                const spinWheel = () => { if (isSpinning.value || wheelPool.value.length === 0) return; isSpinning.value = true; wheelWinner.value = null; const rand = Math.floor(Math.random()*360) + (360*5); wheelRotation.value += rand; setTimeout(() => { const tot = wheelPool.value.length; const deg = wheelRotation.value % 360; const winIdx = Math.floor(((360 - deg + (360/tot/2)) % 360) / (360/tot)) % tot; wheelWinner.value = wheelPool.value[winIdx].name; isSpinning.value = false; if (removeAfterSpin.value) wheelPool.value.splice(winIdx, 1); }, 4000); };
+                const getWinnerPhoto = () => students.value.find(s => s.name === wheelWinner.value)?.photo || '';
+                const generateGroups = () => { let pool = groupFilter.value === 'Campur' ? [...students.value] : students.value.filter(s => s.gender === groupFilter.value); if (pool.length < groupCount.value) return showToast("Siswa kurang!", true); pool.sort(()=>Math.random()-0.5); const n = parseInt(groupCount.value); const res = Array.from({length:n}, ()=>[]); pool.forEach((s,i)=> res[i%n].push(s)); generatedGroups.value = res; };
+                const resetTools = () => { resetWheelPool(); generatedGroups.value = []; wheelWinner.value = null; showToast("RESET SELESAI"); };
+                const promoteClass = () => { const n = parseInt(classInfo.value.name); if (!isNaN(n)) { classInfo.value.name = (n+1)+'G'; saveData('config', classInfo.value); showToast("NAIK KELAS!"); } };
 
-                const promoteClass = () => {
-                    const currentNum = parseInt(classInfo.value.name);
-                    if (!isNaN(currentNum)) { classInfo.value.name = (currentNum + 1) + 'G'; saveData('config', classInfo.value); showToast("Naik Kelas!"); }
-                };
-
-                // Helpers
                 const formatNumber = (n) => new Intl.NumberFormat('id-ID').format(n);
                 const showToast = (m, e = false) => { toast.value = { show: true, message: m, isError: e }; setTimeout(() => toast.value.show = false, 3000); };
-                
-                onMounted(() => {
-                    updateTime();
-                    setInterval(updateTime, 1000);
-                    resetWheelPool();
-                });
+
+                onMounted(() => { updateTime(); setInterval(updateTime, 1000); fetchSurahs(); fetchRates(); resetWheelPool(); });
 
                 return {
-                    isDarkMode, currentTab, adminSubTab, isAdmin, digitalTime, classInfo,
-                    students, structure, schedule, piket, events, cashTransactions, anonymousMessages, days, adminTabs,
-                    pinInput, newMessage, newKas, newStudent, newSchedule, newPiket, newMember, newEvent, toast,
-                    wheelPool, wheelRotation, wheelFilter, wheelWinner, isSpinning, removeAfterSpin, groupFilter, groupCount, generatedGroups,
-                    toggleDarkMode, tabClass, subTabClass, verifyPin, logout, promoteClass,
-                    addStudent, deleteStudent, sortedStudents, getStructureByRole, otherStructure, addStructure, deleteStructure,
-                    addSchedule, deleteSchedule, getScheduleForDay, addPiket, deletePiket, getPiketForDay,
-                    cashBalance, addTransaction, deleteTransaction, addMessage, reactToMessage,
-                    setWheelFilter, resetWheelPool, spinWheel, wheelSegmentStyle, getWinnerPhoto, generateGroups, formatNumber
+                    isDarkMode, currentTab, adminSubTab, calcTab, zakatSubTab, isAdmin, digitalTime, classInfo,
+                    students, sortedStudents, structure, schedule, piket, events, cashTransactions, anonymousMessages, userReactions, days, adminTabs,
+                    pinInput, isLocked, failedAttempts, lockCountdown, toast, searchSurah, quranList, selectedSurah, filteredSurahs, fetchSurahDetail, calcScreen, calcHistory, zakatWealth, zakatSouls, zakatRicePrice, goldPrice,
+                    currencies, currFrom, currTo, currAmount, convertedAmount, wheelPool, wheelRotation, wheelFilter, wheelWinner, isSpinning, removeAfterSpin, generatedGroups, groupFilter, groupCount,
+                    newStudent, newMember, newSchedule, newPiket, newEvent, newKas, newMessage,
+                    toggleDarkMode, tabClass, subTabClass, verifyPin, logout, promoteClass, formatNumber, fetchRates, 
+                    calcIn, calcClear, calcDel, calcOp, calcResult, resetTools, setWheelFilter, resetWheelPool, spinWheel, wheelSegmentStyle, getWinnerPhoto, generateGroups,
+                    addStudent, deleteStudent, addStructure, deleteStructure, getStructureByRole, otherStructure, addSchedule, getScheduleForDay, getPiketForDay, cashBalance, 
+                    deleteSchedule, deletePiket, deleteEvent, addTransaction, deleteTransaction, exportCashReport, addMessage, reactToMessage, deleteMessage
                 };
             }
         }).mount('#app');
